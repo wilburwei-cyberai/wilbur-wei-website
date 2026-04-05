@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI資安講師 × AI資安顧問｜魏○○｜AI Agent資安・生成式AI風險・ISO 27001</title>
+  <meta name="description" content="具備逾十年產官學研資歷的 AI 資安講師與 AI 資安顧問，專精 AI Agent 資安風險、生成式 AI 防護、零信任架構導入與 ISO 27001 稽核。提供企業資安內訓、資安意識培訓，協助組織建立全面防護體系。">
+  <meta name="keywords" content="AI資安講師,AI資安顧問,AI Agent資安,生成式AI資安,零信任架構,資安顧問,企業資安內訓,資安意識培訓,資安稽核顧問,ISO 27001,Active Directory,勒索軟體防禦">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="AI資安講師 × AI資安顧問｜魏○○">
+  <meta property="og:description" content="AI Agent 資安風險・生成式 AI 防護・零信任架構・ISO 27001 稽核顧問。元智大學資工系助理教授 × 衛福部資安稽核委員。">
+  <meta property="og:type" content="website">
+  <!-- TODO: 補上正式網址 -->
+  <meta property="og:url" content="https://your-domain.com/">
+  
+  <link rel="canonical" href="https://your-domain.com/">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "魏○○",
+    "jobTitle": "AI資安講師, AI資安顧問",
+    "description": "具備逾十年產官學研資歷的 AI 資安講師與 AI 資安顧問，專精 AI Agent 資安風險、生成式 AI 防護、零信任架構導入與 ISO 27001 稽核。",
+    "url": "https://your-domain.com/",
+    "sameAs": [
+      "mailto:wilbur.wei.cyberai@gmail.com"
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --ink: #0f0f0f;
+      --ink-60: #5a5a5a;
+      --ink-30: #b0b0b0;
+      --ink-10: #e8e6e0;
+      --paper: #f5f2eb;
+      --paper-dark: #ede9e0;
+      --accent: #b84c2a;
+      --accent-light: #f0e0d8;
+      --accent-2: #2a4a6b;
+      --accent-2-light: #dce6f0;
+      --green: #2a5c3f;
+      --green-light: #daeee3;
+      --serif: 'Noto Serif TC', serif;
+      --sans: 'Noto Sans TC', sans-serif;
+      --mono: 'DM Mono', monospace;
+      --max: 1080px;
+      --radius: 3px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.8;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden; /* 防止手機版溢出 */
+    }
+
+    /* ── TYPOGRAPHY ── */
+    h1, h2, h3 { font-family: var(--serif); font-weight: 700; line-height: 1.3; }
+    h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); letter-spacing: -0.02em; }
+    h2 { font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.01em; }
+    h3 { font-size: 1.1rem; font-weight: 600; }
+    p { margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+    strong { font-weight: 500; }
+
+    /* ── LAYOUT ── */
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+    section { padding: 6rem 0; }
+    section:nth-child(even) { background: var(--paper-dark); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--paper);
+      border-bottom: 1px solid var(--ink-10);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-brand {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--ink-60);
+      text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--ink-60);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      padding-top: 60px;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      background: var(--paper);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg-text {
+      position: absolute;
+      right: -2rem;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      font-family: var(--mono);
+      font-size: clamp(6rem, 15vw, 14rem);
+      font-weight: 500;
+      color: var(--ink-10);
+      letter-spacing: -0.05em;
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 2rem 4rem;
+      max-width: var(--max);
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .hero-title { margin-bottom: 1.5rem; max-width: 18ch; }
+    .hero-title em {
+      font-style: normal;
+      color: var(--accent);
+      position: relative;
+    }
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--ink-60);
+      max-width: 52ch;
+      margin-bottom: 2.5rem;
+      line-height: 1.9;
+    }
+    .hero-kws {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .kw-tag {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border: 1px solid currentColor;
+      border-radius: var(--radius);
+    }
+    .kw-tag.primary { color: var(--accent); background: var(--accent-light); border-color: var(--accent); }
+    .kw-tag.secondary { color: var(--accent-2); background: var(--accent-2-light); border-color: var(--accent-2); }
+    .kw-tag.tertiary { color: var(--green); background: var(--green-light); border-color: var(--green); }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
+    .btn-primary {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding: 12px 28px;
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+    .btn-secondary {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      padding: 12px 28px;
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--ink-30);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--ink); }
+    .hero-trust {
+      border-top: 1px solid var(--ink-10);
+      padding-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+    }
+    .trust-item { display: flex; flex-direction: column; }
+    .trust-num {
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .trust-label {
+      font-size: 0.75rem;
+      color: var(--ink-60);
+      margin-top: 4px;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      color: var(--ink-30);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: var(--ink-30);
+    }
+    .section-title { margin-bottom: 1rem; }
+    .section-lead {
+      font-size: 1rem;
+      color: var(--ink-60);
+      max-width: 60ch;
+      margin-bottom: 3rem;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .about-left { }
+    .about-intro {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--ink-60);
+      margin-bottom: 1.5rem;
+    }
+    .about-highlight {
+      border-left: 3px solid var(--accent);
+      padding: 1rem 1.5rem;
+      background: var(--accent-light);
+      font-size: 0.95rem;
+      color: var(--ink);
+      line-height: 1.8;
+      margin: 1.5rem 0;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .about-roles { display: flex; flex-direction: column; gap: 1.5rem; }
+    .role-card {
+      padding: 1.5rem;
+      background: var(--paper);
+      border: 1px solid var(--ink-10);
+      border-radius: var(--radius);
+      position: relative;
+      overflow: hidden;
+    }
+    .role-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+    }
+    .role-card.r1::before { background: var(--accent); }
+    .role-card.r2::before { background: var(--accent-2); }
+    .role-card.r3::before { background: var(--green); }
+    .role-num {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--ink-30);
+      margin-bottom: 0.4rem;
+    }
+    .role-card h3 { margin-bottom: 0.5rem; font-size: 1rem; }
+    .role-card p { font-size: 0.875rem; color: var(--ink-60); margin: 0; line-height: 1.7; }
+
+    /* ── TOPICS ── */
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5px;
+      background: var(--ink-10);
+      border: 1.5px solid var(--ink-10);
+      border-radius: calc(var(--radius) + 2px);
+      overflow: hidden;
+    }
+    .topic-card {
+      background: var(--paper-dark);
+      padding: 2rem 1.75rem;
+      position: relative;
+      transition: background 0.2s;
+    }
+    .topic-card:hover { background: var(--paper); }
+    .topic-badge {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--ink-30);
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--ink-10);
+    }
+    .topic-card h3 { margin-bottom: 1rem; font-size: 1.1rem; }
+    .topic-quote {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+    .topic-card p { font-size: 0.875rem; color: var(--ink-60); line-height: 1.7; margin-bottom: 1.5rem; }
+    .topic-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .topic-tag {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--ink-30);
+      border: 1px solid var(--ink-10);
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    /* ── NUMBERS ── */
+    .numbers-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .numbers-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5px;
+      background: var(--ink-10);
+      border: 1.5px solid var(--ink-10);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .number-card {
+      background: var(--paper);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+    .number-val {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .number-label { font-size: 0.75rem; color: var(--ink-60); letter-spacing: 0.05em; }
+    .numbers-content h2 { margin-bottom: 1.5rem; }
+    .numbers-content p { color: var(--ink-60); font-size: 0.95rem; line-height: 1.8; margin-bottom: 2rem; }
+    .award-box {
+      border-top: 1px solid var(--ink-10);
+      padding-top: 1.5rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .award-icon { width: 48px; height: 48px; background: var(--accent-light); border-radius: 50%; flex-shrink: 0; }
+    .award-text h3 { font-size: 0.9rem; margin-bottom: 0.2rem; }
+    .award-text p { font-size: 0.75rem; margin: 0; }
+
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .service-card {
+      background: var(--paper);
+      border: 1px solid var(--ink-10);
+      padding: 2.5rem 2rem;
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .service-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+    .service-icon {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.1em;
+    }
+    .service-card h3 { margin-bottom: 1.5rem; font-size: 1.2rem; }
+    .service-card ul { list-style: none; margin-bottom: 2rem; flex-grow: 1; }
+    .service-card li {
+      font-size: 0.875rem;
+      color: var(--ink-60);
+      padding-left: 1.25rem;
+      position: relative;
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+    .service-card li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .service-format {
+      font-size: 0.75rem;
+      color: var(--ink-30);
+      margin-bottom: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--ink-10);
+    }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .service-tag {
+      font-size: 0.65rem;
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+    .st-p { background: var(--accent-light); color: var(--accent); }
+    .st-s { background: var(--accent-2-light); color: var(--accent-2); }
+    .st-t { background: var(--green-light); color: var(--green); }
+
+    /* ── CASES ── */
+    .cases-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+    .case-group { margin-bottom: 2rem; }
+    .case-group-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--ink-30);
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--ink-10);
+    }
+    .case-item {
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--ink-10);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    .case-item:last-child { border-bottom: none; }
+    .case-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--ink-30);
+      margin-top: 0.6rem;
+      flex-shrink: 0;
+    }
+    .case-content h4 {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+      color: var(--ink);
+    }
+    .case-content p {
+      font-size: 0.82rem;
+      color: var(--ink-60);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--ink); color: var(--paper); }
+    #contact .section-label { color: rgba(245,242,235,0.3); }
+    #contact .section-label::before { background: rgba(245,242,235,0.3); }
+    #contact .section-title { color: var(--paper); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .contact-left { }
+    .contact-lead {
+      font-size: 1rem;
+      color: rgba(245,242,235,0.65);
+      line-height: 1.9;
+      margin-bottom: 2rem;
+    }
+    .contact-needs { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2.5rem; }
+    .contact-need {
+      font-size: 0.875rem;
+      color: rgba(245,242,235,0.7);
+      padding-left: 1.25rem;
+      position: relative;
+      line-height: 1.7;
+    }
+    .contact-need::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+    .contact-need strong { color: var(--paper); font-weight: 500; }
+    .contact-right { }
+    .email-block { margin-bottom: 2.5rem; }
+    .email-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: rgba(245,242,235,0.35);
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .email-link {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--paper);
+      text-decoration: none;
+      padding: 0.9rem 1.25rem;
+      border: 1px solid rgba(245,242,235,0.15);
+      border-radius: var(--radius);
+      transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 0.5rem;
+    }
+    .email-link:hover { border-color: var(--accent); background: rgba(184,76,42,0.1); }
+    .contact-ctas { display: flex; flex-direction: column; gap: 0.75rem; }
+    .btn-contact-primary {
+      font-family: var(--sans);
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding: 14px 28px;
+      background: var(--accent);
+      color: var(--paper);
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .btn-contact-primary:hover { background: #9e3d20; }
+    .btn-contact-ghost {
+      font-family: var(--sans);
+      font-size: 0.875rem;
+      font-weight: 400;
+      padding: 14px 28px;
+      background: transparent;
+      color: rgba(245,242,235,0.7);
+      border: 1px solid rgba(245,242,235,0.2);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-contact-ghost:hover { border-color: rgba(245,242,235,0.5); color: var(--paper); }
+    .contact-response {
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: rgba(245,242,235,0.35);
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #080808;
+      padding: 2rem;
+      text-align: center;
+    }
+    .footer-kws {
+      font-size: 0.75rem;
+      color: rgba(245,242,235,0.2);
+      line-height: 2.2;
+      max-width: 700px;
+      margin: 0 auto 1rem;
+    }
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: rgba(245,242,235,0.2);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      section { padding: 4rem 0; }
+      .about-grid,
+      .numbers-layout,
+      .cases-layout,
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .topics-grid,
+      .services-grid { grid-template-columns: 1fr; }
+      .numbers-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .hero-bg-text { display: none; }
+      .hero-inner { padding: 4rem 1.5rem; }
+      h1 { font-size: 2.4rem; }
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow { animation: fadeUp 0.6s ease both; }
+    .hero-title   { animation: fadeUp 0.6s ease 0.1s both; }
+    .hero-subtitle{ animation: fadeUp 0.6s ease 0.2s both; }
+    .hero-kws     { animation: fadeUp 0.6s ease 0.3s both; }
+    .hero-ctas    { animation: fadeUp 0.6s ease 0.4s both; }
+    .hero-trust   { animation: fadeUp 0.6s ease 0.5s both; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Wilbur Wei · AI 資安</div>
+  <ul class="nav-links">
+    <li><a href="#about">關於我</a></li>
+    <li><a href="#topics">專業主題</a></li>
+    <li><a href="#achievements">成就</a></li>
+    <li><a href="#services">服務</a></li>
+    <li><a href="#cases">合作案例</a></li>
+    <li><a href="#contact">聯絡</a></li>
+  </ul>
+</nav>
+
+<!-- ① HERO -->
+<section id="hero">
+  <div class="hero-bg-text">AI SEC</div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">AI 資安講師 × AI 資安顧問・產官學研三棲專家</div>
+    <h1 class="hero-title">讓 AI 成為<br>你的<em>資安護盾</em></h1>
+    <p class="hero-subtitle">
+      從課堂到董事會，我幫組織把防禦落地。<br>
+      專精 AI Agent 資安風險、生成式 AI 防護策略、零信任架構導入<br>與 Active Directory 勒索軟體防禦。
+    </p>
+    <div class="hero-kws">
+      <span class="kw-tag primary">AI 資安講師</span>
+      <span class="kw-tag primary">AI 資安顧問</span>
+      <span class="kw-tag secondary">AI Agent 資安</span>
+      <span class="kw-tag secondary">生成式 AI 資安</span>
+      <span class="kw-tag tertiary">零信任架構</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">邀請演講 / 顧問洽詢</a>
+      <a href="#services" class="btn-secondary">了解服務項目</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item">
+        <span class="trust-num">10<span style="font-size:1rem;font-family:var(--sans);font-weight:300;">+</span></span>
+        <span class="trust-label">年產官學研資歷</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-num">10<span style="font-size:1rem;font-family:var(--sans);font-weight:300;">+</span></span>
+        <span class="trust-label">政府與企業 AI 專案</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-num">91<span style="font-size:1rem;font-family:var(--sans);font-weight:300;">%</span></span>
+        <span class="trust-label">惡意軟體辨識率</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-num" style="font-size:1.2rem;">R&D 100</span>
+        <span class="trust-label">2022 全球百大研發獎</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ② ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-left">
+        <div class="section-label">關於我</div>
+        <h2 class="section-title">一位在課堂、政府<br>與企業之間穿梭的<br>AI 資安顧問</h2>
+        <p class="about-intro">很多人問我：你到底是教授、顧問，還是政府委員？<br>我的答案是：三者都是，也因為三者兼具，我看到的威脅風景才完整。</p>
+        <div class="about-highlight">
+          當 AI Agent 開始自主執行任務、生成式 AI 被整合進企業核心系統，攻擊面與以往截然不同。身為 AI 資安顧問與 AI 資安講師，我不只研究這些新型威脅，更幫組織在技術落地前就把防禦架構想清楚。
+        </div>
+        <p style="font-size:0.9rem;color:var(--ink-60);">這三個角色告訴我同一件事：AI 時代的資安問題，從來不只是技術問題，更是管理決策與組織文化的問題。</p>
+      </div>
+      <div class="about-roles">
+        <div class="role-card r1">
+          <div class="role-num">ROLE 01</div>
+          <h3>學術研究者</h3>
+          <p>元智大學資工系助理教授。與竣盟科技共建「資安欺敵誘捕平台」，與勤晁科技研發 AI 驅動異常行為偵測引擎（SEDE），將學術成果直接轉化為可部署的防禦工具。開設「網路攻防」課程，結合 AI Agent 攻防情境與產業真實案例。</p>
+        </div>
+        <div class="role-card r2">
+          <div class="role-num">ROLE 02</div>
+          <h3>政府稽核委員</h3>
+          <p>受衛生福利部聘任為資安稽核委員，執行國家級資安稽核任務，審查《資通安全管理法》與 ISO 27001 合規，深知監管框架對企業的真實壓力。</p>
+        </div>
+        <div class="role-card r3">
+          <div class="role-num">ROLE 03</div>
+          <h3>產業倡議者</h3>
+          <p>台灣中小企業資安協會榮譽理事長，長期倡導「管理、技術、意識」三位一體防護原則，多次在 SEMICON Taiwan 等大型論壇擔任主講，協助產業建立系統性防護思維。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ③ TOPICS -->
+<section id="topics">
+  <div class="container">
+    <div class="section-label">專業主題</div>
+    <h2 class="section-title">你的組織正在面對<br>哪一道關卡？</h2>
+    <p class="section-lead">我最常被找去解決的問題，集中在四個方向。</p>
+    <div class="topics-grid">
+      <div class="topic-card">
+        <div class="topic-badge">NEW THREAT</div>
+        <h3>AI Agent 與生成式 AI 資安</h3>
+        <p class="topic-quote">「我們導入了 AI 工具，但完全不知道它會帶來什麼風險。」</p>
+        <p>AI Agent 自主執行任務、呼叫外部 API、存取內部資料——每一步都可能成為攻擊入口。生成式 AI 的提示注入（Prompt Injection）、資料外洩、模型投毒，是下一波企業最需要提前布防的威脅。提供 AI 系統資安評估、GenAI 導入風險框架與 AI Agent 安全設計諮詢。</p>
+        <div class="topic-tags">
+          <span class="topic-tag">AI Agent 資安</span>
+          <span class="topic-tag">生成式 AI 資安</span>
+          <span class="topic-tag">Prompt Injection</span>
+        </div>
+      </div>
+      <div class="topic-card">
+        <div class="topic-badge">CORE</div>
+        <h3>AI 輔助資安防護</h3>
+        <p class="topic-quote">「我們怎麼知道攻擊者已經在內網？」</p>
+        <p>透過 AI 驅動的異常行為偵測，在攻擊者橫向移動前即時發現威脅。從模型設計到部署整合，提供端對端技術顧問支援。自研 SEDE 引擎實測惡意軟體辨識率達 91%。</p>
+        <div class="topic-tags">
+          <span class="topic-tag">AI 輔助資安</span>
+          <span class="topic-tag">異常行為偵測</span>
+          <span class="topic-tag">SEDE 引擎</span>
+        </div>
+      </div>
+      <div class="topic-card">
+        <div class="topic-badge">CORE</div>
+        <h3>零信任架構導入</h3>
+        <p class="topic-quote">「我們信任內網，但攻擊者早就進來了。」</p>
+        <p>協助企業從傳統邊界防護轉型為零信任架構，包含身份驗證強化、最小權限設計與政策框架建置。在 AI Agent 大規模部署的時代，零信任更是不可缺席的底層架構。</p>
+        <div class="topic-tags">
+          <span class="topic-tag">零信任架構</span>
+          <span class="topic-tag">零信任導入顧問</span>
+        </div>
+      </div>
+      <div class="topic-card">
+        <div class="topic-badge">CORE</div>
+        <h3>AD 實務防禦與勒索軟體</h3>
+        <p class="topic-quote">「勒索軟體爆發的那天，我們完全不知道怎麼辦。」</p>
+        <p>Active Directory 是多數勒索軟體攻擊的核心路徑。提供 AD 加固診斷、攻擊路徑模擬與事件應變規劃，協助企業在攻擊發生前建立可執行的防禦機制。</p>
+        <div class="topic-tags">
+          <span class="topic-tag">Active Directory</span>
+          <span class="topic-tag">勒索軟體防禦</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="container">
+    <div class="numbers-layout">
+      <div class="numbers-grid">
+        <div class="number-card">
+          <div class="number-val">10+</div>
+          <div class="number-label">年資安實戰資歷</div>
+        </div>
+        <div class="number-card">
+          <div class="number-val">10+</div>
+          <div class="number-label">政府與企業 AI 專案</div>
+        </div>
+        <div class="number-card">
+          <div class="number-val">91%</div>
+          <div class="number-label">惡意軟體辨識率</div>
+        </div>
+        <div class="number-card">
+          <div class="number-val">5</div>
+          <div class="number-label">跨領域指標職務</div>
+        </div>
+      </div>
+      <div class="numbers-content">
+        <div class="section-label">代表成就</div>
+        <h2 class="section-title">數字背後，是真實<br>解決過的問題</h2>
+        <p>這些數字代表的不只是資歷，而是每個我協助過的組織留下的成果。從衛福部的資安稽核，到企業的 AI Agent 資安評估與異常偵測導入，每個專案都讓我更清楚：台灣的資安防禦缺口，卡在技術、管理與 AI 新風險之間沒人翻譯的那道牆。這正是我存在的理由。</p>
+        <div class="award-box">
+          <div class="award-icon"></div>
+          <div class="award-text">
+            <h3>2022 R&D 100 Awards</h3>
+            <p>全球百大研發創新獎，肯定 AI 資安研究的實際應用價值。每年全球僅 100 件技術獲此殊榮。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-label">服務項目</div>
+    <h2 class="section-title">找我，你可以得到什麼</h2>
+    <p class="section-lead">不論你需要一場讓高階主管真正聽進去的資安演講、一套全員資安意識培訓計畫，或是一位懂 AI Agent 新型威脅與監管框架的顧問——這三件事，我都能做。</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">TALK</div>
+        <h3>主題演講</h3>
+        <div>
+          <p style="font-size:0.8rem;color:var(--ink-60);margin-bottom:0.5rem;">企業年會・產業論壇・政府機關研習</p>
+          <ul>
+            <li>AI Agent 資安風險與企業因應</li>
+            <li>生成式 AI 導入的資安盲點</li>
+            <li>零信任架構入門實務</li>
+            <li>勒索軟體防禦與 AD 強化</li>
+            <li>資安管理思維給非技術主管</li>
+          </ul>
+        </div>
+        <div class="service-format">60–90 分鐘 · 可搭配案例工作坊</div>
+        <div class="service-tags">
+          <span class="service-tag st-p">AI資安講師</span>
+          <span class="service-tag st-s">AI Agent資安</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">TRAIN</div>
+        <h3>企業資安內訓</h3>
+        <div>
+          <p style="font-size:0.8rem;color:var(--ink-60);margin-bottom:0.5rem;">資安長・IT 主管・全員意識培訓</p>
+          <ul>
+            <li>技術團隊：AI 輔助攻防、AD 實務防禦</li>
+            <li>管理層：AI 時代資安治理框架</li>
+            <li>全員：生成式 AI 使用資安守則</li>
+            <li>釣魚攻擊識別與社交工程防範</li>
+          </ul>
+        </div>
+        <div class="service-format">半天 / 全天 / 多場次系列課程</div>
+        <div class="service-tags">
+          <span class="service-tag st-s">企業資安內訓</span>
+          <span class="service-tag st-s">資安意識培訓</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">ADV</div>
+        <h3>顧問諮詢</h3>
+        <div>
+          <p style="font-size:0.8rem;color:var(--ink-60);margin-bottom:0.5rem;">需要導入零信任・應對稽核・評估 AI 系統風險</p>
+          <ul>
+            <li>AI Agent 資安評估與防護設計</li>
+            <li>生成式 AI 導入風險框架</li>
+            <li>零信任架構規劃</li>
+            <li>ISO 27001 稽核輔導</li>
+            <li>AD 安全診斷</li>
+          </ul>
+        </div>
+        <div class="service-format">專案制 / 月顧問</div>
+        <div class="service-tags">
+          <span class="service-tag st-p">AI資安顧問</span>
+          <span class="service-tag st-t">資安稽核顧問</span>
+          <span class="service-tag st-t">ISO 27001</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑥ CASES -->
+<section id="cases">
+  <div class="container">
+    <div class="section-label">合作案例</div>
+    <h2 class="section-title" style="margin-bottom:2.5rem;">他們信任我，<br>我交出了成果</h2>
+    <div class="cases-layout">
+      <div>
+        <div class="case-group">
+          <div class="case-group-label">產學合作</div>
+          <div class="case-item">
+            <div class="case-dot"></div>
+            <div class="case-content">
+              <h4>竣盟科技</h4>
+              <p>共同研發「資安欺敵誘捕平台」，整合蜜罐技術與 AI 威脅情資分析</p>
+            </div>
+          </div>
+          <div class="case-item">
+            <div class="case-dot"></div>
+            <div class="case-content">
+              <h4>勤晁科技</h4>
+              <p>主導研發「AI 驅動異常行為偵測引擎（SEDE）」，惡意軟體辨識率達 91%</p>
+            </div>
+          </div>
+          <div class="case-item">
+            <div class="case-dot"></div>
+            <div class="case-content">
+              <h4>元智大學「網路攻防」課程</h4>
+              <p>結合 AI Agent 攻防情境與產業真實案例的實戰型課程</p>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="case-group">
+          <div class="case-group-label">政府機構合作</div>
+          <div class="case-item">
+            <div class="case-dot"></div>
+            <div class="case-content">
+              <h4>衛生福利部</h4>
+              <p>受聘資安稽核委員，執行《資通安全管理法》合規稽核</p>
+            </div>
+          </div>
+          <div class="case-item">
+            <div class="case-dot"></div>
+            <div class="case-content">
+              <h4>台灣中小企業資安協會</h4>
+              <p>榮譽理事長，推動全台中小企業資安政策倡議</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="case-group">
+          <div class="case-group-label">受邀演講</div>
+          <div class="case-item">
+            <div class="case-dot"></div>
+            <div class="case-content">
+              <h4>SEMICON Taiwan</h4>
+              <p>半導體產業資安論壇主講</p>
+            </div>
+          </div>
+          <div class="case-item">
+            <div class="case-dot"></div>
+            <div class="case-content">
+              <h4>各校長資安研習論壇</h4>
+              <p>以「管理者視角看校園資安風險」為題演講</p>
+            </div>
+          </div>
+          <div class="case-item">
+            <div class="case-dot"></div>
+            <div class="case-content">
+              <h4>企業年會與政府研習</h4>
+              <p>涵蓋 AI Agent 資安風險、生成式 AI 防護等主題演講</p>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="case-group">
+          <div class="case-group-label">國際認可</div>
+          <div class="case-item">
+            <div class="case-dot"></div>
+            <div class="case-content">
+              <h4>2022 R&D 100 Awards</h4>
+              <p>全球百大研發創新獎，肯定 AI 資安研究的實際應用價值</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-left">
+        <div class="section-label">聯絡與合作</div>
+        <h2 class="section-title" style="margin-bottom:1.5rem;">準備好強化你的<br>AI 時代資安防線了嗎？</h2>
+        <p class="contact-lead">一封信，讓我們開始討論你的需求。我會在兩個工作天內回覆，並根據你的情況提供初步建議。</p>
+        <div class="contact-needs">
+          <div class="contact-need">一場讓主管真正理解 <strong>AI Agent 資安風險</strong> 與 <strong>生成式 AI 防護</strong> 的演講</div>
+          <div class="contact-need">為全員量身設計的 <strong>企業資安內訓</strong> 或 <strong>資安意識培訓</strong> 課程</div>
+          <div class="contact-need">協助通過 <strong>ISO 27001 稽核</strong>、規劃 <strong>零信任架構導入</strong> 的資安稽核顧問</div>
+          <div class="contact-need">針對 <strong>台灣中小企業資安</strong> 需求量身打造的顧問方案</div>
+        </div>
+      </div>
+      <div class="contact-right">
+        <div class="email-block">
+          <div class="email-label">學術・產學合作</div>
+          <a href="/cdn-cgi/l/email-protection#ff8896939d8a8dd1889a96bf8c9e8b8a8d91d186858ad19a9b8ad18b88" class="email-link"><span class="__cf_email__" data-cfemail="5e2937323c2b2c70293b371e2d3f2a2b2c307027242b703b3a2b702a29">[email&#160;protected]</span></a>
+          <div class="email-label" style="margin-top:1rem;">演講・顧問邀約</div>
+          <a href="/cdn-cgi/l/email-protection#26514f4a4453540851434f08455f444354474f66414b474f4a0845494b" class="email-link"><span class="__cf_email__" data-cfemail="d5a2bcb9b7a0a7fba2b0bcfbb6acb7b0a7b4bc95b2b8b4bcb9fbb6bab8">[email&#160;protected]</span></a>
+        </div>
+        <div class="contact-ctas">
+          <a href="/cdn-cgi/l/email-protection#63140a0f0116114d14060a4d001a010611020a23040e020a0f4d000c0e" class="btn-contact-primary">發送合作邀約</a>
+          <!-- TODO: 上線前替換為實際 PDF 連結 -->
+          <a href="#" class="btn-contact-ghost">下載演講簡歷 PDF</a>
+        </div>
+        <p class="contact-response">通常在 2 個工作天內回覆・歡迎附上活動簡介或需求說明</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-kws">
+    AI資安講師推薦・AI資安顧問台灣・
