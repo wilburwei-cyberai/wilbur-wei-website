@@ -1,20 +1,20 @@
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI資安講師 × AI資安顧問｜魏○○｜AI Agent資安・生成式AI風險・ISO 27001</title>
-  <meta name="description" content="具備逾十年產官學研資歷的 AI 資安講師與 AI 資安顧問，專精 AI Agent 資安風險、生成式 AI 防護、零信任架構導入與 ISO 27001 稽核。提供企業資安內訓、資安意識培訓，協助組織建立全面防護體系。">
-  <meta name="keywords" content="AI資安講師,AI資安顧問,AI Agent資安,生成式AI資安,零信任架構,資安顧問,企業資安內訓,資安意識培訓,資安稽核顧問,ISO 27001,Active Directory,勒索軟體防禦">
+  <title data-lang-key="meta_title">AI資安講師 × AI資安顧問｜魏○○｜AI Agent資安・生成式AI風險・ISO 27001</title>
+  <meta name="description" data-lang-key="meta_description" content="具備逾十年產官學研資歷的 AI 資安講師與 AI 資安顧問，專精 AI Agent 資安風險、生成式 AI 防護、零信任架構導入與 ISO 27001 稽核。提供企業資安內訓、資安意識培訓，協助組織建立全面防護體系。">
+  <meta name="keywords" content="AI資安講師,AI資安顧問,AI Agent資安,生成式AI資安,零信任架構,資安顧問,企業資安內訓,資安意識培訓,資安稽核顧問,ISO 27001,Active Directory,勒索軟體防禦, AI Security Speaker, AI Security Consultant, Generative AI Security, Zero Trust Architecture">
   
   <!-- Open Graph -->
-  <meta property="og:title" content="AI資安講師 × AI資安顧問｜魏○○">
-  <meta property="og:description" content="AI Agent 資安風險・生成式 AI 防護・零信任架構・ISO 27001 稽核顧問。元智大學資工系助理教授 × 衛福部資安稽核委員。">
+  <meta property="og:title" data-lang-key="og_title" content="AI資安講師 × AI資安顧問｜魏○○">
+  <meta property="og:description" data-lang-key="og_description" content="AI Agent 資安風險・生成式 AI 防護・零信任架構・ISO 27001 稽核顧問。元智大學資工系助理教授 × 衛福部資安稽核委員。">
   <meta property="og:type" content="website">
-  <!-- TODO: 補上正式網址 -->
-  <meta property="og:url" content="https://your-domain.com/">
+  <meta property="og:url" content="https://wilburwei-cyberai.github.io/wilbur-wei-website/">
   
-  <link rel="canonical" href="https://your-domain.com/">
+  <link rel="canonical" href="https://wilburwei-cyberai.github.io/wilbur-wei-website/">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,10 +25,10 @@
   {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "魏○○",
-    "jobTitle": "AI資安講師, AI資安顧問",
-    "description": "具備逾十年產官學研資歷的 AI 資安講師與 AI 資安顧問，專精 AI Agent 資安風險、生成式 AI 防護、零信任架構導入與 ISO 27001 稽核。",
-    "url": "https://your-domain.com/",
+    "name": "Wilbur Wei",
+    "jobTitle": "AI Security Speaker, AI Security Consultant",
+    "description": "An AI security speaker and consultant with over a decade of experience in industry, government, and academia, specializing in AI Agent security risks, Generative AI protection, Zero Trust architecture implementation, and ISO 27001 auditing.",
+    "url": "https://wilburwei-cyberai.github.io/wilbur-wei-website/",
     "sameAs": [
       "mailto:wilbur.wei.cyberai@gmail.com"
     ]
@@ -68,10 +68,9 @@
       line-height: 1.8;
       font-size: 16px;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden; /* 防止手機版溢出 */
+      overflow-x: hidden;
     }
 
-    /* ── TYPOGRAPHY ── */
     h1, h2, h3 { font-family: var(--serif); font-weight: 700; line-height: 1.3; }
     h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); letter-spacing: -0.02em; }
     h2 { font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.01em; }
@@ -80,12 +79,10 @@
     p:last-child { margin-bottom: 0; }
     strong { font-weight: 500; }
 
-    /* ── LAYOUT ── */
     .container { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
     section { padding: 6rem 0; }
     section:nth-child(even) { background: var(--paper-dark); }
 
-    /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       background: var(--paper);
@@ -102,7 +99,7 @@
       color: var(--ink-60);
       text-transform: uppercase;
     }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
     .nav-links a {
       font-size: 0.8rem;
       font-weight: 400;
@@ -112,8 +109,19 @@
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--accent); }
+    .lang-switcher a { 
+        border: 1px solid var(--ink-30); 
+        padding: 4px 10px; 
+        border-radius: 3px; 
+        font-family: var(--mono);
+        font-size: 0.7rem;
+    }
+    .lang-switcher a.active { 
+        background: var(--accent);
+        color: var(--paper);
+        border-color: var(--accent);
+    }
 
-    /* ── HERO ── */
     #hero {
       min-height: 100vh;
       padding-top: 60px;
@@ -252,7 +260,6 @@
       letter-spacing: 0.03em;
     }
 
-    /* ── SECTION LABEL ── */
     .section-label {
       font-family: var(--mono);
       font-size: 0.7rem;
@@ -280,14 +287,12 @@
       margin-bottom: 3rem;
     }
 
-    /* ── ABOUT ── */
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 5rem;
       align-items: start;
     }
-    .about-left { }
     .about-intro {
       font-size: 1.05rem;
       line-height: 1.9;
@@ -334,7 +339,6 @@
     .role-card h3 { margin-bottom: 0.5rem; font-size: 1rem; }
     .role-card p { font-size: 0.875rem; color: var(--ink-60); margin: 0; line-height: 1.7; }
 
-    /* ── TOPICS ── */
     .topics-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -381,7 +385,6 @@
       border-radius: 2px;
     }
 
-    /* ── NUMBERS ── */
     .numbers-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -410,7 +413,12 @@
       line-height: 1;
       margin-bottom: 0.5rem;
     }
-    .number-label { font-size: 0.75rem; color: var(--ink-60); letter-spacing: 0.05em; }
+    .number-label {
+      font-size: 0.75rem;
+      color: var(--ink-60);
+      margin-top: 4px;
+      letter-spacing: 0.05em;
+    }
     .numbers-content h2 { margin-bottom: 1.5rem; }
     .numbers-content p { color: var(--ink-60); font-size: 0.95rem; line-height: 1.8; margin-bottom: 2rem; }
     .award-box {
@@ -424,7 +432,6 @@
     .award-text h3 { font-size: 0.9rem; margin-bottom: 0.2rem; }
     .award-text p { font-size: 0.75rem; margin: 0; }
 
-    /* ── SERVICES ── */
     .services-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -481,7 +488,6 @@
     .st-s { background: var(--accent-2-light); color: var(--accent-2); }
     .st-t { background: var(--green-light); color: var(--green); }
 
-    /* ── CASES ── */
     .cases-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -530,7 +536,6 @@
       line-height: 1.6;
     }
 
-    /* ── CONTACT ── */
     #contact { background: var(--ink); color: var(--paper); }
     #contact .section-label { color: rgba(245,242,235,0.3); }
     #contact .section-label::before { background: rgba(245,242,235,0.3); }
@@ -541,7 +546,8 @@
       gap: 5rem;
       align-items: start;
     }
-    .contact-left { }
+    .contact-left {
+    }
     .contact-lead {
       font-size: 1rem;
       color: rgba(245,242,235,0.65);
@@ -564,7 +570,6 @@
       font-size: 0.8rem;
     }
     .contact-need strong { color: var(--paper); font-weight: 500; }
-    .contact-right { }
     .email-block { margin-bottom: 2.5rem; }
     .email-label {
       font-family: var(--mono);
@@ -628,7 +633,6 @@
       line-height: 1.6;
     }
 
-    /* ── FOOTER ── */
     footer {
       background: #080808;
       padding: 2rem;
@@ -648,7 +652,6 @@
       letter-spacing: 0.08em;
     }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       section { padding: 4rem 0; }
       .about-grid,
@@ -664,7 +667,6 @@
       h1 { font-size: 2.4rem; }
     }
 
-    /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -681,14 +683,20 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-brand">Wilbur Wei · AI 資安</div>
+  <div class="nav-brand">Wilbur Wei · AI Security</div>
   <ul class="nav-links">
-    <li><a href="#about">關於我</a></li>
-    <li><a href="#topics">專業主題</a></li>
-    <li><a href="#achievements">成就</a></li>
-    <li><a href="#services">服務</a></li>
-    <li><a href="#cases">合作案例</a></li>
-    <li><a href="#contact">聯絡</a></li>
+    <li><a href="#about" data-lang-key="nav_about">關於我</a></li>
+    <li><a href="#topics" data-lang-key="nav_topics">專業主題</a></li>
+    <li><a href="#achievements" data-lang-key="nav_achievements">成就</a></li>
+    <li><a href="#services" data-lang-key="nav_services">服務</a></li>
+    <li><a href="#cases" data-lang-key="nav_cases">合作案例</a></li>
+    <li><a href="#contact" data-lang-key="nav_contact">聯絡</a></li>
+    <li class="lang-switcher">
+        <a href="#" onclick="switchLanguage('zh-Hant')" class="lang-zh active">中</a>
+    </li>
+    <li class="lang-switcher">
+        <a href="#" onclick="switchLanguage('en')" class="lang-en">EN</a>
+    </li>
   </ul>
 </nav>
 
@@ -696,39 +704,39 @@
 <section id="hero">
   <div class="hero-bg-text">AI SEC</div>
   <div class="hero-inner">
-    <div class="hero-eyebrow">AI 資安講師 × AI 資安顧問・產官學研三棲專家</div>
-    <h1 class="hero-title">讓 AI 成為<br>你的<em>資安護盾</em></h1>
-    <p class="hero-subtitle">
+    <div class="hero-eyebrow" data-lang-key="hero_eyebrow">AI 資安講師 × AI 資安顧問・產官學研三棲專家</div>
+    <h1 class="hero-title" data-lang-key="hero_title">讓 AI 成為<br>你的<em>資安護盾</em></h1>
+    <p class="hero-subtitle" data-lang-key="hero_subtitle">
       從課堂到董事會，我幫組織把防禦落地。<br>
       專精 AI Agent 資安風險、生成式 AI 防護策略、零信任架構導入<br>與 Active Directory 勒索軟體防禦。
     </p>
     <div class="hero-kws">
-      <span class="kw-tag primary">AI 資安講師</span>
-      <span class="kw-tag primary">AI 資安顧問</span>
-      <span class="kw-tag secondary">AI Agent 資安</span>
-      <span class="kw-tag secondary">生成式 AI 資安</span>
-      <span class="kw-tag tertiary">零信任架構</span>
+      <span class="kw-tag primary" data-lang-key="kw_speaker">AI 資安講師</span>
+      <span class="kw-tag primary" data-lang-key="kw_consultant">AI 資安顧問</span>
+      <span class="kw-tag secondary" data-lang-key="kw_agent">AI Agent 資安</span>
+      <span class="kw-tag secondary" data-lang-key="kw_genai">生成式 AI 資安</span>
+      <span class="kw-tag tertiary" data-lang-key="kw_zerotrust">零信任架構</span>
     </div>
     <div class="hero-ctas">
-      <a href="#contact" class="btn-primary">邀請演講 / 顧問洽詢</a>
-      <a href="#services" class="btn-secondary">了解服務項目</a>
+      <a href="#contact" class="btn-primary" data-lang-key="cta_invite">邀請演講 / 顧問洽詢</a>
+      <a href="#services" class="btn-secondary" data-lang-key="cta_services">了解服務項目</a>
     </div>
     <div class="hero-trust">
       <div class="trust-item">
         <span class="trust-num">10<span style="font-size:1rem;font-family:var(--sans);font-weight:300;">+</span></span>
-        <span class="trust-label">年產官學研資歷</span>
+        <span class="trust-label" data-lang-key="trust_experience">年產官學研資歷</span>
       </div>
       <div class="trust-item">
         <span class="trust-num">10<span style="font-size:1rem;font-family:var(--sans);font-weight:300;">+</span></span>
-        <span class="trust-label">政府與企業 AI 專案</span>
+        <span class="trust-label" data-lang-key="trust_projects">政府與企業 AI 專案</span>
       </div>
       <div class="trust-item">
         <span class="trust-num">91<span style="font-size:1rem;font-family:var(--sans);font-weight:300;">%</span></span>
-        <span class="trust-label">惡意軟體辨識率</span>
+        <span class="trust-label" data-lang-key="trust_malware">惡意軟體辨識率</span>
       </div>
       <div class="trust-item">
         <span class="trust-num" style="font-size:1.2rem;">R&D 100</span>
-        <span class="trust-label">2022 全球百大研發獎</span>
+        <span class="trust-label" data-lang-key="trust_award">2022 全球百大研發獎</span>
       </div>
     </div>
   </div>
@@ -739,29 +747,29 @@
   <div class="container">
     <div class="about-grid">
       <div class="about-left">
-        <div class="section-label">關於我</div>
-        <h2 class="section-title">一位在課堂、政府<br>與企業之間穿梭的<br>AI 資安顧問</h2>
-        <p class="about-intro">很多人問我：你到底是教授、顧問，還是政府委員？<br>我的答案是：三者都是，也因為三者兼具，我看到的威脅風景才完整。</p>
-        <div class="about-highlight">
+        <div class="section-label" data-lang-key="about_label">關於我</div>
+        <h2 class="section-title" data-lang-key="about_title">一位在課堂、政府<br>與企業之間穿梭的<br>AI 資安顧問</h2>
+        <p class="about-intro" data-lang-key="about_intro">很多人問我：你到底是教授、顧問，還是政府委員？<br>我的答案是：三者都是，也因為三者兼具，我看到的威脅風景才完整。</p>
+        <div class="about-highlight" data-lang-key="about_highlight">
           當 AI Agent 開始自主執行任務、生成式 AI 被整合進企業核心系統，攻擊面與以往截然不同。身為 AI 資安顧問與 AI 資安講師，我不只研究這些新型威脅，更幫組織在技術落地前就把防禦架構想清楚。
         </div>
-        <p style="font-size:0.9rem;color:var(--ink-60);">這三個角色告訴我同一件事：AI 時代的資安問題，從來不只是技術問題，更是管理決策與組織文化的問題。</p>
+        <p style="font-size:0.9rem;color:var(--ink-60);" data-lang-key="about_conclusion">這三個角色告訴我同一件事：AI 時代的資安問題，從來不只是技術問題，更是管理決策與組織文化的問題。</p>
       </div>
       <div class="about-roles">
         <div class="role-card r1">
           <div class="role-num">ROLE 01</div>
-          <h3>學術研究者</h3>
-          <p>元智大學資工系助理教授。與竣盟科技共建「資安欺敵誘捕平台」，與勤晁科技研發 AI 驅動異常行為偵測引擎（SEDE），將學術成果直接轉化為可部署的防禦工具。開設「網路攻防」課程，結合 AI Agent 攻防情境與產業真實案例。</p>
+          <h3 data-lang-key="role1_title">學術研究者</h3>
+          <p data-lang-key="role1_desc">元智大學資工系助理教授。與竣盟科技共建「資安欺敵誘捕平台」，與勤晁科技研發 AI 驅動異常行為偵測引擎（SEDE），將學術成果直接轉化為可部署的防禦工具。開設「網路攻防」課程，結合 AI Agent 攻防情境與產業真實案例。</p>
         </div>
         <div class="role-card r2">
           <div class="role-num">ROLE 02</div>
-          <h3>政府稽核委員</h3>
-          <p>受衛生福利部聘任為資安稽核委員，執行國家級資安稽核任務，審查《資通安全管理法》與 ISO 27001 合規，深知監管框架對企業的真實壓力。</p>
+          <h3 data-lang-key="role2_title">政府稽核委員</h3>
+          <p data-lang-key="role2_desc">受衛生福利部聘任為資安稽核委員，執行國家級資安稽核任務，審查《資通安全管理法》與 ISO 27001 合規，深知監管框架對企業的真實壓力。</p>
         </div>
         <div class="role-card r3">
           <div class="role-num">ROLE 03</div>
-          <h3>產業倡議者</h3>
-          <p>台灣中小企業資安協會榮譽理事長，長期倡導「管理、技術、意識」三位一體防護原則，多次在 SEMICON Taiwan 等大型論壇擔任主講，協助產業建立系統性防護思維。</p>
+          <h3 data-lang-key="role3_title">產業倡議者</h3>
+          <p data-lang-key="role3_desc">台灣中小企業資安協會榮譽理事長，長期倡導「管理、技術、意識」三位一體防護原則，多次在 SEMICON Taiwan 等大型論壇擔任主講，協助產業建立系統性防護思維。</p>
         </div>
       </div>
     </div>
@@ -771,50 +779,50 @@
 <!-- ③ TOPICS -->
 <section id="topics">
   <div class="container">
-    <div class="section-label">專業主題</div>
-    <h2 class="section-title">你的組織正在面對<br>哪一道關卡？</h2>
-    <p class="section-lead">我最常被找去解決的問題，集中在四個方向。</p>
+    <div class="section-label" data-lang-key="topics_label">專業主題</div>
+    <h2 class="section-title" data-lang-key="topics_title">你的組織正在面對<br>哪一道關卡？</h2>
+    <p class="section-lead" data-lang-key="topics_lead">我最常被找去解決的問題，集中在四個方向。</p>
     <div class="topics-grid">
       <div class="topic-card">
         <div class="topic-badge">NEW THREAT</div>
-        <h3>AI Agent 與生成式 AI 資安</h3>
-        <p class="topic-quote">「我們導入了 AI 工具，但完全不知道它會帶來什麼風險。」</p>
-        <p>AI Agent 自主執行任務、呼叫外部 API、存取內部資料——每一步都可能成為攻擊入口。生成式 AI 的提示注入（Prompt Injection）、資料外洩、模型投毒，是下一波企業最需要提前布防的威脅。提供 AI 系統資安評估、GenAI 導入風險框架與 AI Agent 安全設計諮詢。</p>
+        <h3 data-lang-key="topic1_title">AI Agent 與生成式 AI 資安</h3>
+        <p class="topic-quote" data-lang-key="topic1_quote">「我們導入了 AI 工具，但完全不知道它會帶來什麼風險。」</p>
+        <p data-lang-key="topic1_desc">AI Agent 自主執行任務、呼叫外部 API、存取內部資料——每一步都可能成為攻擊入口。生成式 AI 的提示注入（Prompt Injection）、資料外洩、模型投毒，是下一波企業最需要提前布防的威脅。提供 AI 系統資安評估、GenAI 導入風險框架與 AI Agent 安全設計諮詢。</p>
         <div class="topic-tags">
-          <span class="topic-tag">AI Agent 資安</span>
-          <span class="topic-tag">生成式 AI 資安</span>
+          <span class="topic-tag">AI Agent Security</span>
+          <span class="topic-tag">Generative AI Security</span>
           <span class="topic-tag">Prompt Injection</span>
         </div>
       </div>
       <div class="topic-card">
         <div class="topic-badge">CORE</div>
-        <h3>AI 輔助資安防護</h3>
-        <p class="topic-quote">「我們怎麼知道攻擊者已經在內網？」</p>
-        <p>透過 AI 驅動的異常行為偵測，在攻擊者橫向移動前即時發現威脅。從模型設計到部署整合，提供端對端技術顧問支援。自研 SEDE 引擎實測惡意軟體辨識率達 91%。</p>
+        <h3 data-lang-key="topic2_title">AI 輔助資安防護</h3>
+        <p class="topic-quote" data-lang-key="topic2_quote">「我們怎麼知道攻擊者已經在內網？」</p>
+        <p data-lang-key="topic2_desc">透過 AI 驅動的異常行為偵測，在攻擊者橫向移動前即時發現威脅。從模型設計到部署整合，提供端對端技術顧問支援。自研 SEDE 引擎實測惡意軟體辨識率達 91%。</p>
         <div class="topic-tags">
-          <span class="topic-tag">AI 輔助資安</span>
-          <span class="topic-tag">異常行為偵測</span>
-          <span class="topic-tag">SEDE 引擎</span>
+          <span class="topic-tag">AI-Powered Cybersecurity</span>
+          <span class="topic-tag">Anomaly Detection</span>
+          <span class="topic-tag">SEDE Engine</span>
         </div>
       </div>
       <div class="topic-card">
         <div class="topic-badge">CORE</div>
-        <h3>零信任架構導入</h3>
-        <p class="topic-quote">「我們信任內網，但攻擊者早就進來了。」</p>
-        <p>協助企業從傳統邊界防護轉型為零信任架構，包含身份驗證強化、最小權限設計與政策框架建置。在 AI Agent 大規模部署的時代，零信任更是不可缺席的底層架構。</p>
+        <h3 data-lang-key="topic3_title">零信任架構導入</h3>
+        <p class="topic-quote" data-lang-key="topic3_quote">「我們信任內網，但攻擊者早就進來了。」</p>
+        <p data-lang-key="topic3_desc">協助企業從傳統邊界防護轉型為零信任架構，包含身份驗證強化、最小權限設計與政策框架建置。在 AI Agent 大規模部署的時代，零信任更是不可缺席的底層架構。</p>
         <div class="topic-tags">
-          <span class="topic-tag">零信任架構</span>
-          <span class="topic-tag">零信任導入顧問</span>
+          <span class="topic-tag">Zero Trust Architecture</span>
+          <span class="topic-tag">Zero Trust Implementation</span>
         </div>
       </div>
       <div class="topic-card">
         <div class="topic-badge">CORE</div>
-        <h3>AD 實務防禦與勒索軟體</h3>
-        <p class="topic-quote">「勒索軟體爆發的那天，我們完全不知道怎麼辦。」</p>
-        <p>Active Directory 是多數勒索軟體攻擊的核心路徑。提供 AD 加固診斷、攻擊路徑模擬與事件應變規劃，協助企業在攻擊發生前建立可執行的防禦機制。</p>
+        <h3 data-lang-key="topic4_title">AD 實務防禦與勒索軟體</h3>
+        <p class="topic-quote" data-lang-key="topic4_quote">「勒索軟體爆發的那天，我們完全不知道怎麼辦。」</p>
+        <p data-lang-key="topic4_desc">Active Directory 是多數勒索軟體攻擊的核心路徑。提供 AD 加固診斷、攻擊路徑模擬與事件應變規劃，協助企業在攻擊發生前建立可執行的防禦機制。</p>
         <div class="topic-tags">
-          <span class="topic-tag">Active Directory</span>
-          <span class="topic-tag">勒索軟體防禦</span>
+          <span class="topic-tag">Active Directory Security</span>
+          <span class="topic-tag">Ransomware Defense</span>
         </div>
       </div>
     </div>
@@ -828,30 +836,30 @@
       <div class="numbers-grid">
         <div class="number-card">
           <div class="number-val">10+</div>
-          <div class="number-label">年資安實戰資歷</div>
+          <div class="number-label" data-lang-key="ach_experience">年資安實戰資歷</div>
         </div>
         <div class="number-card">
           <div class="number-val">10+</div>
-          <div class="number-label">政府與企業 AI 專案</div>
+          <div class="number-label" data-lang-key="ach_projects">政府與企業 AI 專案</div>
         </div>
         <div class="number-card">
           <div class="number-val">91%</div>
-          <div class="number-label">惡意軟體辨識率</div>
+          <div class="number-label" data-lang-key="ach_malware">惡意軟體辨識率</div>
         </div>
         <div class="number-card">
           <div class="number-val">5</div>
-          <div class="number-label">跨領域指標職務</div>
+          <div class="number-label" data-lang-key="ach_roles">跨領域指標職務</div>
         </div>
       </div>
       <div class="numbers-content">
-        <div class="section-label">代表成就</div>
-        <h2 class="section-title">數字背後，是真實<br>解決過的問題</h2>
-        <p>這些數字代表的不只是資歷，而是每個我協助過的組織留下的成果。從衛福部的資安稽核，到企業的 AI Agent 資安評估與異常偵測導入，每個專案都讓我更清楚：台灣的資安防禦缺口，卡在技術、管理與 AI 新風險之間沒人翻譯的那道牆。這正是我存在的理由。</p>
+        <div class="section-label" data-lang-key="ach_label">代表成就</div>
+        <h2 class="section-title" data-lang-key="ach_title">數字背後，是真實<br>解決過的問題</h2>
+        <p data-lang-key="ach_desc">這些數字代表的不只是資歷，而是每個我協助過的組織留下的成果。從衛福部的資安稽核，到企業的 AI Agent 資安評估與異常偵測導入，每個專案都讓我更清楚：台灣的資安防禦缺口，卡在技術、管理與 AI 新風險之間沒人翻譯的那道牆。這正是我存在的理由。</p>
         <div class="award-box">
           <div class="award-icon"></div>
           <div class="award-text">
             <h3>2022 R&D 100 Awards</h3>
-            <p>全球百大研發創新獎，肯定 AI 資安研究的實際應用價值。每年全球僅 100 件技術獲此殊榮。</p>
+            <p data-lang-key="ach_award_desc">全球百大研發創新獎，肯定 AI 資安研究的實際應用價值。每年全球僅 100 件技術獲此殊榮。</p>
           </div>
         </div>
       </div>
@@ -862,64 +870,64 @@
 <!-- ⑤ SERVICES -->
 <section id="services">
   <div class="container">
-    <div class="section-label">服務項目</div>
-    <h2 class="section-title">找我，你可以得到什麼</h2>
-    <p class="section-lead">不論你需要一場讓高階主管真正聽進去的資安演講、一套全員資安意識培訓計畫，或是一位懂 AI Agent 新型威脅與監管框架的顧問——這三件事，我都能做。</p>
+    <div class="section-label" data-lang-key="services_label">服務項目</div>
+    <h2 class="section-title" data-lang-key="services_title">找我，你可以得到什麼</h2>
+    <p class="section-lead" data-lang-key="services_lead">不論你需要一場讓高階主管真正聽進去的資安演講、一套全員資安意識培訓計畫，或是一位懂 AI Agent 新型威脅與監管框架的顧問——這三件事，我都能做。</p>
     <div class="services-grid">
       <div class="service-card">
         <div class="service-icon">TALK</div>
-        <h3>主題演講</h3>
+        <h3 data-lang-key="service1_title">主題演講</h3>
         <div>
-          <p style="font-size:0.8rem;color:var(--ink-60);margin-bottom:0.5rem;">企業年會・產業論壇・政府機關研習</p>
+          <p style="font-size:0.8rem;color:var(--ink-60);margin-bottom:0.5rem;" data-lang-key="service1_audience">企業年會・產業論壇・政府機關研習</p>
           <ul>
-            <li>AI Agent 資安風險與企業因應</li>
-            <li>生成式 AI 導入的資安盲點</li>
-            <li>零信任架構入門實務</li>
-            <li>勒索軟體防禦與 AD 強化</li>
-            <li>資安管理思維給非技術主管</li>
+            <li data-lang-key="service1_item1">AI Agent 資安風險與企業因應</li>
+            <li data-lang-key="service1_item2">生成式 AI 導入的資安盲點</li>
+            <li data-lang-key="service1_item3">零信任架構入門實務</li>
+            <li data-lang-key="service1_item4">勒索軟體防禦與 AD 強化</li>
+            <li data-lang-key="service1_item5">資安管理思維給非技術主管</li>
           </ul>
         </div>
-        <div class="service-format">60–90 分鐘 · 可搭配案例工作坊</div>
+        <div class="service-format" data-lang-key="service1_format">60–90 分鐘 · 可搭配案例工作坊</div>
         <div class="service-tags">
-          <span class="service-tag st-p">AI資安講師</span>
-          <span class="service-tag st-s">AI Agent資安</span>
+          <span class="service-tag st-p" data-lang-key="tag_speaker">AI資安講師</span>
+          <span class="service-tag st-s" data-lang-key="tag_agent_security">AI Agent資安</span>
         </div>
       </div>
       <div class="service-card">
         <div class="service-icon">TRAIN</div>
-        <h3>企業資安內訓</h3>
+        <h3 data-lang-key="service2_title">企業資安內訓</h3>
         <div>
-          <p style="font-size:0.8rem;color:var(--ink-60);margin-bottom:0.5rem;">資安長・IT 主管・全員意識培訓</p>
+          <p style="font-size:0.8rem;color:var(--ink-60);margin-bottom:0.5rem;" data-lang-key="service2_audience">資安長・IT 主管・全員意識培訓</p>
           <ul>
-            <li>技術團隊：AI 輔助攻防、AD 實務防禦</li>
-            <li>管理層：AI 時代資安治理框架</li>
-            <li>全員：生成式 AI 使用資安守則</li>
-            <li>釣魚攻擊識別與社交工程防範</li>
+            <li data-lang-key="service2_item1">技術團隊：AI 輔助攻防、AD 實務防禦</li>
+            <li data-lang-key="service2_item2">管理層：AI 時代資安治理框架</li>
+            <li data-lang-key="service2_item3">全員：生成式 AI 使用資安守則</li>
+            <li data-lang-key="service2_item4">釣魚攻擊識別與社交工程防範</li>
           </ul>
         </div>
-        <div class="service-format">半天 / 全天 / 多場次系列課程</div>
+        <div class="service-format" data-lang-key="service2_format">半天 / 全天 / 多場次系列課程</div>
         <div class="service-tags">
-          <span class="service-tag st-s">企業資安內訓</span>
-          <span class="service-tag st-s">資安意識培訓</span>
+          <span class="service-tag st-s" data-lang-key="tag_training">企業資安內訓</span>
+          <span class="service-tag st-s" data-lang-key="tag_awareness">資安意識培訓</span>
         </div>
       </div>
       <div class="service-card">
         <div class="service-icon">ADV</div>
-        <h3>顧問諮詢</h3>
+        <h3 data-lang-key="service3_title">顧問諮詢</h3>
         <div>
-          <p style="font-size:0.8rem;color:var(--ink-60);margin-bottom:0.5rem;">需要導入零信任・應對稽核・評估 AI 系統風險</p>
+          <p style="font-size:0.8rem;color:var(--ink-60);margin-bottom:0.5rem;" data-lang-key="service3_audience">需要導入零信任・應對稽核・評估 AI 系統風險</p>
           <ul>
-            <li>AI Agent 資安評估與防護設計</li>
-            <li>生成式 AI 導入風險框架</li>
-            <li>零信任架構規劃</li>
-            <li>ISO 27001 稽核輔導</li>
-            <li>AD 安全診斷</li>
+            <li data-lang-key="service3_item1">AI Agent 資安評估與防護設計</li>
+            <li data-lang-key="service3_item2">生成式 AI 導入風險框架</li>
+            <li data-lang-key="service3_item3">零信任架構規劃</li>
+            <li data-lang-key="service3_item4">ISO 27001 稽核輔導</li>
+            <li data-lang-key="service3_item5">AD 安全診斷</li>
           </ul>
         </div>
-        <div class="service-format">專案制 / 月顧問</div>
+        <div class="service-format" data-lang-key="service3_format">專案制 / 月顧問</div>
         <div class="service-tags">
-          <span class="service-tag st-p">AI資安顧問</span>
-          <span class="service-tag st-t">資安稽核顧問</span>
+          <span class="service-tag st-p" data-lang-key="tag_consultant">AI資安顧問</span>
+          <span class="service-tag st-t" data-lang-key="tag_audit">資安稽核顧問</span>
           <span class="service-tag st-t">ISO 27001</span>
         </div>
       </div>
@@ -930,86 +938,86 @@
 <!-- ⑥ CASES -->
 <section id="cases">
   <div class="container">
-    <div class="section-label">合作案例</div>
-    <h2 class="section-title" style="margin-bottom:2.5rem;">他們信任我，<br>我交出了成果</h2>
+    <div class="section-label" data-lang-key="cases_label">合作案例</div>
+    <h2 class="section-title" style="margin-bottom:2.5rem;" data-lang-key="cases_title">他們信任我，<br>我交出了成果</h2>
     <div class="cases-layout">
       <div>
         <div class="case-group">
-          <div class="case-group-label">產學合作</div>
+          <div class="case-group-label" data-lang-key="case_group1">產學合作</div>
           <div class="case-item">
             <div class="case-dot"></div>
             <div class="case-content">
               <h4>竣盟科技</h4>
-              <p>共同研發「資安欺敵誘捕平台」，整合蜜罐技術與 AI 威脅情資分析</p>
+              <p data-lang-key="case1_desc">共同研發「資安欺敵誘捕平台」，整合蜜罐技術與 AI 威脅情資分析</p>
             </div>
           </div>
           <div class="case-item">
             <div class="case-dot"></div>
             <div class="case-content">
               <h4>勤晁科技</h4>
-              <p>主導研發「AI 驅動異常行為偵測引擎（SEDE）」，惡意軟體辨識率達 91%</p>
+              <p data-lang-key="case2_desc">主導研發「AI 驅動異常行為偵測引擎（SEDE）」，惡意軟體辨識率達 91%</p>
             </div>
           </div>
           <div class="case-item">
             <div class="case-dot"></div>
             <div class="case-content">
-              <h4>元智大學「網路攻防」課程</h4>
-              <p>結合 AI Agent 攻防情境與產業真實案例的實戰型課程</p>
+              <h4 data-lang-key="case3_title">元智大學「網路攻防」課程</h4>
+              <p data-lang-key="case3_desc">結合 AI Agent 攻防情境與產業真實案例的實戰型課程</p>
             </div>
           </div>
         </div>
         <br>
         <div class="case-group">
-          <div class="case-group-label">政府機構合作</div>
+          <div class="case-group-label" data-lang-key="case_group2">政府機構合作</div>
           <div class="case-item">
             <div class="case-dot"></div>
             <div class="case-content">
-              <h4>衛生福利部</h4>
-              <p>受聘資安稽核委員，執行《資通安全管理法》合規稽核</p>
+              <h4 data-lang-key="case4_title">衛生福利部</h4>
+              <p data-lang-key="case4_desc">受聘資安稽核委員，執行《資通安全管理法》合規稽核</p>
             </div>
           </div>
           <div class="case-item">
             <div class="case-dot"></div>
             <div class="case-content">
-              <h4>台灣中小企業資安協會</h4>
-              <p>榮譽理事長，推動全台中小企業資安政策倡議</p>
+              <h4 data-lang-key="case5_title">台灣中小企業資安協會</h4>
+              <p data-lang-key="case5_desc">榮譽理事長，推動全台中小企業資安政策倡議</p>
             </div>
           </div>
         </div>
       </div>
       <div>
         <div class="case-group">
-          <div class="case-group-label">受邀演講</div>
+          <div class="case-group-label" data-lang-key="case_group3">受邀演講</div>
           <div class="case-item">
             <div class="case-dot"></div>
             <div class="case-content">
               <h4>SEMICON Taiwan</h4>
-              <p>半導體產業資安論壇主講</p>
+              <p data-lang-key="case6_desc">半導體產業資安論壇主講</p>
             </div>
           </div>
           <div class="case-item">
             <div class="case-dot"></div>
             <div class="case-content">
-              <h4>各校長資安研習論壇</h4>
-              <p>以「管理者視角看校園資安風險」為題演講</p>
+              <h4 data-lang-key="case7_title">各校長資安研習論壇</h4>
+              <p data-lang-key="case7_desc">以「管理者視角看校園資安風險」為題演講</p>
             </div>
           </div>
           <div class="case-item">
             <div class="case-dot"></div>
             <div class="case-content">
-              <h4>企業年會與政府研習</h4>
-              <p>涵蓋 AI Agent 資安風險、生成式 AI 防護等主題演講</p>
+              <h4 data-lang-key="case8_title">企業年會與政府研習</h4>
+              <p data-lang-key="case8_desc">涵蓋 AI Agent 資安風險、生成式 AI 防護等主題演講</p>
             </div>
           </div>
         </div>
         <br>
         <div class="case-group">
-          <div class="case-group-label">國際認可</div>
+          <div class="case-group-label" data-lang-key="case_group4">國際認可</div>
           <div class="case-item">
             <div class="case-dot"></div>
             <div class="case-content">
               <h4>2022 R&D 100 Awards</h4>
-              <p>全球百大研發創新獎，肯定 AI 資安研究的實際應用價值</p>
+              <p data-lang-key="case9_desc">全球百大研發創新獎，肯定 AI 資安研究的實際應用價值</p>
             </div>
           </div>
         </div>
@@ -1023,29 +1031,28 @@
   <div class="container">
     <div class="contact-grid">
       <div class="contact-left">
-        <div class="section-label">聯絡與合作</div>
-        <h2 class="section-title" style="margin-bottom:1.5rem;">準備好強化你的<br>AI 時代資安防線了嗎？</h2>
-        <p class="contact-lead">一封信，讓我們開始討論你的需求。我會在兩個工作天內回覆，並根據你的情況提供初步建議。</p>
+        <div class="section-label" data-lang-key="contact_label">聯絡與合作</div>
+        <h2 class="section-title" style="margin-bottom:1.5rem;" data-lang-key="contact_title">準備好強化你的<br>AI 時代資安防線了嗎？</h2>
+        <p class="contact-lead" data-lang-key="contact_lead">一封信，讓我們開始討論你的需求。我會在兩個工作天內回覆，並根據你的情況提供初步建議。</p>
         <div class="contact-needs">
-          <div class="contact-need">一場讓主管真正理解 <strong>AI Agent 資安風險</strong> 與 <strong>生成式 AI 防護</strong> 的演講</div>
-          <div class="contact-need">為全員量身設計的 <strong>企業資安內訓</strong> 或 <strong>資安意識培訓</strong> 課程</div>
-          <div class="contact-need">協助通過 <strong>ISO 27001 稽核</strong>、規劃 <strong>零信任架構導入</strong> 的資安稽核顧問</div>
-          <div class="contact-need">針對 <strong>台灣中小企業資安</strong> 需求量身打造的顧問方案</div>
+          <div class="contact-need" data-lang-key="need1">一場讓主管真正理解 <strong>AI Agent 資安風險</strong> 與 <strong>生成式 AI 防護</strong> 的演講</div>
+          <div class="contact-need" data-lang-key="need2">為全員量身設計的 <strong>企業資安內訓</strong> 或 <strong>資安意識培訓</strong> 課程</div>
+          <div class="contact-need" data-lang-key="need3">協助通過 <strong>ISO 27001 稽核</strong>、規劃 <strong>零信任架構導入</strong> 的資安稽核顧問</div>
+          <div class="contact-need" data-lang-key="need4">針對 <strong>台灣中小企業資安</strong> 需求量身打造的顧問方案</div>
         </div>
       </div>
       <div class="contact-right">
         <div class="email-block">
-          <div class="email-label">學術・產學合作</div>
-          <a href="/cdn-cgi/l/email-protection#ff8896939d8a8dd1889a96bf8c9e8b8a8d91d186858ad19a9b8ad18b88" class="email-link"><span class="__cf_email__" data-cfemail="5e2937323c2b2c70293b371e2d3f2a2b2c307027242b703b3a2b702a29">[email&#160;protected]</span></a>
-          <div class="email-label" style="margin-top:1rem;">演講・顧問邀約</div>
-          <a href="/cdn-cgi/l/email-protection#26514f4a4453540851434f08455f444354474f66414b474f4a0845494b" class="email-link"><span class="__cf_email__" data-cfemail="d5a2bcb9b7a0a7fba2b0bcfbb6acb7b0a7b4bc95b2b8b4bcb9fbb6bab8">[email&#160;protected]</span></a>
+          <div class="email-label" data-lang-key="email_label1">學術・產學合作</div>
+          <a href="mailto:wilbur.wei@saturn.yzu.edu.tw" class="email-link">wilbur.wei@saturn.yzu.edu.tw</a>
+          <div class="email-label" style="margin-top:1rem;" data-lang-key="email_label2">演講・顧問邀約</div>
+          <a href="mailto:wilbur.wei.cyberai@gmail.com" class="email-link">wilbur.wei.cyberai@gmail.com</a>
         </div>
         <div class="contact-ctas">
-          <a href="/cdn-cgi/l/email-protection#63140a0f0116114d14060a4d001a010611020a23040e020a0f4d000c0e" class="btn-contact-primary">發送合作邀約</a>
-          <!-- TODO: 上線前替換為實際 PDF 連結 -->
-          <a href="#" class="btn-contact-ghost">下載演講簡歷 PDF</a>
+          <a href="mailto:wilbur.wei.cyberai@gmail.com" class="btn-contact-primary" data-lang-key="cta_send_invite">發送合作邀約</a>
+          <a href="https://drive.google.com/file/d/1xieEdX66-irNiDhZ4ZV2F09sCOKy4BS9/view?usp=sharing" target="_blank" class="btn-contact-ghost" data-lang-key="cta_download_cv">下載演講簡歷 PDF</a>
         </div>
-        <p class="contact-response">通常在 2 個工作天內回覆・歡迎附上活動簡介或需求說明</p>
+        <p class="contact-response" data-lang-key="contact_response">通常在 2 個工作天內回覆・歡迎附上活動簡介或需求說明</p>
       </div>
     </div>
   </div>
@@ -1053,5 +1060,300 @@
 
 <!-- FOOTER -->
 <footer>
-  <p class="footer-kws">
-    AI資安講師推薦・AI資安顧問台灣・
+  <p class="footer-kws" data-lang-key="footer_kws">
+    AI資安講師推薦・AI資安顧問台灣・AI Agent資安風險顧問・生成式AI資安講師・中小企業資安顧問台灣・零信任架構導入顧問・資安稽核顧問ISO 27001・Active Directory勒索軟體防禦・企業資安內訓課程・資安意識培訓台灣
+  </p>
+  <p class="footer-copy">© 2025 Wilbur Wei · AI Security Speaker × AI Security Consultant</p>
+</footer>
+
+<script>
+const translations = {
+  'zh-Hant': {
+    'meta_title': 'AI資安講師 × AI資安顧問｜魏○○｜AI Agent資安・生成式AI風險・ISO 27001',
+    'meta_description': '具備逾十年產官學研資歷的 AI 資安講師與 AI 資安顧問，專精 AI Agent 資安風險、生成式 AI 防護、零信任架構導入與 ISO 27001 稽核。提供企業資安內訓、資安意識培訓，協助組織建立全面防護體系。',
+    'og_title': 'AI資安講師 × AI資安顧問｜魏○○',
+    'og_description': 'AI Agent 資安風險・生成式 AI 防護・零信任架構・ISO 27001 稽核顧問。元智大學資工系助理教授 × 衛福部資安稽核委員。',
+    'nav_about': '關於我',
+    'nav_topics': '專業主題',
+    'nav_achievements': '成就',
+    'nav_services': '服務',
+    'nav_cases': '合作案例',
+    'nav_contact': '聯絡',
+    'hero_eyebrow': 'AI 資安講師 × AI 資安顧問・產官學研三棲專家',
+    'hero_title': '讓 AI 成為<br>你的<em>資安護盾</em>',
+    'hero_subtitle': '從課堂到董事會，我幫組織把防禦落地。<br>專精 AI Agent 資安風險、生成式 AI 防護策略、零信任架構導入<br>與 Active Directory 勒索軟體防禦。',
+    'kw_speaker': 'AI 資安講師',
+    'kw_consultant': 'AI 資安顧問',
+    'kw_agent': 'AI Agent 資安',
+    'kw_genai': '生成式 AI 資安',
+    'kw_zerotrust': '零信任架構',
+    'cta_invite': '邀請演講 / 顧問洽詢',
+    'cta_services': '了解服務項目',
+    'trust_experience': '年產官學研資歷',
+    'trust_projects': '政府與企業 AI 專案',
+    'trust_malware': '惡意軟體辨識率',
+    'trust_award': '2022 全球百大研發獎',
+    'about_label': '關於我',
+    'about_title': '一位在課堂、政府<br>與企業之間穿梭的<br>AI 資安顧問',
+    'about_intro': '很多人問我：你到底是教授、顧問，還是政府委員？<br>我的答案是：三者都是，也因為三者兼具，我看到的威脅風景才完整。',
+    'about_highlight': '當 AI Agent 開始自主執行任務、生成式 AI 被整合進企業核心系統，攻擊面與以往截然不同。身為 AI 資安顧問與 AI 資安講師，我不只研究這些新型威脅，更幫組織在技術落地前就把防禦架構想清楚。',
+    'about_conclusion': '這三個角色告訴我同一件事：AI 時代的資安問題，從來不只是技術問題，更是管理決策與組織文化的問題。',
+    'role1_title': '學術研究者',
+    'role1_desc': '元智大學資工系助理教授。與竣盟科技共建「資安欺敵誘捕平台」，與勤晁科技研發 AI 驅動異常行為偵測引擎（SEDE），將學術成果直接轉化為可部署的防禦工具。開設「網路攻防」課程，結合 AI Agent 攻防情境與產業真實案例。',
+    'role2_title': '政府稽核委員',
+    'role2_desc': '受衛生福利部聘任為資安稽核委員，執行國家級資安稽核任務，審查《資通安全管理法》與 ISO 27001 合規，深知監管框架對企業的真實壓力。',
+    'role3_title': '產業倡議者',
+    'role3_desc': '台灣中小企業資安協會榮譽理事長，長期倡導「管理、技術、意識」三位一體防護原則，多次在 SEMICON Taiwan 等大型論壇擔任主講，協助產業建立系統性防護思維。',
+    'topics_label': '專業主題',
+    'topics_title': '你的組織正在面對<br>哪一道關卡？',
+    'topics_lead': '我最常被找去解決的問題，集中在四個方向。',
+    'topic1_title': 'AI Agent 與生成式 AI 資安',
+    'topic1_quote': '「我們導入了 AI 工具，但完全不知道它會帶來什麼風險。」',
+    'topic1_desc': 'AI Agent 自主執行任務、呼叫外部 API、存取內部資料——每一步都可能成為攻擊入口。生成式 AI 的提示注入（Prompt Injection）、資料外洩、模型投毒，是下一波企業最需要提前布防的威脅。提供 AI 系統資安評估、GenAI 導入風險框架與 AI Agent 安全設計諮詢。',
+    'topic2_title': 'AI 輔助資安防護',
+    'topic2_quote': '「我們怎麼知道攻擊者已經在內網？」',
+    'topic2_desc': '透過 AI 驅動的異常行為偵測，在攻擊者橫向移動前即時發現威脅。從模型設計到部署整合，提供端對端技術顧問支援。自研 SEDE 引擎實測惡意軟體辨識率達 91%。',
+    'topic3_title': '零信任架構導入',
+    'topic3_quote': '「我們信任內網，但攻擊者早就進來了。」',
+    'topic3_desc': '協助企業從傳統邊界防護轉型為零信任架構，包含身份驗證強化、最小權限設計與政策框架建置。在 AI Agent 大規模部署的時代，零信任更是不可缺席的底層架構。',
+    'topic4_title': 'AD 實務防禦與勒索軟體',
+    'topic4_quote': '「勒索軟體爆發的那天，我們完全不知道怎麼辦。」',
+    'topic4_desc': 'Active Directory 是多數勒索軟體攻擊的核心路徑。提供 AD 加固診斷、攻擊路徑模擬與事件應變規劃，協助企業在攻擊發生前建立可執行的防禦機制。',
+    'ach_label': '代表成就',
+    'ach_title': '數字背後，是真實<br>解決過的問題',
+    'ach_experience': '年資安實戰資歷',
+    'ach_projects': '政府與企業 AI 專案',
+    'ach_malware': '惡意軟體辨識率',
+    'ach_roles': '跨領域指標職務',
+    'ach_desc': '這些數字代表的不只是資歷，而是每個我協助過的組織留下的成果。從衛福部的資安稽核，到企業的 AI Agent 資安評估與異常偵測導入，每個專案都讓我更清楚：台灣的資安防禦缺口，卡在技術、管理與 AI 新風險之間沒人翻譯的那道牆。這正是我存在的理由。',
+    'ach_award_desc': '全球百大研發創新獎，肯定 AI 資安研究的實際應用價值。每年全球僅 100 件技術獲此殊榮。',
+    'services_label': '服務項目',
+    'services_title': '找我，你可以得到什麼',
+    'services_lead': '不論你需要一場讓高階主管真正聽進去的資安演講、一套全員資安意識培訓計畫，或是一位懂 AI Agent 新型威脅與監管框架的顧問——這三件事，我都能做。',
+    'service1_title': '主題演講',
+    'service1_audience': '企業年會・產業論壇・政府機關研習',
+    'service1_item1': 'AI Agent 資安風險與企業因應',
+    'service1_item2': '生成式 AI 導入的資安盲點',
+    'service1_item3': '零信任架構入門實務',
+    'service1_item4': '勒索軟體防禦與 AD 強化',
+    'service1_item5': '資安管理思維給非技術主管',
+    'service1_format': '60–90 分鐘 · 可搭配案例工作坊',
+    'tag_speaker': 'AI資安講師',
+    'tag_agent_security': 'AI Agent資安',
+    'service2_title': '企業資安內訓',
+    'service2_audience': '資安長・IT 主管・全員意識培訓',
+    'service2_item1': '技術團隊：AI 輔助攻防、AD 實務防禦',
+    'service2_item2': '管理層：AI 時代資安治理框架',
+    'service2_item3': '全員：生成式 AI 使用資安守則',
+    'service2_item4': '釣魚攻擊識別與社交工程防範',
+    'service2_format': '半天 / 全天 / 多場次系列課程',
+    'tag_training': '企業資安內訓',
+    'tag_awareness': '資安意識培訓',
+    'service3_title': '顧問諮詢',
+    'service3_audience': '需要導入零信任・應對稽核・評估 AI 系統風險',
+    'service3_item1': 'AI Agent 資安評估與防護設計',
+    'service3_item2': '生成式 AI 導入風險框架',
+    'service3_item3': '零信任架構規劃',
+    'service3_item4': 'ISO 27001 稽核輔導',
+    'service3_item5': 'AD 安全診斷',
+    'service3_format': '專案制 / 月顧問',
+    'tag_consultant': 'AI資安顧問',
+    'tag_audit': '資安稽核顧問',
+    'cases_label': '合作案例',
+    'cases_title': '他們信任我，<br>我交出了成果',
+    'case_group1': '產學合作',
+    'case1_desc': '共同研發「資安欺敵誘捕平台」，整合蜜罐技術與 AI 威脅情資分析',
+    'case2_desc': '主導研發「AI 驅動異常行為偵測引擎（SEDE）」，惡意軟體辨識率達 91%',
+    'case3_title': '元智大學「網路攻防」課程',
+    'case3_desc': '結合 AI Agent 攻防情境與產業真實案例的實戰型課程',
+    'case_group2': '政府機構合作',
+    'case4_title': '衛生福利部',
+    'case4_desc': '受聘資安稽核委員，執行《資通安全管理法》合規稽核',
+    'case5_title': '台灣中小企業資安協會',
+    'case5_desc': '榮譽理事長，推動全台中小企業資安政策倡議',
+    'case_group3': '受邀演講',
+    'case6_desc': '半導體產業資安論壇主講',
+    'case7_title': '各校長資安研習論壇',
+    'case7_desc': '以「管理者視角看校園資安風險」為題演講',
+    'case8_title': '企業年會與政府研習',
+    'case8_desc': '涵蓋 AI Agent 資安風險、生成式 AI 防護等主題演講',
+    'case_group4': '國際認可',
+    'case9_desc': '全球百大研發創新獎，肯定 AI 資安研究的實際應用價值',
+    'contact_label': '聯絡與合作',
+    'contact_title': '準備好強化你的<br>AI 時代資安防線了嗎？',
+    'contact_lead': '一封信，讓我們開始討論你的需求。我會在兩個工作天內回覆，並根據你的情況提供初步建議。',
+    'need1': '一場讓主管真正理解 <strong>AI Agent 資安風險</strong> 與 <strong>生成式 AI 防護</strong> 的演講',
+    'need2': '為全員量身設計的 <strong>企業資安內訓</strong> 或 <strong>資安意識培訓</strong> 課程',
+    'need3': '協助通過 <strong>ISO 27001 稽核</strong>、規劃 <strong>零信任架構導入</strong> 的資安稽核顧問',
+    'need4': '針對 <strong>台灣中小企業資安</strong> 需求量身打造的顧問方案',
+    'email_label1': '學術・產學合作',
+    'email_label2': '演講・顧問邀約',
+    'cta_send_invite': '發送合作邀約',
+    'cta_download_cv': '下載演講簡歷 PDF',
+    'contact_response': '通常在 2 個工作天內回覆・歡迎附上活動簡介或需求說明',
+    'footer_kws': 'AI資安講師推薦・AI資安顧問台灣・AI Agent資安風險顧問・生成式AI資安講師・中小企業資安顧問台灣・零信任架構導入顧問・資安稽核顧問ISO 27001・Active Directory勒索軟體防禦・企業資安內訓課程・資安意識培訓台灣'
+  },
+  'en': {
+    'meta_title': 'AI Security Speaker & Consultant | Wilbur Wei | AI Agent Security, GenAI Risk, ISO 27001',
+    'meta_description': 'AI Security Speaker & Consultant with 10+ years of experience across academia, government, and industry. Specializing in AI Agent security, Generative AI protection, Zero Trust implementation, and ISO 27001 auditing. Offering corporate training and security awareness programs.',
+    'og_title': 'AI Security Speaker & Consultant | Wilbur Wei',
+    'og_description': 'Expert in AI Agent Security, Generative AI Protection, Zero Trust Architecture, and ISO 27001 Auditing. Assistant Professor at Yuan Ze University & Cybersecurity Auditor for the Ministry of Health and Welfare.',
+    'nav_about': 'About',
+    'nav_topics': 'Topics',
+    'nav_achievements': 'Achievements',
+    'nav_services': 'Services',
+    'nav_cases': 'Cases',
+    'nav_contact': 'Contact',
+    'hero_eyebrow': 'AI Security Speaker × Consultant・Expert Across Industry, Government & Academia',
+    'hero_title': 'Turn AI Into<br>Your <em>Cyber Shield</em>',
+    'hero_subtitle': 'From the classroom to the boardroom, I help organizations implement real-world defense.<br>Specializing in AI Agent security risks, Generative AI protection strategies, Zero Trust implementation, and Active Directory ransomware defense.',
+    'kw_speaker': 'AI Security Speaker',
+    'kw_consultant': 'AI Security Consultant',
+    'kw_agent': 'AI Agent Security',
+    'kw_genai': 'Generative AI Security',
+    'kw_zerotrust': 'Zero Trust Architecture',
+    'cta_invite': 'Invite for a Talk / Consultation',
+    'cta_services': 'Explore Services',
+    'trust_experience': 'Years of Experience',
+    'trust_projects': 'Gov & Corp AI Projects',
+    'trust_malware': 'Malware Detection Rate',
+    'trust_award': '2022 R&D 100 Award',
+    'about_label': 'About Me',
+    'about_title': 'An AI Security Advisor<br>Navigating Between Academia,<br>Government, and Enterprise',
+    'about_intro': 'Many ask: are you a professor, a consultant, or a government auditor?<br>My answer: I am all three. This unique combination gives me a complete view of the threat landscape.',
+    'about_highlight': 'When AI Agents execute tasks autonomously and Generative AI is integrated into core systems, the attack surface changes completely. As an AI Security Consultant and Speaker, I don’t just study these new threats—I help organizations design their defense architecture before the technology is even deployed.',
+    'about_conclusion': 'These three roles have taught me one thing: in the age of AI, cybersecurity is never just a technical issue—it’s a matter of management decisions and organizational culture.',
+    'role1_title': 'Academic Researcher',
+    'role1_desc': 'Assistant Professor at Yuan Ze University. Co-developed a “Cybersecurity Deception & Lure Platform” with JHIH-UN and an AI-driven anomaly detection engine (SEDE) with QIN CHAO, turning academic research into deployable defense tools. I teach a “Network Attack and Defense” course featuring AI Agent scenarios and real industry cases.',
+    'role2_title': 'Government Auditor',
+    'role2_desc': 'Appointed as a cybersecurity auditor by the Ministry of Health and Welfare, I conduct national-level security audits, ensuring compliance with the Cyber Security Management Act and ISO 27001, giving me deep insight into the real-world pressures of regulatory frameworks.',
+    'role3_title': 'Industry Advocate',
+    'role3_desc': 'Honorary Chairman of the Taiwan Small and Medium Enterprise Cybersecurity Association. I advocate for a holistic defense principle of “Management, Technology, and Awareness” and have been a keynote speaker at major forums like SEMICON Taiwan, helping industries build systemic defense mindsets.',
+    'topics_label': 'Key Topics',
+    'topics_title': 'Which Challenge Is<br>Your Organization Facing?',
+    'topics_lead': 'The problems I’m most often called upon to solve fall into four main areas.',
+    'topic1_title': 'AI Agent & Generative AI Security',
+    'topic1_quote': '“We’ve adopted AI tools, but we have no idea what risks they bring.”',
+    'topic1_desc': 'AI Agent autonomously execute tasks, call external APIs, and access internal data—every step can become an attack vector. Prompt injection, data leakage, and model poisoning in Generative AI are the next wave of threats that enterprises need to defend against. I provide AI system security assessments, GenAI adoption risk frameworks, and secure design consulting for AI Agents.',
+    'topic2_title': 'AI-Powered Cyber Defense',
+    'topic2_quote': '“How do we know if an attacker is already inside our network?”',
+    'topic2_desc': 'Detect threats in real-time before attackers move laterally with AI-driven anomaly detection. I provide end-to-end technical consulting, from model design to deployment. My self-developed SEDE engine has a 91% malware detection rate in tests.',
+    'topic3_title': 'Zero Trust Implementation',
+    'topic3_quote': '“We trust our internal network, but the attackers are already in.”',
+    'topic3_desc': 'I help enterprises transition from traditional perimeter defense to a Zero Trust architecture, including strengthening identity verification, designing for least privilege, and establishing policy frameworks. In an era of large-scale AI Agent deployment, Zero Trust is an indispensable underlying architecture.',
+    'topic4_title': 'AD Security & Ransomware Defense',
+    'topic4_quote': '“The day the ransomware hit, we had no idea what to do.”',
+    'topic4_desc': 'Active Directory is a core pathway for most ransomware attacks. I provide AD hardening diagnostics, attack path simulations, and incident response planning to help enterprises build executable defense mechanisms before an attack occurs.',
+    'ach_label': 'Achievements',
+    'ach_title': 'Behind the Numbers<br>Are Real Problems Solved',
+    'ach_experience': 'Years of Security Experience',
+    'ach_projects': 'Gov & Corp AI Projects',
+    'ach_malware': 'Malware Detection Rate',
+    'ach_roles': 'Cross-Disciplinary Roles',
+    'ach_desc': 'These numbers represent more than just experience; they are the results left by every organization I’ve helped. From security audits for the Ministry of Health and Welfare to AI Agent security assessments and anomaly detection implementation for enterprises, each project has made it clearer to me: Taiwan’s cybersecurity defense gap is the untranslated wall between technology, management, and new AI risks. This is why I exist.',
+    'ach_award_desc': 'This global R&D award recognizes the practical application value of AI security research. Only 100 technologies worldwide receive this honor each year.',
+    'services_label': 'Services',
+    'services_title': 'What You Get When You Work With Me',
+    'services_lead': 'Whether you need a security talk that senior executives will actually listen to, a company-wide security awareness training program, or a consultant who understands new threats from AI Agents and regulatory frameworks—I can do all three.',
+    'service1_title': 'Keynote Speaking',
+    'service1_audience': 'Corporate Events · Industry Forums · Government Seminars',
+    'service1_item1': 'AI Agent Security Risks & Corporate Responses',
+    'service1_item2': 'Security Blind Spots in Generative AI Adoption',
+    'service1_item3': 'Practical Introduction to Zero Trust Architecture',
+    'service1_item4': 'Ransomware Defense & AD Hardening',
+    'service1_item5': 'Security Mindset for Non-Technical Managers',
+    'service1_format': '60–90 minutes · Optional case study workshop',
+    'tag_speaker': 'AI Security Speaker',
+    'tag_agent_security': 'AI Agent Security',
+    'service2_title': 'Corporate Training',
+    'service2_audience': 'CISOs · IT Managers · All-Staff Awareness Training',
+    'service2_item1': 'Technical Teams: AI-assisted Attack & Defense, Practical AD Defense',
+    'service2_item2': 'Management: AI-Era Cybersecurity Governance Framework',
+    'service2_item3': 'All Staff: Generative AI Usage Security Guidelines',
+    'service2_item4': 'Phishing Attack Identification & Social Engineering Prevention',
+    'service2_format': 'Half-day / Full-day / Multi-session series',
+    'tag_training': 'Corporate Training',
+    'tag_awareness': 'Security Awareness',
+    'service3_title': 'Consulting',
+    'service3_audience': 'For Zero Trust implementation, audit compliance, or AI system risk assessment',
+    'service3_item1': 'AI Agent Security Assessment & Defense Design',
+    'service3_item2': 'Generative AI Adoption Risk Framework',
+    'service3_item3': 'Zero Trust Architecture Planning',
+    'service3_item4': 'ISO 27001 Audit Advisory',
+    'service3_item5': 'AD Security Diagnostics',
+    'service3_format': 'Project-based / Monthly Retainer',
+    'tag_consultant': 'AI Security Consultant',
+    'tag_audit': 'Audit Consultant',
+    'cases_label': 'Case Studies',
+    'cases_title': 'They Trusted Me,<br>I Delivered Results',
+    'case_group1': 'Industry-Academia Collaboration',
+    'case1_desc': 'Co-developed a “Cybersecurity Deception & Lure Platform” integrating honeypot technology with AI threat intelligence analysis.',
+    'case2_desc': 'Led the development of the “AI-driven Anomaly Detection Engine (SEDE),” achieving a 91% malware detection rate.',
+    'case3_title': '“Network Attack & Defense” Course at YZU',
+    'case3_desc': 'A practical course combining AI Agent attack/defense scenarios with real industry cases.',
+    'case_group2': 'Government Collaboration',
+    'case4_title': 'Ministry of Health and Welfare',
+    'case4_desc': 'Appointed as a cybersecurity auditor to conduct compliance audits for the Cyber Security Management Act.',
+    'case5_title': 'Taiwan SME Cybersecurity Association',
+    'case5_desc': 'As Honorary Chairman, promoted cybersecurity policy initiatives for SMEs across Taiwan.',
+    'case_group3': 'Invited Talks',
+    'case6_desc': 'Keynote speaker at the semiconductor industry cybersecurity forum.',
+    'case7_title': 'Principals’ Cybersecurity Forums',
+    'case7_desc': 'Lectured on “Campus Security Risks from a Manager’s Perspective.”',
+    'case8_title': 'Corporate & Government Events',
+    'case8_desc': 'Keynotes covering topics like AI Agent security risks and Generative AI protection.',
+    'case_group4': 'International Recognition',
+    'case9_desc': 'This global R&D award recognizes the practical application value of my AI security research.',
+    'contact_label': 'Contact & Collaboration',
+    'contact_title': 'Ready to Strengthen Your<br>AI-Era Security Defenses?',
+    'contact_lead': 'Send a message, and let’s start discussing your needs. I’ll reply within two business days with initial recommendations based on your situation.',
+    'need1': 'A keynote that makes executives truly understand <strong>AI Agent security risks</strong> and <strong>Generative AI protection</strong>.',
+    'need2': 'A customized <strong>corporate training</strong> or <strong>security awareness program</strong> for all employees.',
+    'need3': 'An audit consultant to help pass <strong>ISO 27001 audits</strong> and plan <strong>Zero Trust implementation</strong>.',
+    'need4': 'A consulting solution tailored to the needs of <strong>Taiwanese SMEs</strong>.',
+    'email_label1': 'Academic & Industry Collaboration',
+    'email_label2': 'Speaking & Consulting Inquiries',
+    'cta_send_invite': 'Send Invitation',
+    'cta_download_cv': 'Download Speaker CV (PDF)',
+    'contact_response': 'Replies typically within 2 business days. Please include your event/needs overview.',
+    'footer_kws': 'AI Security Speaker, AI Security Consultant Taiwan, AI Agent Risk Advisor, Generative AI Security Speaker, SME Cybersecurity Consultant Taiwan, Zero Trust Implementation Consultant, ISO 27001 Audit Advisor, Active Directory Ransomware Defense, Corporate Security Training, Security Awareness Training Taiwan'
+  }
+};
+
+function switchLanguage(lang) {
+  document.documentElement.lang = lang;
+  localStorage.setItem('preferredLanguage', lang);
+
+  document.querySelectorAll('[data-lang-key]').forEach(el => {
+    const key = el.getAttribute('data-lang-key');
+    if (translations[lang] && translations[lang][key]) {
+      if (el.tagName === 'META' || el.tagName === 'TITLE') {
+        el.content = translations[lang][key];
+        if (el.tagName === 'TITLE') document.title = translations[lang][key];
+      } else {
+        el.innerHTML = translations[lang][key];
+      }
+    }
+  });
+
+  document.querySelectorAll('.lang-switcher a').forEach(a => a.classList.remove('active'));
+  document.querySelector(`.lang-switcher .lang-${lang.startsWith('zh') ? 'zh' : 'en'}`).classList.add('active');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const preferredLanguage = localStorage.getItem('preferredLanguage');
+  const browserLanguage = navigator.language || navigator.userLanguage;
+  let initialLang = 'zh-Hant';
+
+  if (preferredLanguage) {
+    initialLang = preferredLanguage;
+  } else if (browserLanguage.startsWith('en')) {
+    initialLang = 'en';
+  }
+
+  switchLanguage(initialLang);
+});
+
+</script>
+</body>
+</html>
