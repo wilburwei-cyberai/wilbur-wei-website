@@ -88,7 +88,7 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       background: var(--paper);
       border-bottom: 1px solid var(--ink-10);
-      padding: 0 2rem;
+      padding: 0 1.5rem;
       display: flex; align-items: center; justify-content: space-between;
       height: 60px;
     }
@@ -99,6 +99,17 @@
       letter-spacing: 0.1em;
       color: var(--ink-60);
       text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      font-size: 1.5rem;
+      color: var(--ink);
+      z-index: 101;
     }
     .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
     .nav-links a {
@@ -108,14 +119,22 @@
       text-decoration: none;
       letter-spacing: 0.05em;
       transition: color 0.2s;
+      white-space: nowrap;
     }
     .nav-links a:hover { color: var(--accent); }
+    .lang-switcher {
+      display: flex;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
     .lang-switcher a { 
         border: 1px solid var(--ink-30); 
         padding: 4px 10px; 
         border-radius: 3px; 
         font-family: var(--mono);
         font-size: 0.7rem;
+        cursor: pointer;
+        transition: all 0.2s;
     }
     .lang-switcher a.active { 
         background: var(--accent);
@@ -175,6 +194,11 @@
       width: 32px;
       height: 1px;
       background: var(--accent);
+    }
+    @media (max-width: 480px) {
+      .hero-eyebrow::before {
+        width: 16px;
+      }
     }
     .hero-title { margin-bottom: 1.5rem; max-width: 18ch; }
     .hero-title em {
@@ -662,10 +686,60 @@
       .topics-grid,
       .services-grid { grid-template-columns: 1fr; }
       .numbers-grid { grid-template-columns: 1fr 1fr; }
-      .nav-links { display: none; }
       .hero-bg-text { display: none; }
-      .hero-inner { padding: 4rem 1.5rem; }
-      h1 { font-size: 2.4rem; }
+      .hero-inner { padding: 4rem 1.5rem 2rem; }
+      h1 { font-size: 2rem; }
+      .nav-toggle { display: block; }
+      .nav-links {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: var(--paper);
+        border-bottom: 1px solid var(--ink-10);
+        flex-direction: column;
+        gap: 0;
+        padding: 1rem 1.5rem;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+      .nav-links.active {
+        max-height: 500px;
+      }
+      .nav-links li {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--ink-10);
+      }
+      .nav-links li:last-child {
+        border-bottom: none;
+      }
+      .nav-links a {
+        font-size: 0.9rem;
+        display: block;
+      }
+      .lang-switcher {
+        flex-direction: row;
+        gap: 0.5rem;
+        padding: 0.75rem 0;
+        border-top: 1px solid var(--ink-10);
+      }
+      nav { padding: 0 1rem; }
+      .container { padding: 0 1rem; }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.8rem; }
+      h2 { font-size: 1.3rem; }
+      .hero-eyebrow { font-size: 0.65rem; }
+      .hero-subtitle { font-size: 0.9rem; }
+      .kw-tag { font-size: 0.65rem; padding: 3px 8px; }
+      .btn-primary, .btn-secondary { font-size: 0.8rem; padding: 10px 20px; }
+      .hero-trust { gap: 1.5rem; }
+      .trust-num { font-size: 1.5rem; }
+      .trust-label { font-size: 0.7rem; }
+      .nav-brand { font-size: 0.7rem; }
+      .lang-switcher a { font-size: 0.65rem; padding: 3px 8px; }
     }
 
     @keyframes fadeUp {
@@ -685,7 +759,8 @@
 <!-- NAV -->
 <nav>
   <div class="nav-brand">Wilbur Wei · AI Security</div>
-  <ul class="nav-links">
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">☰</button>
+  <ul class="nav-links" id="navLinks">
     <li><a href="#about" data-lang-key="nav_about">關於我</a></li>
     <li><a href="#topics" data-lang-key="nav_topics">專業主題</a></li>
     <li><a href="#achievements" data-lang-key="nav_achievements">成就</a></li>
@@ -1353,6 +1428,31 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   switchLanguage(initialLang);
+
+  // Hamburger menu logic
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  
+  if (navToggle && navLinks) {
+    navToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      navLinks.classList.toggle('active');
+    });
+    
+    // Close menu after clicking a navigation link
+    navLinks.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+    
+    // Close menu when clicking outside nav
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('nav')) {
+        navLinks.classList.remove('active');
+      }
+    });
+  }
 });
 
 </script>
