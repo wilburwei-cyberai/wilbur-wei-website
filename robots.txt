@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wilburwei-cyberai.github.io/wilbur-wei-website/sitemap.xml
