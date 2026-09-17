@@ -1,0 +1,142 @@
+[
+  {
+    "id": "P1",
+    "slug": "ahaf",
+    "title": "AHAF: Agent-as-Human Authorization Framework to Enhance Cybersecurity of Openclaw",
+    "authors": [
+      "Te-En Wei",
+      "Hung-Ming Chen",
+      "Ching-Hua Kao",
+      "Jen-Fu Wang"
+    ],
+    "year": 2026,
+    "venue": {
+      "zh": "第三十六屆全國資訊安全會議（CISC 2026）・最佳論文獎",
+      "en": "36th Cryptology and Information Security Conference (CISC 2026) · Best Paper Award"
+    },
+    "description": {
+      "zh": "提出以零信任為基礎的 AI Agent 授權框架，從角色、資源與行為三個維度設計控制，結合人工確認與異常偵測，降低代理人權限過大的風險。",
+      "en": "A zero-trust authorisation framework for AI agents. Controls across role, resource and action are combined with human confirmation and anomaly detection to address excessive privileges."
+    },
+    "award": {
+      "zh": "最佳論文獎",
+      "en": "Best Paper Award"
+    }
+  },
+  {
+    "id": "P2",
+    "slug": "hmelf",
+    "title": "HMELF 研究加密橫向移動偵測：以 Ligolo-ng 加密隧道攻擊為例",
+    "authors": [
+      "王仁甫",
+      "歐陽翰",
+      "蘇柏翰",
+      "魏得恩"
+    ],
+    "year": 2026,
+    "venue": {
+      "zh": "第三十六屆全國資訊安全會議（CISC 2026）・佳作獎",
+      "en": "36th Cryptology and Information Security Conference (CISC 2026) · Honorable Mention"
+    },
+    "description": {
+      "zh": "以 Ligolo-ng 加密隧道攻擊為案例，結合網路流量特徵與端點行為，研究混合多模型集成學習如何辨識加密橫向移動。",
+      "en": "A study of encrypted lateral movement using Ligolo-ng tunnelling attacks. HMELF combines network traffic features with endpoint behaviour in a hybrid ensemble-learning framework."
+    },
+    "award": {
+      "zh": "佳作獎",
+      "en": "Honorable Mention"
+    }
+  },
+  {
+    "id": "P3",
+    "slug": "mars",
+    "title": "MARS: Multi-Agent Retrieval-based System for Autonomous Penetration Testing",
+    "authors": [
+      "Te-En Wei",
+      "Hsin-Hua Hsieh",
+      "Chia-Cheng Wang",
+      "Jen-Fu Wang"
+    ],
+    "year": 2026,
+    "venue": {
+      "zh": "第三十六屆全國資訊安全會議（CISC 2026）",
+      "en": "36th Cryptology and Information Security Conference (CISC 2026)"
+    },
+    "description": {
+      "zh": "以多代理人分工、檢索增強生成及全域記憶管理支援自主滲透測試。研究於 VulnHub 靶機評估偵察與漏洞分析，自動化漏洞利用仍受環境因素限制。",
+      "en": "A multi-agent penetration-testing framework using retrieval-augmented generation and shared memory. Reconnaissance and vulnerability analysis were evaluated on VulnHub targets; automated exploitation remains limited by environmental factors."
+    },
+    "award": null
+  },
+  {
+    "id": "P4",
+    "slug": "ad-risk",
+    "title": "Active Directory 高權限帳號風險評估模型：以 APT29 攻擊為例",
+    "authors": [
+      "王仁甫",
+      "周樂樂",
+      "蘇柏翰",
+      "魏得恩"
+    ],
+    "year": 2026,
+    "venue": {
+      "zh": "第三十六屆全國資訊安全會議（CISC 2026）",
+      "en": "36th Cryptology and Information Security Conference (CISC 2026)"
+    },
+    "description": {
+      "zh": "從攻擊者視角分析 AD 帳號的風險，結合風險評估與攻擊圖，區分權限大小、影響程度及攻擊路徑，以 APT29 行為進行案例驗證。",
+      "en": "An account-level AD risk model combining risk assessment and attack graphs. An APT29 case study examines privilege, impact and attack paths beyond a simple high-privilege ranking."
+    },
+    "award": null
+  },
+  {
+    "id": "P5",
+    "slug": "stie-zta",
+    "title": "STIE-ZTA: Self-adaptive Trust Inference Engine for Policy-based Zero Trust Architecture",
+    "authors": [
+      "Te-En Wei",
+      "Jung-Kai Lin",
+      "Ting-Chen Hu",
+      "Chia-Hai Cheng",
+      "Szu-Ying Lee",
+      "Jen-Fu Wang"
+    ],
+    "year": 2025,
+    "venue": {
+      "zh": "第三十五屆全國資訊安全會議（CISC 2025）・佳作獎",
+      "en": "35th Cryptology and Information Security Conference (CISC 2025) · Honorable Mention"
+    },
+    "description": {
+      "zh": "零信任架構要求對每一個存取主體持續驗證，實作上的難題是：企業裡已經有入侵偵測、防火牆、端點防護等各式各樣的資安工具，各自產出資料，卻沒有一個統一的機制把它們整合起來判斷一個主體到底值不值得信任。STIE-ZTA 是一個以政策為基礎、具自適應學習能力的信任推論框架，彙整並分析這些既有工具的異質資料，持續評估每個主體的行為信任程度，讓企業在不汰換現有設備的前提下，做出更即時、更有依據的存取控制決策。",
+      "en": "Zero-trust architecture requires continuous verification of every subject that requests access. The practical difficulty is that enterprises already run many security tools — intrusion detection, firewalls, endpoint protection — each producing its own data, with no unified way to combine them into a judgement about whether a subject can be trusted. STIE-ZTA is a policy-based, self-adaptive trust inference framework that aggregates and analyses this heterogeneous data to evaluate each subject's behavioural trust level continuously, so that organisations can make timelier and better-grounded access decisions while getting more out of the infrastructure they already have."
+    },
+    "award": {
+      "zh": "佳作獎",
+      "en": "Honorable Mention"
+    }
+  },
+  {
+    "id": "P6",
+    "slug": "apt-intelligence",
+    "title": "AI 方法建構 APT 駭客家族攻擊情資特徵拓樸及風險評估架構－以 AD 伺服器攻擊為案例研究",
+    "authors": [
+      "王仁甫",
+      "陳品翰",
+      "陳思宥",
+      "呂書晴",
+      "徐睿廷",
+      "陳品嘉",
+      "魏得恩"
+    ],
+    "year": 2025,
+    "venue": {
+      "zh": "《資訊安全通訊》（Communications of the CCISA）第 31 卷第 3 期，2025 年 8 月・期刊論文（前期成果發表於 CISC 2025）",
+      "en": "Communications of the CCISA, Vol. 31, No. 3, August 2025 · Journal article (an earlier version appeared at CISC 2025)"
+    },
+    "description": {
+      "zh": "以 AD 攻擊為案例，將非結構化威脅情資轉為特徵網絡，結合風險分析及語言模型，研究如何支持漏洞判讀與修補優先順序。",
+      "en": "An AD-focused study that turns unstructured threat intelligence into feature networks and combines risk analysis with language models to support vulnerability assessment and patch prioritisation."
+    },
+    "award": null
+  }
+]

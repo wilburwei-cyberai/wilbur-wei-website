@@ -1,3 +1,4 @@
+# Effective crawler rules belong at the host root, not a project subpath.
 User-agent: *
 Allow: /
 
