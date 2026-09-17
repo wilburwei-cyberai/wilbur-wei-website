@@ -30,3 +30,64 @@ html.inquiry-open{overflow:hidden}
 .evidence-links{display:flex;flex-wrap:wrap;gap:12px 24px;margin-top:auto}.evidence-links .text-link{margin-top:0}
 
 .tag-list{align-items:center}.tag-list>.tag{flex:0 0 auto;width:auto;max-width:100%;padding:2px 9px;line-height:1.8}.record .tag-list{margin-bottom:12px}
+
+/* v3: restore the v0 profile-led composition without changing shared navigation. */
+.hero-profile{padding:66px 0 48px}
+.hero-profile .hero-copy{max-width:1050px}
+.hero-profile .eyebrow{font-size:14px;letter-spacing:.11em;display:flex;gap:18px;align-items:center}
+.hero-profile .eyebrow:before{content:'';width:40px;height:1px;background:var(--accent);flex:none}
+.hero-profile h1{font-size:clamp(3.3rem,6.2vw,5.6rem);line-height:1.35;margin:34px 0 22px;font-weight:700}
+.hero-profile .identity{margin:0 0 18px;font-size:14px}
+.hero-profile .lead{max-width:930px;font-size:20px;line-height:1.95}
+.hero-keywords{display:flex;flex-wrap:wrap;gap:12px;margin:34px 0}
+.expertise-tag{display:inline-block;padding:6px 14px;border:1px solid;border-radius:3px;font:14px/1.8 var(--mono);text-decoration:none;letter-spacing:.05em}
+.expertise-tag.primary{color:#a13e24;background:#f0e1da;border-color:#b34a2b}
+.expertise-tag.secondary{color:#2b4e71;background:#e1e8ee;border-color:#3d5b78}
+.expertise-tag.tertiary{color:#28583c;background:#dfebe1;border-color:#41694f}
+.expertise-tag:hover{background:var(--paper);color:var(--ink)}
+.hero-profile .actions{margin-top:0;gap:18px}
+.hero-profile .button{font-size:16px;padding:15px 28px}
+.hero-trust{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px;border-top:1px solid var(--line);padding-top:32px;margin-top:60px}
+.trust-item{text-decoration:none;display:flex;flex-direction:column;gap:10px;color:var(--ink)}
+.trust-value{font:500 42px/1.3 var(--serif)}
+.trust-award{font-size:32px;padding-top:9px}
+.trust-item>span{font-size:13px;line-height:1.8;color:var(--muted)}
+.profile-layout,.achievement-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:72px;align-items:start}
+.profile-intro h2{font-size:clamp(1.8rem,3.2vw,2.8rem);line-height:1.5;margin-bottom:26px}
+.profile-intro>p{color:var(--muted)}
+.profile-highlight{padding:24px 28px;background:#efe0d8;border-left:4px solid var(--accent);margin:30px 0}
+.profile-highlight p{margin:0;font-size:16px}
+.profile-roles{display:grid;gap:24px}
+.profile-role{border:1px solid var(--line);border-left:4px solid var(--accent);padding:25px 28px;border-radius:2px}
+.profile-role-government{border-left-color:#355475}
+.profile-role-industry{border-left-color:#3b6248}
+.role-number{font:12px var(--mono);letter-spacing:.08em;color:var(--muted)}
+.profile-role h3{margin:13px 0;font-size:1.3rem}
+.profile-role p{font-size:14px;color:var(--muted);margin-bottom:8px}
+.role-links{display:flex;flex-wrap:wrap;gap:8px 22px}
+.role-links .text-link{font-size:12px;margin-top:5px}
+.achievement-layout{align-items:center}
+.achievement-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--line)}
+.achievement-number{padding:35px 18px;min-height:188px;text-align:center;display:flex;flex-direction:column;justify-content:center;gap:10px;text-decoration:none}
+.achievement-number:nth-child(odd){border-right:1px solid var(--line)}
+.achievement-number:nth-child(-n+2){border-bottom:1px solid var(--line)}
+.achievement-number strong{font:500 54px/1.25 var(--serif);color:var(--accent)}
+.achievement-number span{font-size:13px;color:var(--muted)}
+.achievement-number:hover{background:var(--surface)}
+.achievement-layout h2{font-size:clamp(1.85rem,3.2vw,2.8rem);line-height:1.5}
+.achievement-layout p{color:var(--muted)}
+.metric-context{font-size:12px;margin:18px 0 0;line-height:1.85}
+.recognition{display:flex;align-items:start;gap:23px;border-top:1px solid var(--line);padding-top:28px;margin-top:30px}
+.recognition-year{width:64px;height:64px;flex:none;border-radius:50%;display:grid;place-items:center;background:#efe0d8;color:var(--accent);font:14px var(--mono)}
+.recognition h3{font-size:1.25rem;margin:0 0 10px}
+.recognition p{font-size:14px;margin:0}
+@media(max-width:1100px){.profile-layout,.achievement-layout{gap:35px}.profile-role{padding:22px}.hero-profile .lead{font-size:18px}}
+@media(max-width:720px){
+ .hero-profile{padding:38px 0 32px}.hero-profile .eyebrow{font-size:11px;gap:10px;letter-spacing:.06em}.hero-profile .eyebrow:before{width:20px}
+ .hero-profile h1{font-size:clamp(2.5rem,10.7vw,3.8rem);line-height:1.4;margin-top:26px}.hero-profile .identity{font-size:12px;line-height:1.8}.hero-profile .lead{font-size:16px}.desktop-break{display:none}
+ .hero-keywords{gap:8px;margin:26px 0}.expertise-tag{font-size:12px;padding:5px 10px}.hero-profile .button{padding:13px 18px;font-size:14px}.hero-profile .actions{gap:12px}
+ .hero-trust{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 20px;margin-top:36px;padding-top:24px}.trust-value{font-size:34px}.trust-award{font-size:25px;padding-top:9px}.trust-item>span{font-size:12px}
+ .profile-layout,.achievement-layout{grid-template-columns:1fr;gap:28px}.profile-intro h2,.achievement-layout h2{font-size:1.85rem}.profile-highlight{padding:20px}.profile-roles{gap:16px}.profile-role{padding:22px}.profile-role p{font-size:14px}
+ .achievement-number{padding:28px 13px;min-height:165px}.achievement-number strong{font-size:44px}.achievement-number span{font-size:12px}.recognition{gap:16px}.recognition-year{width:52px;height:52px;font-size:12px}
+}
+@media print{.hero-profile h1{font-size:30pt}.hero-keywords,.role-links{display:none}.profile-role,.achievement-grid,.recognition{break-inside:avoid}}

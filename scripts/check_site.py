@@ -64,10 +64,29 @@ assert set(urls)=={d.canonical[0] for d in docs.values()}
 for lang in ['', 'en/']:
     experience=(ROOT/(lang+'experience/index.html')).read_text()
     assert 'id="A5"' not in experience and 'id="B5"' not in experience
-    assert experience.count('data-record data-kind=')==22
+    assert experience.count('data-record data-kind=')==23
+    assert 'id="A11"' in experience and 'SEMICON Taiwan 2025' in experience
+    assert 'Silicon Shield Reinforcement: AD Security Strategies and Multi-Factor Defense in the Semiconductor Industry' in experience
+    assert '矽盾強化：半導體企業的 AD 資安與多因子防禦戰略' in experience
+    home=(ROOT/(lang+'index.html')).read_text()
+    about=(ROOT/(lang+'about/index.html')).read_text()
+    for text in [home,about]:
+        assert text.count('class="profile-role profile-role-')==3
+        assert '2022 R&amp;D 100 Awards' in text
+        assert '91%' not in text and '跨領域職務' not in text
+        assert 'https://www.cse.yzu.edu.tw/people/professor?name=Wilbur%20Wei' in text
+    assert '讓 AI 成為' in home if not lang else 'Make AI' in home
+    assert 'SEMICON Taiwan 2025' in home
+    assert 'semicon-2025-ad-security.png' not in home and '查看演講簡報封面' not in experience
     research=docs[ROOT/(lang+'research/index.html')]
     articles=[n for n in research.ld[0]['@graph'] if n['@type']=='ScholarlyArticle']
     assert len(articles)==6
     assert len([n for n in research.ids if n in ['ahaf','hmelf','mars','ad-risk','stie-zta','apt-intelligence']])==6
 assert (ROOT/'assets/social-card.png').exists()
-print('PASS: 18 pages; unique titles/descriptions; reciprocal language URLs; valid JSON-LD/sitemap; all local links and anchors; 22 records per language; 6 publications per language; merged/HOLD records excluded.')
+for p,d in docs.items():
+    text=p.read_text()
+    assert 'ZipTRu9fl09hABXefrHacn5wxzdZ1XQzbUtYnAI4e0Q' in text
+    person=next(n for n in d.ld[0]['@graph'] if n['@type']=='Person')
+    assert person['sameAs']==['https://www.cse.yzu.edu.tw/people/professor?name=Wilbur%20Wei']
+    assert 'wilbur-wei-website.v3' not in d.canonical[0]
+print('PASS: 18 pages; unique titles/descriptions; reciprocal language URLs; valid JSON-LD/sitemap; all local links and anchors; 23 records per language; 6 publications per language; merged/HOLD records excluded.')

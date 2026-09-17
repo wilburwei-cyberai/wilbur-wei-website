@@ -6,8 +6,8 @@ const path = require('path');
 
 (async () => {
   const browser = await chromium.launch({headless:true, channel:process.env.WILBUR_BROWSER_CHANNEL || 'chrome'});
-  const base = process.env.WILBUR_PREVIEW_URL || 'http://127.0.0.1:8767';
-  const output = process.env.WILBUR_QA_DIR || path.resolve(__dirname, '../../網站v2檢查');
+  const base = process.env.WILBUR_PREVIEW_URL || 'http://127.0.0.1:8768';
+  const output = process.env.WILBUR_QA_DIR || path.resolve(__dirname, '../../網站v3檢查');
   fs.mkdirSync(output, {recursive:true});
   const errors = [];
   let clicks = 0;

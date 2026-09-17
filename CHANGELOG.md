@@ -1,5 +1,15 @@
 # 版本紀錄
 
+## v3 — 2026-09-17
+
+- 獨立建立 `wilbur-wei-website.v3`，保留 v0、v1、v2。
+- 恢復 v0 首頁主張、彩色專業標籤、三種專業角色與成就版型。
+- 首頁與關於頁共用 `content/profile.py`，同步角色、成果及官方人物連結。
+- 依站主回覆省略 91% 與五項職務，改呈現六篇論文及三項論文獎，標示年份與獎項組成。
+- 新增 SEMICON Taiwan 2025 演講 A11，保留完整中英文題名；依站主要求統一為文字卡片，不公開簡報封面。
+- Person sameAs 連結元智資工教師介紹；延續全部 18 個正式網址、canonical、hreflang、sitemap、JSON-LD 與 Search Console 驗證。
+- 保留 MIRAGE Lab Logo、合作公告、課程紀錄狀態、公司英文名稱與洽詢視窗。
+
 ## v2 — 2026-09-17
 
 - 獨立交付於 `wilbur-wei-website.v2`，保留 v0 與 v1。

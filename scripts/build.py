@@ -16,6 +16,7 @@ sys.path.insert(0, str(ROOT / 'content'))
 from records import RECORDS, STATUS, bi
 from pages import PAGES, SERVICES, TOPICS, FAQ
 from lab import LAB_NAME, LAB_ZH, LAB_AFFILIATION, LAB_INTRO, LAB_DIRECTIONS
+from profile import FACULTY_URL, ROLES, METRICS, ACHIEVEMENT_INTRO, METRIC_CONTEXT, AWARD_DESCRIPTION
 PAPERS = json.loads((ROOT / 'content/publications.json').read_text())
 CONFIG = json.loads((ROOT / 'site.config.json').read_text())
 EMAIL = 'wilbur.wei.cyberai@gmail.com'
@@ -77,6 +78,7 @@ def record_card(c,r,compact=False):
     if compact:
         return f'<article class="card"><div class="tag-list">{badge}<span class="meta">{year}</span></div><h3>{title}</h3><p class="meta">{e(c.t(r["org"]))}<br>{e(c.t(r["meta"]))}</p>{paragraph(c.t(r["description"]))}{c.link("experience",c.l("查看紀錄","View record"),r["id"])}</article>'
     original = paragraph(r['title']['zh'],'original-title') if c.lang=='en' else ''
+    if r['id']=='A11' and c.lang=='zh': original=paragraph(r['title']['en'],'original-title')
     return f'<article class="record" id="{r["id"]}" data-record data-kind="{r["kind"]}"><div class="record-year">{year}</div><div><div class="tag-list">{badge}</div><h3>{title}</h3>{original}<div class="meta">{e(c.t(r["org"]))} · {e(c.t(r["meta"]))}</div>{paragraph(c.t(r["description"]))}</div></article>'
 
 def record_list(c, ids):
@@ -97,19 +99,48 @@ def page_hero(c, headline, lead, anchors=None):
     links = '<div class="anchor-nav">'+''.join(f'<a href="#{key}">{e(text)}</a>' for key,text in anchors or [])+'</div>'
     return '<section class="page-hero"><div class="wrap">'+f'<div class="breadcrumbs"><a href="{c.href()}">{c.l("首頁","Home")}</a> / {e(c.t(PAGES[c.slug]["label"]))}</div><span class="eyebrow">WILBUR WEI / {c.slug.upper()}</span><h1>{e(headline)}</h1>'+paragraph(lead,'lead')+links+'</div></section>'
 
+def profile_section(c, id='about'):
+    role_cards=[]
+    for i,(kind,title,desc) in enumerate(ROLES,1):
+        if kind=='academic':
+            links=c.link('lab','MIRAGE Lab')+f'<a class="text-link" href="{FACULTY_URL}">{c.l("元智資工教師介紹","University faculty profile")} ↗</a>'
+        elif kind=='government':
+            links=c.link('consulting',c.l('顧問合作方向','Consulting approach'))
+        else:
+            links=c.link('experience','SEMICON Taiwan 2025','A11')
+        role_cards.append(f'<article class="profile-role profile-role-{kind}"><span class="role-number">ROLE 0{i}</span><h3>{e(c.t(title))}</h3>{paragraph(c.t(desc))}<div class="role-links">{links}</div></article>')
+    intro=c.l('很多人問我：你到底是教授、顧問，還是政府委員？我的答案是：三者都是，也因為三者兼具，我看到的威脅風景才完整。',
+              'People often ask: are you a professor, a consultant or a government committee member? My answer is all three. Working across these roles gives me a fuller view of the threat landscape.')
+    highlight=c.l('當 AI Agent 開始自主執行任務、生成式 AI 被整合進企業核心系統，攻擊面與以往截然不同。身為 AI 資安顧問與 AI 資安講師，我不只研究這些新型威脅，更幫組織在技術落地前就把防禦架構想清楚。',
+                  'When AI agents begin executing tasks autonomously and generative AI enters core business systems, the attack surface changes fundamentally. As an AI security consultant and speaker, I study these emerging threats and help organisations think through their defensive architecture before deploying the technology.')
+    title=c.l('一位在課堂、政府<br>與企業之間穿梭的<br>AI 資安顧問','An AI security consultant<br>across academia,<br>government and industry')
+    left=f'<div class="profile-intro"><span class="eyebrow">{c.l("關於我 / ABOUT","ABOUT / PERSPECTIVE")}</span><h2>{title}</h2>'+paragraph(intro,'lead')+'<div class="profile-highlight">'+paragraph(highlight)+'</div>'+paragraph(c.l('這三個角色告訴我同一件事：AI 時代的資安問題，從來不只是技術問題，更是管理決策與組織文化的問題。','These three roles have taught me the same lesson: cybersecurity in the AI era is as much about management decisions and organisational culture as it is about technology.'))
+    if c.slug!='about': left+=c.link('about',c.l('認識完整經歷','Explore my background'))
+    return c.section('<div class="profile-layout">'+left+'</div><div class="profile-roles">'+''.join(role_cards)+'</div></div>',id=id)
+
+def achievements_section(c):
+    targets=[c.href('about'),c.href('consulting'),c.href('research',anchor='publications'),c.href('research',anchor='awards')]
+    metrics=''.join(f'<a class="achievement-number" href="{href}"><strong>{value}</strong><span>{e(c.t(label))}</span></a>' for (value,label),href in zip(METRICS,targets))
+    award=f'<div class="recognition"><span class="recognition-year" aria-hidden="true">2022</span><div><h3>2022 R&amp;D 100 Awards</h3>{paragraph(c.t(AWARD_DESCRIPTION))}<a class="text-link" href="{CV}" target="_blank" rel="noopener">{c.l("查看專業簡歷","Professional CV")} ↗</a></div></div>'
+    content='<div><span class="eyebrow">'+c.l('代表成就 / ACHIEVEMENTS','ACHIEVEMENTS')+'</span><h2>'+c.l('數字背後，是真實<br>解決過的問題','Behind the numbers,<br>real problems addressed')+'</h2>'+paragraph(c.t(ACHIEVEMENT_INTRO))+award+'</div>'
+    return c.section('<div class="achievement-layout"><div><div class="achievement-grid">'+metrics+'</div>'+paragraph(c.t(METRIC_CONTEXT),'metric-context')+'</div>'+content+'</div>',id='achievements')
+
 def home(c):
-    hero_title=c.l('理解 AI 風險，<br>做出<em>安全的決策。</em>','Understand AI risks.<br>Make <em>safer decisions.</em>')
-    figure=f'<aside class="hero-figure" aria-label="{c.l("專業方向","Areas of practice")}"><div class="figure-top"><span>WILBUR WEI</span><span>AI × SECURITY</span></div><div class="figure-title" aria-hidden="true">THINK.<br>BUILD.<br>SECURE.</div><div class="figure-rule"></div><div class="figure-item"><b>01</b><div><strong>Security of AI</strong><small>{c.l("保護 AI 系統與使用流程","Protecting AI systems and workflows")}</small></div></div><div class="figure-item"><b>02</b><div><strong>AI for Security</strong><small>{c.l("運用 AI 支援資安防禦","Applying AI to cyber defence")}</small></div></div></aside>'
-    actions=c.button(c.l('洽詢演講／企業內訓','Speaking & training'),c.href('speaking'))+c.button(c.l('討論顧問需求','Discuss consulting'),c.href('consulting'),True)
-    proof=f'<div class="proof-strip"><a href="{c.href("experience")}"><strong>2024–26</strong><span>{c.l("歷年演講與授課紀錄","Speaking & teaching records")}</span></a><a href="{c.href("research")}"><strong>6</strong><span>{c.l("篇 2025–2026 共同研究論文","co-authored publications, 2025–2026")}</span></a><a href="{c.href("research",anchor="awards")}"><strong>3</strong><span>{c.l("項論文獎｜CISC 2025–2026","paper awards · CISC 2025–2026")}</span></a></div>'
-    result=f'<section class="hero" id="hero"><div class="wrap"><div class="hero-grid"><div><span class="eyebrow">AI SECURITY · SPEAKING / TRAINING / CONSULTING</span><h1>{hero_title}</h1>'+paragraph(c.l('魏得恩 Wilbur Wei｜AI 資安講師與顧問','Wilbur Wei / Te-En Wei · AI security speaker & consultant'),'identity')+paragraph(c.l('協助企業主管與技術團隊理解 AI 風險，透過演講、內訓與顧問合作，把安全要求落實到導入決策與日常作業。','I help business leaders and technical teams understand AI risks and turn security requirements into deployment decisions and everyday practice through talks, training and consulting.'),'lead')+f'<div class="actions">{actions}</div></div>{figure}</div>{proof}</div></section>'
+    hero_title=c.l('讓 AI 成為<br>你的<em>資安護盾</em>','Make AI<br>your <em>cyber shield</em>')
+    tags=[('primary','AI 資安講師','AI security speaker','speaking'),('primary','AI 資安顧問','AI security consultant','consulting'),('secondary','AI Agent 資安','AI agent security','consulting'),('secondary','生成式 AI 資安','Generative AI security','training'),('tertiary','零信任架構','Zero trust architecture','consulting')]
+    chips='<div class="hero-keywords">'+''.join(f'<a class="expertise-tag {color}" href="{c.href(slug)}">{e(c.l(zh,en))}</a>' for color,zh,en,slug in tags)+'</div>'
+    actions=c.button(c.l('邀請演講／顧問洽詢','Speaking / consulting inquiry'),'#contact')+c.button(c.l('了解服務項目','Explore services'),'#services',True)
+    trust=[('10+',c.l('年產官學研資歷','years across industry, government and academia'),c.href('about')),('10+',c.l('政府與企業 AI 專案','government and enterprise AI projects'),c.href('consulting')),('6',c.l('篇共同研究論文｜2025–2026','co-authored papers · 2025–2026'),c.href('research')),('R&D 100',c.l('2022 全球百大研發獎','2022 R&D innovation recognition'),'#achievements')]
+    proof='<div class="hero-trust">'+''.join(f'<a href="{href}" class="trust-item"><strong class="trust-value{ " trust-award" if value=="R&D 100" else ""}">{e(value)}</strong><span>{e(label)}</span></a>' for value,label,href in trust)+'</div>'
+    result=f'<section class="hero hero-profile" id="hero"><div class="wrap"><div class="hero-copy"><span class="eyebrow">{c.l("AI 資安講師 × AI 資安顧問・產官學研三棲專家","AI SECURITY SPEAKER × CONSULTANT · INDUSTRY / GOVERNMENT / ACADEMIA")}</span><h1>{hero_title}</h1>'+paragraph(c.l('魏得恩 Wilbur Wei｜元智大學資工系助理教授・MIRAGE Lab','Wilbur Wei / Te-En Wei · Assistant Professor, Yuan Ze University · MIRAGE Lab'),'identity')+'<p class="lead">'+c.l('從課堂到董事會，我幫組織把防禦落地。<br>專精 AI Agent 資安風險、生成式 AI 防護策略、零信任架構導入<br class="desktop-break">與 Active Directory 勒索軟體防禦。','From the classroom to the boardroom, I help organisations put defence into practice.<br>My work covers AI agent risks, generative AI security, zero trust architecture and Active Directory ransomware defence.')+'</p>'+chips+f'<div class="actions">{actions}</div></div>{proof}</div></section>'
+    result+=profile_section(c)
     result+=c.section(c.heading('WAYS TO WORK TOGETHER',c.l('從你的需求，開始合作。','Start with what your organisation needs.'))+service_cards(c),id='services',tinted=True)
     topics=''.join(f'<div class="topic"><h3>{e(c.t(t))}</h3>{paragraph(c.t(d))}</div>' for t,d in TOPICS)
     result+=c.section('<div class="split"><div><span class="eyebrow">FOCUS</span><h2>'+c.l('同時看見技術風險<br>與管理決策。','Technical risk.<br>Management decisions.')+'</h2>'+paragraph(c.l('從資料、權限到工作流程，讓 AI 安全與企業需求接得起來。','Connect AI security to your business through data, permissions and workflows.'))+'</div><div>'+topics+'</div></div>',id='topics')
-    cards=''.join(record_card(c,next(r for r in RECORDS if r['id']==id),True) for id in ['A1','A3','B1'])
-    result+=c.section(c.heading('SELECTED EXPERIENCE',c.l('不同受眾，不同的切入方式。','Different audiences. Different starting points.'),c.link('experience',c.l('查看完整紀錄','All records')))+'<div class="grid-3">'+cards+'</div>',id='portfolio',tinted=True)
-    result+=c.section(c.heading('RESEARCH',c.l('以研究支撐專業判斷。','Research that informs practice.'),c.link('research',c.l('論文與獎項','Publications & awards')))+'<div class="grid-2">'+''.join(f'<article class="card"><span class="number">{p["year"]} / CISC</span><h3>{e(p["slug"].upper())}</h3>{paragraph(c.t(p["description"]))}{c.link("research",c.l("研究摘要與書目","Read the research"),p["slug"])}</article>' for p in [PAPERS[0],PAPERS[4]])+'</div>',id='achievements')
-    result+=c.section('<div class="split"><div><span class="eyebrow">ABOUT</span><h2>'+c.l('魏得恩<br>Wilbur Wei','Wilbur Wei<br>Te-En Wei')+'</h2></div><div>'+paragraph(c.l('元智大學資訊工程學系助理教授，學術署名 Te-En Wei。研究與實務涵蓋 AI Agent 安全、零信任、異常偵測與 Active Directory 風險評估。','Assistant Professor in the Department of Computer Science and Engineering at Yuan Ze University, publishing as Te-En Wei. Research and practice span AI agent security, zero trust, anomaly detection and Active Directory risk.'))+paragraph(c.l('從產學研發到主管研習與技術實作，協助不同角色找到能採取行動的切入點。','Across research collaborations, executive seminars and technical labs, I help people find a practical starting point.'))+c.link('about',c.l('認識我的經歷','About my work'))+'</div></div>',id='about',tinted=True)
+    result+=achievements_section(c)
+    cards=''.join(record_card(c,next(r for r in RECORDS if r['id']==id),True) for id in ['A11','A1','A3','B1'])
+    result+=c.section(c.heading('SELECTED EXPERIENCE',c.l('不同受眾，不同的切入方式。','Different audiences. Different starting points.'),c.link('experience',c.l('查看完整紀錄','All records')))+'<div class="grid-2">'+cards+'</div>',id='portfolio',tinted=True)
+    result+=c.section(c.heading('RESEARCH',c.l('以研究支撐專業判斷。','Research that informs practice.'),c.link('research',c.l('論文與獎項','Publications & awards')))+'<div class="grid-2">'+''.join(f'<article class="card"><span class="number">{p["year"]} / CISC</span><h3>{e(p["slug"].upper())}</h3>{paragraph(c.t(p["description"]))}{c.link("research",c.l("研究摘要與書目","Read the research"),p["slug"])}</article>' for p in [PAPERS[0],PAPERS[4]])+'</div>',id='research-highlights')
     result+=c.section(c.heading('COLLABORATION',c.l('產學合作，連結研究與實務。','Connecting research and industry.'))+'<div class="grid-2"><article class="card"><h3>'+c.l('竣盟科技｜Billows Tech.','Billows Tech.')+'</h3>'+paragraph(c.l('共同推動資安欺敵誘捕產學合作，結合學術研究與產業場景。','Industry–academia collaboration on cybersecurity deception, connecting research with operational contexts.'))+f'<a class="text-link" href="{NEWS}">{c.l("元智大學合作報導","Yuan Ze University report")} ↗</a></article><article class="card"><h3>'+c.l('勤晁科技｜Zyell Solutions','Zyell Solutions')+'</h3>'+paragraph(c.l('AI 驅動異常行為偵測引擎（SEDE）研發合作，聚焦以行為分析支持資安防禦。','Research collaboration on the SEDE AI-driven anomaly-detection engine, focusing on behavioural analysis for cyber defence.'))+f'<a class="text-link" href="{ZYELL_NEWS}">{c.l("元智資工勤晁合作公告","Yuan Ze–Zyell collaboration announcement")} ↗</a></article></div>',id='cases')
     return result+lab_feature(c)
 
@@ -150,7 +181,7 @@ def lab(c):
 def speaking(c):
     result=page_hero(c,c.l('讓受眾聽得懂，也知道如何行動。','Talks that connect understanding with action.'),c.l('為主管、產業公協會與教育機構，把 AI 風險轉成聽眾能判斷的情境。先確認受眾與活動目標，再選擇案例、深度與形式。','For leaders, industry associations and educators: turn AI risks into situations the audience can reason about. We start with the audience and the purpose of the event.'),[('talk-topics',c.l('演講方向','Topics')),('selected',c.l('代表紀錄','Selected records')),('faq',c.l('邀約問題','Questions'))])
     result+=c.section(c.heading('TOPICS',c.l('可以從這些問題切入。','Questions we can explore together.'))+'<div class="grid-2">'+''.join(f'<article class="card"><h3>{e(c.t(t))}</h3>{paragraph(c.t(d))}</article>' for t,d in TOPICS)+'</div>',id='talk-topics')
-    result+=c.section(c.heading('SELECTED TALKS',c.l('從製造業現場到校務決策。','From manufacturing operations to campus decisions.'),c.link('experience',c.l('所有演講與授課','All speaking & teaching')))+record_list(c,['A1','A3','A4','A9','A10']),id='selected',tinted=True)
+    result+=c.section(c.heading('SELECTED TALKS',c.l('從製造業現場到校務決策。','From manufacturing operations to campus decisions.'),c.link('experience',c.l('所有演講與授課','All speaking & teaching')))+record_list(c,['A11','A1','A3','A4','A9','A10']),id='selected',tinted=True)
     result+=c.section(c.heading('FORMAT',c.l('時長與互動，配合活動目的。','A format that fits the purpose.'))+paragraph(c.l('已有研討會短講、兩小時研習及三小時企業培訓紀錄。可以討論案例解說、問答與情境練習的配置；課程時數依活動與學習目標確認。','Past engagements include conference talks, two-hour seminars and three-hour corporate sessions. We can discuss the balance of examples, questions and scenario exercises.'))+c.button(c.l('提供活動需求','Send an event brief'),c.mail('speaking')))
     return result+faq(c,'speaking')
 
@@ -196,11 +227,10 @@ def research(c):
 
 def about(c):
     result=page_hero(c,c.l('魏得恩 Wilbur Wei','Wilbur Wei / Te-En Wei'),c.l('元智大學資訊工程學系助理教授｜AI 資安講師與顧問。學術論文使用 Te-En Wei 或魏得恩署名。','Assistant Professor, Department of Computer Science and Engineering, Yuan Ze University. AI security speaker and consultant. Publications appear under Te-En Wei or 魏得恩.'))
-    result+=c.section('<div class="split"><div><span class="eyebrow">PERSPECTIVE</span><h2>'+c.l('研究、教學與實務，<br>連到同一個問題。','Research, teaching and practice.<br>One connected perspective.')+'</h2></div><div>'+paragraph(c.l('AI 安全不只關於模型，也關於誰可以存取什麼資料、誰能呼叫工具，以及組織如何作決定。我的工作從這些問題出發，連結研究、教學與顧問。','AI security concerns more than models: who can access data, who can invoke tools and how an organisation makes decisions. These questions connect my research, teaching and consulting.'))+paragraph(c.l('在元智大學進行 AI 資安與零信任等研究，與企業合作探索偵測與欺敵防禦，也將技術轉為主管研習、企業課程與實作教材。','At Yuan Ze University, I research AI security and zero trust, collaborate with industry on detection and deception, and turn technical work into seminars, corporate courses and lab materials.'))+'</div></div>')
-    roles=[(bi('學術與產學研究','Academic and industry research'),bi('元智大學資訊工程學系助理教授。研究涵蓋 AI Agent 安全、零信任、APT 與 AD 風險評估；參與 Billows Tech. 與 Zyell Solutions 相關研發合作。','Assistant Professor at Yuan Ze University, researching AI agent security, zero trust, APTs and AD risk, with research collaborations involving Billows Tech. and Zyell Solutions.')),(bi('稽核與治理經驗','Audit and governance experience'),bi('具衛生福利部資安稽核委員經歷，將稽核、政策與控制措施的觀點帶入治理及教育訓練。','Experience as a cybersecurity audit committee member for the Ministry of Health and Welfare, informing governance and training work.')),(bi('產業交流與授課','Industry engagement and teaching'),bi('曾以台灣中小企業資訊安全協會名譽理事長身分參與產業演講，並於自強基金會、資安署相關課程與中華電信學院等場域授課或演講。','Industry speaking experience, including as honorary chair of TWSMEISA, and teaching or speaking engagements with TCFST, government training programmes and 中華電信學院.'))]
-    result+=c.section(c.heading('EXPERIENCE',c.l('跨越不同工作現場的經驗','Experience across different settings'))+'<div class="grid-3">'+''.join(f'<article class="card"><h3>{e(c.t(t))}</h3>{paragraph(c.t(d))}</article>' for t,d in roles)+'</div>',tinted=True)
+    result+=profile_section(c,id='perspective')
+    result+=achievements_section(c)
     result+=c.section(c.heading('ADVISORY BACKGROUND',c.l('顧問與合作經歷','Advisory and collaboration background'))+paragraph(c.l('顧問與合作經歷包含長茂科技（EverMore Tech.）、中華資安國際（CHT Security）及亞洲開發銀行（Asian Development Bank, ADB）。各項合作的範圍與角色依個別經歷而定；研究合作與演講紀錄另列於相關頁面。','Advisory and collaboration experience includes EverMore Tech., CHT Security and the Asian Development Bank (ADB). Roles and scope vary by engagement; research collaborations and speaking records are listed separately.'))+'<div class="actions">'+c.button(c.l('查看演講與授課','Speaking & teaching records'),c.href('experience'))+c.button(c.l('閱讀研究成果','Research publications'),c.href('research'),True)+'</div>')
-    result+=c.section(c.heading('BACKGROUND & SOURCES',c.l('進一步認識我的工作','Further reading'))+'<ul class="source-list">'+f'<li><a href="{CV}" rel="noopener" target="_blank">{c.l("演講與專業簡歷（Google Drive PDF）","Speaker and professional CV (Google Drive PDF)")}</a></li><li><a href="{NEWS}">{c.l("元智大學：與竣盟科技推動欺敵誘捕產學合作","Yuan Ze University: deception research collaboration with Billows Tech.")}</a></li><li><a href="https://www.cse.yzu.edu.tw/">{c.l("元智大學資訊工程學系","Department of Computer Science and Engineering, Yuan Ze University")}</a></li></ul>'+paragraph(c.l('歷年研發成果另包含 2022 R&D 100 Awards 獲獎經歷；近期共同研究論文獎詳見研究頁。','Earlier R&D experience includes a 2022 R&D 100 Awards recognition. Recent co-authored paper awards are listed on the research page.'),'notice'),tinted=True)
+    result+=c.section(c.heading('BACKGROUND & SOURCES',c.l('進一步認識我的工作','Further reading'))+'<ul class="source-list">'+f'<li><a href="{CV}" rel="noopener" target="_blank">{c.l("演講與專業簡歷（Google Drive PDF）","Speaker and professional CV (Google Drive PDF)")}</a></li><li><a href="{NEWS}">{c.l("元智大學：與竣盟科技推動欺敵誘捕產學合作","Yuan Ze University: deception research collaboration with Billows Tech.")}</a></li><li><a href="{FACULTY_URL}">{c.l("元智大學資工系：魏得恩教師介紹","Yuan Ze University: Wilbur Wei faculty profile")}</a></li></ul>'+paragraph(c.l('歷年研發成果另包含 2022 R&D 100 Awards 獲獎經歷；近期共同研究論文獎詳見研究頁。','Earlier R&D experience includes a 2022 R&D 100 Awards recognition. Recent co-authored paper awards are listed on the research page.'),'notice'),tinted=True)
     return result+lab_feature(c)
 
 def teaching(c):
@@ -233,7 +263,7 @@ def inquiry_dialog(c):
 def schema(c):
     pid=c.base+'#person'
     lang='zh-Hant' if c.lang=='zh' else 'en'
-    graph=[{'@type':'Person','@id':pid,'name':'魏得恩' if c.lang=='zh' else 'Wilbur Wei','alternateName':['Wilbur Wei','Te-En Wei','魏得恩'],'url':c.url('about'),'jobTitle':c.l('元智大學資訊工程學系助理教授；AI 資安講師與顧問','Assistant Professor; AI security speaker and consultant'),'worksFor':{'@type':'CollegeOrUniversity','name':c.l('元智大學','Yuan Ze University'),'url':'https://www.yzu.edu.tw/'},'knowsAbout':['AI Agent Security','LLM Threat Modeling','Zero Trust Architecture','AI for Cybersecurity','Active Directory Security'],'email':EMAIL},
+    graph=[{'@type':'Person','@id':pid,'name':'魏得恩' if c.lang=='zh' else 'Wilbur Wei','alternateName':['Wilbur Wei','Te-En Wei','魏得恩'],'url':c.url('about'),'jobTitle':c.l('元智大學資訊工程學系助理教授；AI 資安講師與顧問','Assistant Professor; AI security speaker and consultant'),'worksFor':{'@type':'CollegeOrUniversity','name':c.l('元智大學','Yuan Ze University'),'url':'https://www.yzu.edu.tw/'},'knowsAbout':['AI Agent Security','LLM Threat Modeling','Zero Trust Architecture','AI for Cybersecurity','Active Directory Security'],'email':EMAIL,'sameAs':[FACULTY_URL]},
     {'@type':'WebSite','@id':c.base+'#website','url':c.base,'name':'Wilbur Wei · AI Security','inLanguage':['zh-Hant','en'],'publisher':{'@id':pid}},
     {'@type':'ProfilePage' if c.slug=='about' else 'WebPage','@id':c.url()+'#webpage','url':c.url(),'name':c.t(PAGES[c.slug]['title']),'description':c.t(PAGES[c.slug]['description']),'inLanguage':lang,'isPartOf':{'@id':c.base+'#website'},'about':{'@id':pid}}]
     if c.slug == 'about':
