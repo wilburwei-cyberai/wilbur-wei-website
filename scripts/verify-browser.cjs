@@ -6,10 +6,10 @@ const assert=require('assert');
 (async()=>{
  const browser=await chromium.launch({headless:true,channel:process.env.WILBUR_BROWSER_CHANNEL || 'chrome'});
  const errors=[];
- const base=process.env.WILBUR_PREVIEW_URL || 'http://127.0.0.1:8766';
- const output=process.env.WILBUR_QA_DIR || path.resolve(__dirname,'../../網站v1檢查');
+ const base=process.env.WILBUR_PREVIEW_URL || 'http://127.0.0.1:8767';
+ const output=process.env.WILBUR_QA_DIR || path.resolve(__dirname,'../../網站v2檢查');
  fs.mkdirSync(output,{recursive:true});
- const pages=['','speaking/','training/','consulting/','experience/','research/','about/','teaching/'];
+ const pages=['','speaking/','training/','consulting/','experience/','research/','about/','teaching/','lab/'];
  let checks=0;
  for(const width of [1440,390]) {
   const page=await browser.newPage({viewport:{width,height:960}});
@@ -35,15 +35,31 @@ const assert=require('assert');
   await page.screenshot({path:path.join(output,`research-${width}.png`),fullPage:true});
   await page.goto(base+'/en/',{waitUntil:'networkidle'});
   await page.screenshot({path:path.join(output,`home-en-${width}.png`),fullPage:true});
+  for (const lang of ['', 'en/']) {
+   await page.goto(`${base}/${lang}lab/`,{waitUntil:'networkidle'});
+   const logos=page.locator('main img');
+   assert.equal(await logos.count(),2);
+   for(const logo of await logos.all()){
+    await logo.scrollIntoViewIfNeeded();
+    await logo.evaluate(img=>img.decode());
+    assert(await logo.evaluate(img=>img.naturalWidth>0));
+   }
+   await page.evaluate(()=>window.scrollTo(0,0));
+   await page.screenshot({path:path.join(output,`lab-${lang?'en':'zh'}-${width}.png`),fullPage:true});
+   await page.screenshot({path:path.join(output,`lab-viewport-${lang?'en':'zh'}-${width}.png`)});
+  }
+  await page.goto(base+'/consulting/#evidence',{waitUntil:'networkidle'});
+  assert.equal(await page.locator('#evidence a[href="https://www.cse.yzu.edu.tw/news/announcement?id=193"]').count(),1);
+  await page.locator('#evidence').screenshot({path:path.join(output,`evidence-${width}.png`)});
   await page.close();
  }
  // Check the desktop/mobile navigation boundary with the longer English labels.
- for(const width of [1024,768]) {
+ for(const width of [1120,1024,768]) {
   const page=await browser.newPage({viewport:{width,height:960}});
   for(const lang of ['', 'en/']) {
    await page.goto(`${base}/${lang}`,{waitUntil:'networkidle'});
    assert(!await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),`navigation overflow ${width} ${lang}`);
-   if(width===1024){
+   if(width===1120){
     const brand=await page.locator('.brand').boundingBox();
     const nav=await page.locator('#site-nav').boundingBox();
     assert(brand.x+brand.width<nav.x,`navigation overlaps brand ${lang}`);
@@ -59,6 +75,8 @@ const assert=require('assert');
  await page.goto(base+'/experience/');
  await page.locator('#record-search').fill('咖米');
  assert.equal(await page.locator('[data-record]:visible').count(),1);
+ assert.equal(await page.locator('#A8 .record-year').textContent(),'2026');
+ assert((await page.locator('#A8').textContent()).includes('企業內部演講'));
  await page.locator('#record-search').fill('');
  await page.selectOption('#record-kind','series');
  assert.equal(await page.locator('[data-record]:visible').count(),1);

@@ -13,7 +13,7 @@ if (toggle && nav) {
     if (event.key === 'Escape' && nav.classList.contains('open')) { closeMenu(); toggle.focus(); }
   });
   document.addEventListener('click', event => { if (!event.target.closest('.site-header')) closeMenu(); });
-  matchMedia('(min-width: 1001px)').addEventListener('change', closeMenu);
+  matchMedia('(min-width: 1101px)').addEventListener('change', closeMenu);
 }
 const filters = document.querySelector('#record-filters');
 if (filters) {

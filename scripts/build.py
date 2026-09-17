@@ -15,12 +15,14 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, str(ROOT / 'content'))
 from records import RECORDS, STATUS, bi
 from pages import PAGES, SERVICES, TOPICS, FAQ
+from lab import LAB_NAME, LAB_ZH, LAB_AFFILIATION, LAB_INTRO, LAB_DIRECTIONS
 PAPERS = json.loads((ROOT / 'content/publications.json').read_text())
 CONFIG = json.loads((ROOT / 'site.config.json').read_text())
 EMAIL = 'wilbur.wei.cyberai@gmail.com'
 ACADEMIC = 'wilbur.wei@saturn.yzu.edu.tw'
 CV = 'https://drive.google.com/file/d/1xieEdX66-irNiDhZ4ZV2F09sCOKy4BS9/view?usp=sharing'
 NEWS = 'https://yznews.yzu.edu.tw/index.php/zh/yzu-campus-news-zh/1042-3'
+ZYELL_NEWS = 'https://www.cse.yzu.edu.tw/news/announcement?id=193'
 e = html.escape
 
 def directory(slug, lang):
@@ -70,7 +72,7 @@ def list_html(items): return '<ul>' + ''.join(f'<li>{e(x)}</li>' for x in items)
 def record_card(c,r,compact=False):
     label = STATUS[r['status']][c.lang]
     title = e(c.t(r['title']))
-    badge = f'<span class="tag {r["status"]}">{e(label)}</span>'
+    badge = f'<span class="tag status-{r["status"]}">{e(label)}</span>'
     year = str(r['year']) if r['year'] else c.l('企業演講','Corporate talk')
     if compact:
         return f'<article class="card"><div class="tag-list">{badge}<span class="meta">{year}</span></div><h3>{title}</h3><p class="meta">{e(c.t(r["org"]))}<br>{e(c.t(r["meta"]))}</p>{paragraph(c.t(r["description"]))}{c.link("experience",c.l("查看紀錄","View record"),r["id"])}</article>'
@@ -108,7 +110,41 @@ def home(c):
     result+=c.section(c.heading('SELECTED EXPERIENCE',c.l('不同受眾，不同的切入方式。','Different audiences. Different starting points.'),c.link('experience',c.l('查看完整紀錄','All records')))+'<div class="grid-3">'+cards+'</div>',id='portfolio',tinted=True)
     result+=c.section(c.heading('RESEARCH',c.l('以研究支撐專業判斷。','Research that informs practice.'),c.link('research',c.l('論文與獎項','Publications & awards')))+'<div class="grid-2">'+''.join(f'<article class="card"><span class="number">{p["year"]} / CISC</span><h3>{e(p["slug"].upper())}</h3>{paragraph(c.t(p["description"]))}{c.link("research",c.l("研究摘要與書目","Read the research"),p["slug"])}</article>' for p in [PAPERS[0],PAPERS[4]])+'</div>',id='achievements')
     result+=c.section('<div class="split"><div><span class="eyebrow">ABOUT</span><h2>'+c.l('魏得恩<br>Wilbur Wei','Wilbur Wei<br>Te-En Wei')+'</h2></div><div>'+paragraph(c.l('元智大學資訊工程學系助理教授，學術署名 Te-En Wei。研究與實務涵蓋 AI Agent 安全、零信任、異常偵測與 Active Directory 風險評估。','Assistant Professor in the Department of Computer Science and Engineering at Yuan Ze University, publishing as Te-En Wei. Research and practice span AI agent security, zero trust, anomaly detection and Active Directory risk.'))+paragraph(c.l('從產學研發到主管研習與技術實作，協助不同角色找到能採取行動的切入點。','Across research collaborations, executive seminars and technical labs, I help people find a practical starting point.'))+c.link('about',c.l('認識我的經歷','About my work'))+'</div></div>',id='about',tinted=True)
-    result+=c.section(c.heading('COLLABORATION',c.l('產學合作，連結研究與實務。','Connecting research and industry.'))+'<div class="grid-2"><article class="card"><h3>'+c.l('竣盟科技｜Billows Tech.','Billows Tech.')+'</h3>'+paragraph(c.l('共同推動資安欺敵誘捕產學合作，結合學術研究與產業場景。','Industry–academia collaboration on cybersecurity deception, connecting research with operational contexts.'))+f'<a class="text-link" href="{NEWS}">{c.l("元智大學合作報導","Yuan Ze University report")} ↗</a></article><article class="card"><h3>'+c.l('勤晁科技｜Zyell Solutions','Zyell Solutions')+'</h3>'+paragraph(c.l('AI 驅動異常行為偵測引擎（SEDE）研發合作，聚焦以行為分析支持資安防禦。','Research collaboration on the SEDE AI-driven anomaly-detection engine, focusing on behavioural analysis for cyber defence.'))+c.link('consulting',c.l('了解相關顧問方向','Related consulting areas'))+'</article></div>',id='cases')
+    result+=c.section(c.heading('COLLABORATION',c.l('產學合作，連結研究與實務。','Connecting research and industry.'))+'<div class="grid-2"><article class="card"><h3>'+c.l('竣盟科技｜Billows Tech.','Billows Tech.')+'</h3>'+paragraph(c.l('共同推動資安欺敵誘捕產學合作，結合學術研究與產業場景。','Industry–academia collaboration on cybersecurity deception, connecting research with operational contexts.'))+f'<a class="text-link" href="{NEWS}">{c.l("元智大學合作報導","Yuan Ze University report")} ↗</a></article><article class="card"><h3>'+c.l('勤晁科技｜Zyell Solutions','Zyell Solutions')+'</h3>'+paragraph(c.l('AI 驅動異常行為偵測引擎（SEDE）研發合作，聚焦以行為分析支持資安防禦。','Research collaboration on the SEDE AI-driven anomaly-detection engine, focusing on behavioural analysis for cyber defence.'))+f'<a class="text-link" href="{ZYELL_NEWS}">{c.l("元智資工勤晁合作公告","Yuan Ze–Zyell collaboration announcement")} ↗</a></article></div>',id='cases')
+    return result+lab_feature(c)
+
+def lab_feature(c):
+    return f'''<section class="lab-feature" id="mirage-lab"><div class="wrap lab-feature-grid">
+<div class="lab-feature-logo"><img src="{c.asset('mirage-logo-white.png')}" width="688" height="764" loading="lazy" alt="MIRAGE Lab Logo"></div>
+<div><span class="eyebrow">YUAN ZE UNIVERSITY / CSE</span><h2>MIRAGE Lab</h2>
+<p class="lab-feature-name">{c.l(LAB_ZH,'AI agent security · Red teaming · Zero trust')}</p>
+{paragraph(c.l('元智大學資訊工程學系。從 AI 代理人的授權邊界，到攻防行為與信任評估，研究安全機制如何被設計與驗證。','Based in Computer Science and Engineering at Yuan Ze University. Studying the design and evaluation of security mechanisms through agent authorisation, adversarial behaviour and trust assessment.'))}
+{c.link('lab',c.l('認識 MIRAGE Lab','Explore MIRAGE Lab'))}</div></div></section>'''
+
+def lab(c):
+    academic_mail = 'mailto:' + ACADEMIC + '?' + urlencode({
+        'subject':c.l('MIRAGE Lab 研究合作洽詢','MIRAGE Lab research inquiry'),
+        'body':c.l('魏老師您好：\n\n姓名／單位：\n研究主題或問題：\n合作構想：\n預計時程：\n\n得知管道（選填）：',
+                   'Hello Wilbur,\n\nName / organisation:\nResearch topic or question:\nCollaboration idea:\nTimeline:\n\nHow you found me (optional):')
+    }, quote_via=quote)
+    result=f'''<section class="lab-hero"><div class="wrap">
+<div class="breadcrumbs"><a href="{c.href()}">{c.l('首頁','Home')}</a> / MIRAGE Lab</div>
+<div class="lab-hero-grid"><div><span class="eyebrow">YUAN ZE UNIVERSITY / CSE</span><h1>MIRAGE Lab</h1>
+<p class="lab-subtitle">{LAB_ZH}</p><p class="lab-affiliation">{e(c.t(LAB_AFFILIATION))}</p>
+<p class="lab-statement">{c.l('理解攻擊如何發生，<br>驗證防禦如何成立。','Understand the attack.<br>Evaluate the defence.')}</p>
+<div class="anchor-nav"><a href="#lab-profile">{c.l('認識實驗室','About the lab')}</a><a href="#lab-directions">{c.l('研究方向','Research areas')}</a><a href="#lab-collaboration">{c.l('研究合作','Collaborate')}</a></div></div>
+<div class="lab-emblem"><img src="{c.asset('mirage-logo-white.png')}" width="688" height="764" alt="MIRAGE Lab — {LAB_ZH}"><span>AI AGENTS · RED TEAMING · ZERO TRUST</span></div></div></div></section>'''
+    profile=f'''<div class="lab-profile-grid"><div><span class="eyebrow">THE LAB</span><h2>{c.l('從攻防情境，提出可以驗證的問題。','Turn attack and defence scenarios into testable questions.')}</h2></div><div>{paragraph(c.t(LAB_INTRO),'lead')}<div class="lab-advisor"><img src="{c.asset('mirage-logo-dark.png')}" width="688" height="764" loading="lazy" alt="MIRAGE Lab Logo"><span>{c.l('指導教師','Faculty advisor')}</span><strong>{c.l('魏得恩 Wilbur Wei','Wilbur Wei / Te-En Wei')}</strong><p>{c.l('元智大學資訊工程學系助理教授','Assistant Professor, Computer Science and Engineering, Yuan Ze University')}</p>{c.link('about',c.l('教師經歷與專業背景','Faculty background'))}</div></div></div>'''
+    result+=c.section(profile,id='lab-profile')
+    directions=[]
+    for number,title,question,desc,papers in LAB_DIRECTIONS:
+        links=''.join(c.link('research',label,slug) for slug,label in papers)
+        directions.append(f'<article class="lab-research-card"><span class="number">{number}</span><h3>{e(c.t(title))}</h3><p class="lab-question">{e(c.t(question))}</p>{paragraph(c.t(desc))}<div class="lab-paper-links"><small>{c.l("相關研究","Related papers")}</small>{links}</div></article>')
+    result+=c.section(c.heading('RESEARCH AREAS',c.l('三個相互連結的研究方向','Three connected research areas'))+'<div class="grid-3">'+''.join(directions)+'</div>',id='lab-directions',tinted=True)
+    research_body=c.heading('RELATED PUBLICATIONS',c.l('以研究成果，說明問題與方法。','Explore the questions through published work.'),c.link('research',c.l('閱讀完整論文書目','Full publication list')))
+    research_body+=paragraph(c.l('指導教師與共同作者的相關研究包含 AHAF、HMELF、MARS、STIE-ZTA，以及 AD 風險與 APT 情資分析。研究頁保留各篇論文的作者、發表出處及研究範圍。','Related work by the faculty advisor and co-authors includes AHAF, HMELF, MARS, STIE-ZTA, AD risk and APT intelligence analysis. The research page provides author lists, publication venues and the scope of each study.'))
+    result+=c.section(research_body)
+    result+=f'''<section class="lab-collaboration" id="lab-collaboration"><div class="wrap lab-profile-grid"><div><span class="eyebrow">RESEARCH & COLLABORATION</span><h2>{c.l('一起釐清值得研究的問題。','Find a research question worth investigating.')}</h2></div><div>{paragraph(c.l('歡迎就 AI 代理人安全、攻防驗證、零信任與威脅分析討論學術或產學合作。來信可簡述研究問題、已有背景與合作構想。','For academic or industry research on AI agent security, adversarial evaluation, zero trust and threat analysis, share the research question, relevant background and your collaboration idea.'))}<div class="actions">{c.button(c.l('討論研究合作','Discuss research collaboration'),academic_mail)}</div><p class="lab-email"><a href="mailto:{ACADEMIC}">{ACADEMIC}</a></p></div></div></section>'''
     return result
 
 def speaking(c):
@@ -133,7 +169,7 @@ def consulting(c):
     result+=c.section(c.heading('SCOPE',c.l('可以一起釐清的問題。','Areas we can work through.'))+'<div class="grid-2">'+''.join(f'<article class="card"><h3>{e(c.t(t))}</h3>{paragraph(c.t(d))}</article>' for t,d in scopes)+'</div>',id='scope')
     steps=[(bi('需求與範圍','Context and scope'),bi('確認業務情境、決策者、導入階段與期望成果。','Agree on the business context, decision-makers, deployment stage and outcomes.')),(bi('盤點與評估','Review and assessment'),bi('依約定範圍檢視架構、資料流程、權限與現有控制。','Review architecture, data flows, permissions and existing controls within the agreed scope.')),(bi('建議與優先順序','Recommendations and priorities'),bi('將風險連到控制建議，討論可行性、責任與改善順序。','Connect risks to controls and discuss feasibility, responsibilities and priorities.')),(bi('交付與後續討論','Deliverables and follow-through'),bi('依約定提供分析與建議，必要時搭配內訓或後續顧問討論。','Deliver the agreed analysis and recommendations, with training or follow-up advice where appropriate.'))]
     result+=c.section('<div class="split"><div><span class="eyebrow">PROCESS</span><h2>'+c.l('先把範圍說清楚。','Start with a clear scope.')+'</h2>'+paragraph(c.l('可討論專案或持續顧問形式，依問題規模與團隊需要確認。','Project-based or ongoing advice can be discussed according to the problem and the team’s needs.'))+'</div><ol class="process">'+''.join(f'<li><div><h3>{e(c.t(t))}</h3>{paragraph(c.t(d))}</div></li>' for t,d in steps)+'</ol></div>',id='process',tinted=True)
-    result+=c.section(c.heading('EXPERIENCE & RESEARCH',c.l('從產學合作與研究，累積判斷依據。','Experience and research behind the advice.'))+'<div class="grid-2"><article class="card"><h3>'+c.l('Billows Tech.／Zyell Solutions','Billows Tech. / Zyell Solutions')+'</h3>'+paragraph(c.l('竣盟科技的資安欺敵誘捕平台產學合作，以及勤晁科技的 SEDE 異常行為偵測研發，連結研究方法與企業問題。','Collaboration with Billows Tech. on deception technology and with Zyell Solutions on SEDE anomaly detection connects research methods with industry problems.'))+f'<a class="text-link" href="{NEWS}">{c.l("閱讀元智大學合作報導","Yuan Ze collaboration report")} ↗</a></article><article class="card"><h3>AHAF / STIE-ZTA / AD Risk</h3>'+paragraph(c.l('AI Agent 授權、持續信任評估與 AD 帳號風險研究，支援顧問需求的討論。研究結果保留各自實驗範圍。','Research on agent authorisation, continuous trust evaluation and AD account risk informs consulting discussions, within each study’s scope.'))+c.link('research',c.l('查看研究依據','Explore the research'))+'</article></div>',id='evidence')
+    result+=c.section(c.heading('EXPERIENCE & RESEARCH',c.l('從產學合作與研究，累積判斷依據。','Experience and research behind the advice.'))+'<div class="grid-2"><article class="card"><h3>'+c.l('Billows Tech.／Zyell Solutions','Billows Tech. / Zyell Solutions')+'</h3>'+paragraph(c.l('竣盟科技的資安欺敵誘捕平台產學合作，以及勤晁科技的 SEDE 異常行為偵測研發，連結研究方法與企業問題。','Collaboration with Billows Tech. on deception technology and with Zyell Solutions on SEDE anomaly detection connects research methods with industry problems.'))+f'<div class="evidence-links"><a class="text-link" href="{NEWS}">{c.l("竣盟合作報導","Billows Tech. collaboration report")} ↗</a><a class="text-link" href="{ZYELL_NEWS}">{c.l("勤晁合作報導","Zyell Solutions collaboration announcement")} ↗</a></div></article><article class="card"><h3>AHAF / STIE-ZTA / AD Risk</h3>'+paragraph(c.l('AI Agent 授權、持續信任評估與 AD 帳號風險研究，支援顧問需求的討論。研究結果保留各自實驗範圍。','Research on agent authorisation, continuous trust evaluation and AD account risk informs consulting discussions, within each study’s scope.'))+c.link('research',c.l('查看研究依據','Explore the research'))+'</article></div>',id='evidence')
     result+=c.section(c.heading('START A CONVERSATION',c.l('用一段需求說明，開始討論。','Start with a short brief.'))+paragraph(c.l('請先提供不含機密的背景、問題與期望成果。我們再確認評估範圍、所需資料、時程與交付方式。','Send a non-confidential outline of your context, problem and desired outcome. We can then agree on the scope, inputs, timeline and deliverables.'))+c.button(c.l('討論顧問需求','Discuss consulting'),c.mail('consulting')),tinted=True)
     return result+faq(c,'consulting')
 
@@ -147,6 +183,7 @@ def experience(c):
 
 def research(c):
     result=page_hero(c,c.l('從 AI 代理人到零信任，研究防禦如何成立。','Studying how defence works—from AI agents to zero trust.'),c.l('魏得恩／Te-En Wei（Wilbur Wei）與共同作者的研究成果。MIRAGE Lab 關注 AI Agent 授權、AI 輔助資安、加密橫向移動與風險評估。','Publications by Te-En Wei (Wilbur Wei) and co-authors. MIRAGE Lab focuses on agent authorisation, AI-assisted security, encrypted lateral movement and risk assessment.'),[('awards',c.l('論文獎','Paper awards')),('publications',c.l('論文書目','Publications'))])
+    result+=f'<div class="lab-related"><div class="wrap"><span>{c.l("元智大學資訊工程學系 · MIRAGE Lab", "Yuan Ze University · MIRAGE Lab")}</span>{c.link("lab",c.l("認識實驗室與研究方向","Meet the lab"))}</div></div>'
     awards=''.join(f'<article class="award"><span class="year">CISC {p["year"]}</span><h3>{e(c.t(p["award"]))}</h3><p>{e(p["slug"].upper())}</p><a href="#{p["slug"]}">{c.l("閱讀獲獎論文摘要","Read the awarded paper")} ↗</a></article>' for p in PAPERS if p['award'])
     result+=c.section(c.heading('RECOGNITION',c.l('三項共同研究論文獎','Three awards for co-authored papers'))+'<div class="award-list">'+awards+'</div>',id='awards',tinted=True)
     articles=[]
@@ -164,7 +201,7 @@ def about(c):
     result+=c.section(c.heading('EXPERIENCE',c.l('跨越不同工作現場的經驗','Experience across different settings'))+'<div class="grid-3">'+''.join(f'<article class="card"><h3>{e(c.t(t))}</h3>{paragraph(c.t(d))}</article>' for t,d in roles)+'</div>',tinted=True)
     result+=c.section(c.heading('ADVISORY BACKGROUND',c.l('顧問與合作經歷','Advisory and collaboration background'))+paragraph(c.l('顧問與合作經歷包含長茂科技（EverMore Tech.）、中華資安國際（CHT Security）及亞洲開發銀行（Asian Development Bank, ADB）。各項合作的範圍與角色依個別經歷而定；研究合作與演講紀錄另列於相關頁面。','Advisory and collaboration experience includes EverMore Tech., CHT Security and the Asian Development Bank (ADB). Roles and scope vary by engagement; research collaborations and speaking records are listed separately.'))+'<div class="actions">'+c.button(c.l('查看演講與授課','Speaking & teaching records'),c.href('experience'))+c.button(c.l('閱讀研究成果','Research publications'),c.href('research'),True)+'</div>')
     result+=c.section(c.heading('BACKGROUND & SOURCES',c.l('進一步認識我的工作','Further reading'))+'<ul class="source-list">'+f'<li><a href="{CV}" rel="noopener" target="_blank">{c.l("演講與專業簡歷（Google Drive PDF）","Speaker and professional CV (Google Drive PDF)")}</a></li><li><a href="{NEWS}">{c.l("元智大學：與竣盟科技推動欺敵誘捕產學合作","Yuan Ze University: deception research collaboration with Billows Tech.")}</a></li><li><a href="https://www.cse.yzu.edu.tw/">{c.l("元智大學資訊工程學系","Department of Computer Science and Engineering, Yuan Ze University")}</a></li></ul>'+paragraph(c.l('歷年研發成果另包含 2022 R&D 100 Awards 獲獎經歷；近期共同研究論文獎詳見研究頁。','Earlier R&D experience includes a 2022 R&D 100 Awards recognition. Recent co-authored paper awards are listed on the research page.'),'notice'),tinted=True)
-    return result
+    return result+lab_feature(c)
 
 def teaching(c):
     result=page_hero(c,c.l('讓教材能被理解，也能被實際使用。','Courseware people can understand—and use.'),c.l('從受眾問題、資料品質與執行環境出發，讓觀念、例子與實作接得起來。','Connect concepts, examples and practice through audience needs, source quality and the learning environment.'))
@@ -174,7 +211,7 @@ def teaching(c):
     result+=c.section(c.heading('IN DEVELOPMENT',c.l('持續開發的教學內容','Teaching content in development'))+record_list(c,['B3'])+c.link('training',c.l('討論內訓需求','Explore training options')))
     return result
 
-RENDERERS={'':home,'speaking':speaking,'training':training,'consulting':consulting,'experience':experience,'research':research,'about':about,'teaching':teaching}
+RENDERERS={'':home,'speaking':speaking,'training':training,'consulting':consulting,'experience':experience,'research':research,'about':about,'teaching':teaching,'lab':lab}
 
 def contact(c):
     return f'<section class="contact" id="contact"><div class="wrap contact-grid"><div><span class="eyebrow">LET’S TALK</span><h2>{c.l("從你的情境，開始討論。","Tell me about your context.")}</h2>'+paragraph(c.l('提供活動或團隊背景、想解決的問題與預計時程，就能開始討論合適的合作方式。','Share your event or team context, the problem to address and the expected timeline.'))+f'<div class="actions">{c.button(c.l("演講邀約","Speaking"),c.mail("speaking"))}{c.button(c.l("內訓洽詢","Training"),c.mail("training"))}{c.button(c.l("顧問需求","Consulting"),c.mail("consulting"))}</div></div><div><div class="email-block"><small>{c.l("演講、企業內訓與顧問","Speaking, training and consulting")}</small><a href="mailto:{EMAIL}">{EMAIL}</a></div><div class="email-block"><small>{c.l("學術與產學合作","Academic and industry research")}</small><a href="mailto:{ACADEMIC}">{ACADEMIC}</a></div><p class="status-note">{c.l("點選邀約可準備洽詢內容，再複製或選擇郵件方式寄出。","Prepare an inquiry, then copy it or choose an email option to send it.")}</p></div></div></section>'
@@ -201,6 +238,17 @@ def schema(c):
     {'@type':'ProfilePage' if c.slug=='about' else 'WebPage','@id':c.url()+'#webpage','url':c.url(),'name':c.t(PAGES[c.slug]['title']),'description':c.t(PAGES[c.slug]['description']),'inLanguage':lang,'isPartOf':{'@id':c.base+'#website'},'about':{'@id':pid}}]
     if c.slug == 'about':
         graph[-1]['mainEntity'] = {'@id': pid}
+    if c.slug == 'lab':
+        lab_id = c.base + 'lab/#organization'
+        graph[-1]['mainEntity'] = {'@id': lab_id}
+        graph[-1]['about'] = {'@id': lab_id}
+        graph[0]['affiliation'] = {'@id': lab_id}
+        graph.append({'@type':'Organization','@id':lab_id,'name':LAB_NAME,
+                      'alternateName':LAB_ZH,'url':c.url('lab'),
+                      'description':c.t(LAB_INTRO),'logo':c.base+'assets/mirage-logo-dark.png',
+                      'parentOrganization':{'@type':'Organization','name':c.t(LAB_AFFILIATION),'url':'https://www.cse.yzu.edu.tw/',
+                                            'parentOrganization':{'@type':'CollegeOrUniversity','name':'Yuan Ze University','url':'https://www.yzu.edu.tw/'}},
+                      'member':{'@id':pid},'email':ACADEMIC})
     if c.slug:
         graph.append({'@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':1,'name':c.l('首頁','Home'),'item':c.url('')},{'@type':'ListItem','position':2,'name':c.t(PAGES[c.slug]['label']),'item':c.url()}]})
     if c.slug in ['speaking','training','consulting']:
@@ -214,7 +262,7 @@ def schema(c):
 def render(c):
     meta=PAGES[c.slug]
     lang='zh-Hant' if c.lang=='zh' else 'en'
-    nav=''.join(f'<a href="{c.href(slug)}"'+(' aria-current="page"' if c.slug==slug else '')+f'>{e(c.t(PAGES[slug]["label"]))}</a>' for slug in ['speaking','training','consulting','experience','research','about'])
+    nav=''.join(f'<a href="{c.href(slug)}"'+(' aria-current="page"' if c.slug==slug else '')+f'>{e(c.t(PAGES[slug]["label"]))}</a>' for slug in ['speaking','training','consulting','experience','research','lab','about'])
     language=c.href(c.slug,'en' if c.lang=='zh' else 'zh')
     alternates=''.join(f'<link rel="alternate" hreflang="{hl}" href="{e(c.url(lang=l))}">' for hl,l in [('zh-Hant','zh'),('en','en'),('x-default','zh')])
     body=RENDERERS[c.slug](c)
@@ -243,10 +291,11 @@ def render(c):
 <meta name="theme-color" content="#f5f2eb">
 <link rel="icon" type="image/svg+xml" href="{c.asset('favicon.svg')}">
 <link rel="stylesheet" href="{c.asset('site.css')}">
+<link rel="stylesheet" href="{c.asset('lab.css')}">
 <script defer src="{c.asset('site.js')}"></script>
 <script type="application/ld+json">{json.dumps(schema(c),ensure_ascii=False).replace('</','<\\/')}</script>
 </head>
-<body>
+<body{' class="lab-page"' if c.slug == 'lab' else ''}>
 <a class="skip" href="#main">{c.l('跳到主要內容','Skip to main content')}</a>
 <header class="site-header"><div class="wrap header-inner"><a class="brand" href="{c.href()}"><strong>Wilbur Wei</strong><span>AI SECURITY · 魏得恩</span></a><button class="nav-toggle" type="button" aria-label="{c.l('切換導覽選單','Toggle navigation')}" aria-controls="site-nav" aria-expanded="false" hidden>☰</button><nav class="nav-links" id="site-nav" aria-label="{c.l('主要導覽','Main navigation')}">{nav}<a class="nav-contact" href="#contact">{c.l('聯絡','Contact')}</a><a class="language" href="{language}" lang="{c.l('en','zh-Hant')}" hreflang="{c.l('en','zh-Hant')}" aria-label="{c.l('View this page in English','以繁體中文閱讀本頁')}">{c.l('EN','繁中')}</a></nav></div></header>
 <main id="main">{body}{contact(c)}</main>
@@ -274,7 +323,7 @@ def build(base):
         node=ET.SubElement(tree,ns+'url');ET.SubElement(node,ns+'loc').text=url
     ET.ElementTree(tree).write(ROOT/'sitemap.xml',encoding='utf-8',xml_declaration=True)
     (ROOT/'robots.txt').write_text('# Effective crawler rules belong at the host root, not a project subpath.\nUser-agent: *\nAllow: /\n\nSitemap: '+base+'sitemap.xml\n')
-    (ROOT/'.nojekyll').touch()
+    (ROOT/'.nojekyll').write_text('Static HTML site. Skip Jekyll processing.\n')
     (ROOT/'404.html').write_text(f'<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>找不到頁面｜Wilbur Wei</title><style>body{{font:18px/1.8 system-ui;background:#f5f2eb;color:#202520;max-width:700px;margin:15vh auto;padding:24px}}a{{color:#294c3e}}</style><main><p>404</p><h1>找不到這個頁面</h1><p>This page could not be found.</p><a href="{base}">回到首頁 / Home</a></main></html>')
     print(f'Built {len(urls)} bilingual pages for {base}')
 

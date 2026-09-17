@@ -34,9 +34,9 @@ class Document(HTMLParser):
 files=sorted(p for p in ROOT.rglob('index.html') if not {'node_modules', '.git', 'test-results', 'playwright-report'}.intersection(p.relative_to(ROOT).parts))
 docs={p:Document() for p in files}
 for p,d in docs.items():d.feed(p.read_text())
-assert len(docs)==16, len(docs)
-assert len({d.title for d in docs.values()})==16
-assert len({d.description[0] for d in docs.values()})==16
+assert len(docs)==18, len(docs)
+assert len({d.title for d in docs.values()})==18
+assert len({d.description[0] for d in docs.values()})==18
 for p,d in docs.items():
     assert d.h1==1,(p,'h1',d.h1)
     assert not d.duplicate_ids,(p,d.duplicate_ids)
@@ -70,4 +70,4 @@ for lang in ['', 'en/']:
     assert len(articles)==6
     assert len([n for n in research.ids if n in ['ahaf','hmelf','mars','ad-risk','stie-zta','apt-intelligence']])==6
 assert (ROOT/'assets/social-card.png').exists()
-print('PASS: 16 pages; unique titles/descriptions; reciprocal language URLs; valid JSON-LD/sitemap; all local links and anchors; 22 records per language; 6 publications per language; merged/HOLD records excluded.')
+print('PASS: 18 pages; unique titles/descriptions; reciprocal language URLs; valid JSON-LD/sitemap; all local links and anchors; 22 records per language; 6 publications per language; merged/HOLD records excluded.')

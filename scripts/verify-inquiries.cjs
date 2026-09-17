@@ -6,8 +6,8 @@ const path = require('path');
 
 (async () => {
   const browser = await chromium.launch({headless:true, channel:process.env.WILBUR_BROWSER_CHANNEL || 'chrome'});
-  const base = process.env.WILBUR_PREVIEW_URL || 'http://127.0.0.1:8766';
-  const output = process.env.WILBUR_QA_DIR || path.resolve(__dirname, '../../網站v1檢查');
+  const base = process.env.WILBUR_PREVIEW_URL || 'http://127.0.0.1:8767';
+  const output = process.env.WILBUR_QA_DIR || path.resolve(__dirname, '../../網站v2檢查');
   fs.mkdirSync(output, {recursive:true});
   const errors = [];
   let clicks = 0;
@@ -89,6 +89,15 @@ const path = require('path');
     await page.goto(base+'/consulting/');
     await page.locator('main [data-inquiry]').first().click();
     assert(await page.getByRole('dialog').isVisible());
+    for(const lang of ['', 'en/']) {
+      await page.goto(`${base}/${lang}lab/`);
+      await page.locator('#lab-collaboration [data-inquiry]').click();
+      assert(await page.getByRole('dialog').isVisible());
+      assert.equal(await page.locator('#inquiry-email').inputValue(),'wilbur.wei@saturn.yzu.edu.tw');
+      const academic = new URL(await page.locator('#inquiry-gmail').getAttribute('href'));
+      assert.equal(academic.searchParams.get('to'),'wilbur.wei@saturn.yzu.edu.tw');
+      assert(academic.searchParams.get('su').includes('MIRAGE Lab'));
+    }
     const noJS = await browser.newContext({javaScriptEnabled:false});
     const plain = await noJS.newPage();
     await plain.goto(base+'/');
