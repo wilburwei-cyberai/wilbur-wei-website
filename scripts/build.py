@@ -18,6 +18,7 @@ from pages import PAGES, SERVICES, TOPICS, FAQ
 from lab import LAB_NAME, LAB_ZH, LAB_AFFILIATION, LAB_INTRO, LAB_DIRECTIONS
 from transformation import INTRO as TRANSFORMATION_INTRO, SCENARIOS, STEPS, ASKEY_TITLE, ASKEY_DESCRIPTION
 from research_directions import INTRO as FUTURE_INTRO, DIRECTIONS as FUTURE_DIRECTIONS
+from research_projects import RESEARCH_PROJECTS
 from profile import FACULTY_URL, ROLES, METRICS, ACHIEVEMENT_INTRO, METRIC_CONTEXT, AWARD_DESCRIPTION
 PAPERS = json.loads((ROOT / 'content/publications.json').read_text())
 CONFIG = json.loads((ROOT / 'site.config.json').read_text())
@@ -146,7 +147,7 @@ def home(c):
     result+=achievements_section(c)
     cards=''.join(record_card(c,next(r for r in RECORDS if r['id']==id),True) for id in ['A11','A1','A2','B1'])
     result+=c.section(c.heading('SELECTED EXPERIENCE',c.l('不同受眾，不同的切入方式。','Different audiences. Different starting points.'),c.link('experience',c.l('查看完整紀錄','All records')))+'<div class="grid-2">'+cards+'</div>',id='portfolio',tinted=True)
-    result+=c.section(c.heading('RESEARCH',c.l('以研究支撐專業判斷。','Research that informs practice.'),c.link('research',c.l('論文與獎項','Publications & awards')))+'<div class="grid-2">'+''.join(f'<article class="card"><span class="number">{p["year"]} / CISC</span><h3>{e(p["slug"].upper())}</h3>{paragraph(c.t(p["description"]))}{c.link("research",c.l("研究摘要與書目","Read the research"),p["slug"])}</article>' for p in [PAPERS[0],PAPERS[4]])+'</div>',id='research-highlights')
+    result+=c.section(c.heading('RESEARCH',c.l('以研究支撐專業判斷。','Research that informs practice.'),c.link('research',c.l('論文與獎項','Publications & awards')))+'<div class="grid-2">'+''.join(f'<article class="card"><span class="number">{p["year"]} / CISC</span><h3>{e(p["slug"].upper())}</h3>{paragraph(c.t(p["description"]))}{c.link("research",c.l("研究摘要與書目","Read the research"),p["slug"])}</article>' for p in [PAPERS[0],PAPERS[4]])+'</div><div class="callout">'+c.link('research',c.l('FY115 國科會計畫：LLM 驅動紅隊代理平台','FY115 NSTC project: LLM-driven red team agent platform'),RESEARCH_PROJECTS[0]['slug'])+'</div>',id='research-highlights')
     result+=c.section(c.heading('COLLABORATION',c.l('產學合作，連結研究與實務。','Connecting research and industry.'))+'<div class="grid-2"><article class="card"><h3>'+c.l('竣盟科技｜Billows Tech.','Billows Tech.')+'</h3>'+paragraph(c.l('共同推動資安欺敵誘捕產學合作，結合學術研究與產業場景。','Industry–academia collaboration on cybersecurity deception, connecting research with operational contexts.'))+f'<a class="text-link" href="{NEWS}">{c.l("元智大學合作報導","Yuan Ze University report")} ↗</a></article><article class="card"><h3>'+c.l('勤晁科技｜Zyell Solutions','Zyell Solutions')+'</h3>'+paragraph(c.l('AI 驅動異常行為偵測引擎（SEDE）研發合作，聚焦以行為分析支持資安防禦。','Research collaboration on the SEDE AI-driven anomaly-detection engine, focusing on behavioural analysis for cyber defence.'))+f'<a class="text-link" href="{ZYELL_NEWS}">{c.l("元智資工勤晁合作公告","Yuan Ze–Zyell collaboration announcement")} ↗</a></article></div>',id='cases')
     return result+lab_feature(c)
 
@@ -169,7 +170,7 @@ def lab(c):
 <div class="lab-hero-grid"><div><span class="eyebrow">YUAN ZE UNIVERSITY / CSE</span><h1>MIRAGE Lab</h1>
 <p class="lab-subtitle">{LAB_ZH}</p><p class="lab-affiliation">{e(c.t(LAB_AFFILIATION))}</p>
 <p class="lab-statement">{c.l('理解攻擊如何發生，<br>驗證防禦如何成立。','Understand the attack.<br>Evaluate the defence.')}</p>
-<div class="anchor-nav"><a href="#lab-profile">{c.l('認識實驗室','About the lab')}</a><a href="#lab-directions">{c.l('研究方向','Research areas')}</a><a href="#emerging-directions">{c.l('未來方向','Future directions')}</a><a href="#lab-collaboration">{c.l('研究合作','Collaborate')}</a></div></div>
+<div class="anchor-nav"><a href="#lab-profile">{c.l('認識實驗室','About the lab')}</a><a href="#lab-directions">{c.l('研究方向','Research areas')}</a><a href="#projects">{c.l('研究計畫','Projects')}</a><a href="#emerging-directions">{c.l('未來方向','Future directions')}</a><a href="#lab-collaboration">{c.l('研究合作','Collaborate')}</a></div></div>
 <div class="lab-emblem"><img src="{c.asset('mirage-logo-white.png')}" width="688" height="764" alt="MIRAGE Lab — {LAB_ZH}"><span>AI AGENTS · RED TEAMING · ZERO TRUST</span></div></div></div></section>'''
     profile=f'''<div class="lab-profile-grid"><div><span class="eyebrow">THE LAB</span><h2>{c.l('從攻防情境，提出可以驗證的問題。','Turn attack and defence scenarios into testable questions.')}</h2></div><div>{paragraph(c.t(LAB_INTRO),'lead')}<div class="lab-advisor"><img src="{c.asset('mirage-logo-dark.png')}" width="688" height="764" loading="lazy" alt="MIRAGE Lab Logo"><span>{c.l('指導教師','Faculty advisor')}</span><strong>{c.l('魏得恩 Wilbur Wei','Wilbur Wei / Te-En Wei')}</strong><p>{c.l('元智大學資訊工程學系助理教授','Assistant Professor, Computer Science and Engineering, Yuan Ze University')}</p>{c.link('about',c.l('教師經歷與專業背景','Faculty background'))}</div></div></div>'''
     result+=c.section(profile,id='lab-profile')
@@ -178,6 +179,7 @@ def lab(c):
         links=''.join(c.link('research',label,slug) for slug,label in papers)
         directions.append(f'<article class="lab-research-card"><span class="number">{number}</span><h3>{e(c.t(title))}</h3><p class="lab-question">{e(c.t(question))}</p>{paragraph(c.t(desc))}<div class="lab-paper-links"><small>{c.l("相關研究","Related papers")}</small>{links}</div></article>')
     result+=c.section(c.heading('RESEARCH AREAS',c.l('三個相互連結的研究方向','Three connected research areas'))+'<div class="grid-3">'+''.join(directions)+'</div>',id='lab-directions',tinted=True)
+    result+=research_projects(c)
     result+=future_research(c)
     research_body=c.heading('RELATED PUBLICATIONS',c.l('以研究成果，說明問題與方法。','Explore the questions through published work.'),c.link('research',c.l('閱讀完整論文書目','Full publication list')))
     research_body+=paragraph(c.l('指導教師與共同作者的相關研究包含 AHAF、HMELF、MARS、STIE-ZTA，以及 AD 風險與 APT 情資分析。研究頁保留各篇論文的作者、發表出處及研究範圍。','Related work by the faculty advisor and co-authors includes AHAF, HMELF, MARS, STIE-ZTA, AD risk and APT intelligence analysis. The research page provides author lists, publication venues and the scope of each study.'))
@@ -222,9 +224,23 @@ def experience(c):
     result+=c.section(filters+''.join(record_card(c,r) for r in records)+f'<p id="record-empty" class="empty-state" hidden>{c.l("沒有符合的紀錄，請更換關鍵字或類型。","No matching records. Try a different term or category.")}</p>'+paragraph(c.l('紀錄更新：2026 年 9 月 29 日。課程設計與籌備項目依狀態標示。','Records updated 29 September 2026. Curriculum design and planned courses are labelled accordingly.'),'status-note'))
     return result
 
+
+def research_projects(c):
+    entries=[]
+    for project in RESEARCH_PROJECTS:
+        other='en' if c.lang=='zh' else 'zh'
+        other_lang='en' if other=='en' else 'zh-Hant'
+        label=c.l('國科會計畫','NSTC research project')
+        period=c.l('執行年度：','Execution fiscal year: ')+project['fiscal_year']+f" ({project['year']})"
+        entry=f'<article class="publication research-project" id="{project["slug"]}"><span class="eyebrow">{e(label)}</span><h3>{e(c.t(project["title"]))}</h3><p class="original-title" lang="{other_lang}">{e(project["title"][other])}</p><p class="meta">{e(c.t(project["agency"]))}<br>{e(period)}</p>'
+        if c.slug=='lab': entry+=c.link('research',c.l('查看研究計畫','View research project'),project['slug'])
+        entries.append(entry+'</article>')
+    return c.section(c.heading('RESEARCH PROJECTS',c.l('國科會研究計畫','NSTC research projects'))+''.join(entries),id='projects')
+
 def research(c):
-    result=page_hero(c,c.l('從 AI 資安，延伸至通訊與硬體的信任。','From AI security to trust in communications and hardware.'),c.l('魏得恩／Te-En Wei（Wilbur Wei）與共同作者的研究成果。既有成果涵蓋 AI Agent、零信任與風險評估；接下來規劃深耕無人機與機器人通訊資安，以及 PUF 硬體資安應用。','Publications by Te-En Wei (Wilbur Wei) and co-authors. Published work covers AI agents, zero trust and risk assessment. Future directions include drone and robot communication security, and PUF hardware security applications.'),[('emerging-directions',c.l('未來研究方向','Future directions')),('awards',c.l('論文獎','Paper awards')),('publications',c.l('論文書目','Publications'))])
+    result=page_hero(c,c.l('從 AI 資安，延伸至通訊與硬體的信任。','From AI security to trust in communications and hardware.'),c.l('魏得恩／Te-En Wei（Wilbur Wei）的研究計畫與共同研究成果。既有成果涵蓋 AI Agent、零信任與風險評估；接下來規劃深耕無人機與機器人通訊資安，以及 PUF 硬體資安應用。','Research projects and co-authored publications by Te-En Wei (Wilbur Wei). Published work covers AI agents, zero trust and risk assessment. Future directions include drone and robot communication security, and PUF hardware security applications.'),[('projects',c.l('研究計畫','Projects')),('emerging-directions',c.l('未來研究方向','Future directions')),('awards',c.l('論文獎','Paper awards')),('publications',c.l('論文書目','Publications'))])
     result+=f'<div class="lab-related"><div class="wrap"><span>{c.l("元智大學資訊工程學系 · MIRAGE Lab", "Yuan Ze University · MIRAGE Lab")}</span>{c.link("lab",c.l("認識實驗室與研究方向","Meet the lab"))}</div></div>'
+    result+=research_projects(c)
     result+=future_research(c)
     awards=''.join(f'<article class="award"><span class="year">CISC {p["year"]}</span><h3>{e(c.t(p["award"]))}</h3><p>{e(p["slug"].upper())}</p><a href="#{p["slug"]}">{c.l("閱讀獲獎論文摘要","Read the awarded paper")} ↗</a></article>' for p in PAPERS if p['award'])
     result+=c.section(c.heading('RECOGNITION',c.l('三項共同研究論文獎','Three awards for co-authored papers'))+'<div class="award-list">'+awards+'</div>',id='awards',tinted=True)
@@ -327,6 +343,14 @@ def schema(c):
                       'member':{'@id':pid},'email':ACADEMIC})
     if c.slug:
         graph.append({'@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':1,'name':c.l('首頁','Home'),'item':c.url('')},{'@type':'ListItem','position':2,'name':c.t(PAGES[c.slug]['label']),'item':c.url()}]})
+    if c.slug in ['research','lab']:
+        for project in RESEARCH_PROJECTS:
+            project_url=c.url('research',lang='zh')+'#'+project['slug']
+            graph.append({'@type':'ResearchProject','@id':project_url,'url':project_url,
+                          'name':c.t(project['title']),
+                          'alternateName':project['title']['en' if c.lang=='zh' else 'zh'],
+                          'description':c.l('國科會計畫，執行年度：','NSTC research project. Execution fiscal year: ')+project['fiscal_year']+f" ({project['year']})",
+                          'funder':{'@type':'Organization','name':c.t(project['agency'])}})
     if c.slug in ['transformation','speaking','training','consulting']:
         svc=next(s for s in SERVICES if s[0]==c.slug)
         graph.append({'@type':'Service','@id':c.url()+'#service','name':c.t(svc[1]),'description':c.t(svc[3]),'provider':{'@id':pid},'url':c.url()})

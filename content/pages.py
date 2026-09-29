@@ -189,3 +189,8 @@ FAQ = {'speaking': [({'zh': '可以依產業與聽眾調整內容嗎？', 'en': 
                       'en': 'Review permitted data, tool permissions, output checks and decision responsibility '
                             'while designing the workflow. Where needed, combine the engagement with AI security '
                             'consulting and training.'})]}
+
+# Keep project discovery in the research page's search/share description.
+PAGES['research']['description'] = bi(
+    '魏得恩 Te-En Wei（Wilbur Wei）的研究計畫與成果：FY115 國科會 LLM 驅動紅隊代理平台計畫、七筆論文發表紀錄與三項論文獎，以及通訊與硬體資安的未來研究規劃。',
+    'Research by Te-En Wei (Wilbur Wei): the FY115 NSTC LLM-driven red team agent platform project, seven publication records, three paper awards, and future communication and hardware security directions.')

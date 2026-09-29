@@ -1,3 +1,9 @@
+# v4 補充：FY115 國科會計畫
+
+新增「基於 LLM 驅動的紅隊代理攻防演練與場域模擬實戰平台」，英文為「LLM-Driven Red Team Agent Platform for Adversarial Drills and Real-World Scenario Simulation」。研究頁與 MIRAGE Lab 同步呈現，首頁研究區加入入口。執行年度標示 FY115（2026），保留原資安定位及 7 筆論文計數。
+
+---
+
 # v4 · 2026-09-29
 
 以 AI 資安為主要定位，保留原首頁與專業敘事；AI 賦能轉型列為延伸服務，新增中英文專頁、流程情境、試點規劃及洽詢入口。
