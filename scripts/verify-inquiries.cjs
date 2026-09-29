@@ -6,8 +6,8 @@ const path = require('path');
 
 (async () => {
   const browser = await chromium.launch({headless:true, channel:process.env.WILBUR_BROWSER_CHANNEL || 'chrome'});
-  const base = process.env.WILBUR_PREVIEW_URL || 'http://127.0.0.1:8768';
-  const output = process.env.WILBUR_QA_DIR || path.resolve(__dirname, '../../網站v3檢查');
+  const base = process.env.WILBUR_PREVIEW_URL || 'http://127.0.0.1:8769';
+  const output = process.env.WILBUR_QA_DIR || path.resolve(__dirname, '../../網站v4檢查');
   fs.mkdirSync(output, {recursive:true});
   const errors = [];
   let clicks = 0;
@@ -25,8 +25,8 @@ const path = require('path');
       for (const lang of ['', 'en/']) {
         await page.goto(`${base}/${lang}`, {waitUntil:'networkidle'});
         const triggers = page.locator('#contact [data-inquiry]');
-        assert.equal(await triggers.count(), 3);
-        for (let i=0;i<3;i++) {
+        assert.equal(await triggers.count(), 4);
+        for (let i=0;i<4;i++) {
           const link = triggers.nth(i);
           const source = new URL(await link.getAttribute('href'));
           await link.click();
@@ -102,9 +102,9 @@ const path = require('path');
     const plain = await noJS.newPage();
     await plain.goto(base+'/');
     assert(!await plain.locator('#inquiry-dialog').isVisible());
-    assert.equal(await plain.locator('#contact [data-inquiry][href^="mailto:"]').count(),3);
+    assert.equal(await plain.locator('#contact [data-inquiry][href^="mailto:"]').count(),4);
     assert.equal(errors.length,0,errors.join('\n'));
-    fs.writeFileSync(path.join(output,'inquiry-results.json'),JSON.stringify({inquiryChecks:clicks,errors,checks:['three actual clicks in both languages and viewports','draft editing and URL encoding','clipboard success/denial UI with test adapter','Escape and close restore focus','draft persistence within page','service-page inquiry','no-JS mailto fallback'],externalEmailActions:'not opened or sent'},null,2));
+    fs.writeFileSync(path.join(output,'inquiry-results.json'),JSON.stringify({inquiryChecks:clicks,errors,checks:['four actual clicks in both languages and viewports','draft editing and URL encoding','clipboard success/denial UI with test adapter','Escape and close restore focus','draft persistence within page','service-page inquiry','no-JS mailto fallback'],externalEmailActions:'not opened or sent'},null,2));
     console.log('PASS:',clicks,'inquiry flows; edit/copy/fallback/focus and no-JS checks. No email sent.');
   } finally {
     await browser.close();

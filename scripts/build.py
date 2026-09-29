@@ -16,6 +16,8 @@ sys.path.insert(0, str(ROOT / 'content'))
 from records import RECORDS, STATUS, bi
 from pages import PAGES, SERVICES, TOPICS, FAQ
 from lab import LAB_NAME, LAB_ZH, LAB_AFFILIATION, LAB_INTRO, LAB_DIRECTIONS
+from transformation import INTRO as TRANSFORMATION_INTRO, SCENARIOS, STEPS, ASKEY_TITLE, ASKEY_DESCRIPTION
+from research_directions import INTRO as FUTURE_INTRO, DIRECTIONS as FUTURE_DIRECTIONS
 from profile import FACULTY_URL, ROLES, METRICS, ACHIEVEMENT_INTRO, METRIC_CONTEXT, AWARD_DESCRIPTION
 PAPERS = json.loads((ROOT / 'content/publications.json').read_text())
 CONFIG = json.loads((ROOT / 'site.config.json').read_text())
@@ -51,9 +53,12 @@ class Page:
         return f'<a class="{css}" href="{self.href(slug, anchor=anchor)}">{e(label or self.t(PAGES[slug]["label"]))} <span aria-hidden="true">↗</span></a>'
     def mail(self, service):
         zh = self.lang == 'zh'
-        names = {'speaking':('演講邀約','Speaking inquiry'),'training':('企業內訓洽詢','Training inquiry'),'consulting':('顧問需求討論','Consulting inquiry')}
+        names = {'transformation':('AI 賦能轉型洽詢','AI transformation inquiry'),'speaking':('演講邀約','Speaking inquiry'),'training':('企業內訓洽詢','Training inquiry'),'consulting':('顧問需求討論','Consulting inquiry')}
         fields = (['單位／姓名','受眾與人數','主題／目標','日期／時長','地點或線上形式'] if service=='speaking' else ['單位／姓名','團隊角色與人數','現有工具／學習需求','期望成果','預計時程']) if service!='consulting' else ['單位／姓名','業務情境與導入階段','目前問題（請勿包含機密）','期望成果','預計時程']
         english = (['Organisation / name','Audience and size','Topic / goal','Date / duration','Location or online format'] if service=='speaking' else ['Organisation / name','Team roles and size','Tools / learning needs','Desired outcomes','Timeline']) if service!='consulting' else ['Organisation / name','Business context and deployment stage','Current problem (no confidential information)','Desired outcomes','Timeline']
+        if service == 'transformation':
+            fields = ['單位／姓名','想改善的工作流程','目前瓶頸（請勿包含機密）','現有工具與資料類型','期望改善的指標','預計時程']
+            english = ['Organisation / name','Workflow to improve','Current bottleneck (no confidential information)','Existing tools and data types','Desired improvement measures','Timeline']
         body = ('魏老師您好：\n\n' if zh else 'Hello Wilbur,\n\n') + '\n'.join(f'{x}: ' for x in (fields if zh else english))
         body += '\n\n' + ('得知管道（選填）: ' if zh else 'How you found me (optional): ')
         return 'mailto:' + EMAIL + '?' + urlencode({'subject':names[service][0 if zh else 1], 'body':body}, quote_via=quote)
@@ -88,7 +93,7 @@ def service_cards(c):
     cards=[]
     for i,(slug,title,subtitle,desc) in enumerate(SERVICES):
         cards.append(f'<article class="card"><span class="number">0{i+1} / {slug.upper()}</span><h3>{e(c.t(title))}</h3>{paragraph(c.t(subtitle))}{paragraph(c.t(desc))}{c.link(slug,c.l("了解合作方式","Explore this service"))}</article>')
-    return '<div class="grid-3">'+''.join(cards)+'</div>'
+    return '<div class="grid-2">'+''.join(cards)+'</div>'
 
 def faq(c,slug):
     items = ''.join(f'<details><summary>{e(c.t(q))}</summary>{paragraph(c.t(a))}</details>' for q,a in FAQ[slug])
@@ -115,6 +120,7 @@ def profile_section(c, id='about'):
                   'When AI agents begin executing tasks autonomously and generative AI enters core business systems, the attack surface changes fundamentally. As an AI security consultant and speaker, I study these emerging threats and help organisations think through their defensive architecture before deploying the technology.')
     title=c.l('一位在課堂、政府<br>與企業之間穿梭的<br>AI 資安顧問','An AI security consultant<br>across academia,<br>government and industry')
     left=f'<div class="profile-intro"><span class="eyebrow">{c.l("關於我 / ABOUT","ABOUT / PERSPECTIVE")}</span><h2>{title}</h2>'+paragraph(intro,'lead')+'<div class="profile-highlight">'+paragraph(highlight)+'</div>'+paragraph(c.l('這三個角色告訴我同一件事：AI 時代的資安問題，從來不只是技術問題，更是管理決策與組織文化的問題。','These three roles have taught me the same lesson: cybersecurity in the AI era is as much about management decisions and organisational culture as it is about technology.'))
+    left+=paragraph(c.l('在資安專業之外，也提供 AI 賦能轉型服務：協助企業盤點流程、評估 AI 導入機會，並結合團隊培訓與安全要求。','Alongside my security practice, I offer AI transformation services: assess workflows and adoption opportunities, with team training and security requirements considered together.'))+c.link('transformation',c.l('AI 賦能轉型服務','AI transformation services'))
     if c.slug!='about': left+=c.link('about',c.l('認識完整經歷','Explore my background'))
     return c.section('<div class="profile-layout">'+left+'</div><div class="profile-roles">'+''.join(role_cards)+'</div></div>',id=id)
 
@@ -127,10 +133,10 @@ def achievements_section(c):
 
 def home(c):
     hero_title=c.l('讓 AI 成為<br>你的<em>資安護盾</em>','Make AI<br>your <em>cyber shield</em>')
-    tags=[('primary','AI 資安講師','AI security speaker','speaking'),('primary','AI 資安顧問','AI security consultant','consulting'),('secondary','AI Agent 資安','AI agent security','consulting'),('secondary','生成式 AI 資安','Generative AI security','training'),('tertiary','零信任架構','Zero trust architecture','consulting')]
+    tags=[('primary','AI 資安講師','AI security speaker','speaking'),('primary','AI 資安顧問','AI security consultant','consulting'),('secondary','AI Agent 資安','AI agent security','consulting'),('secondary','生成式 AI 資安','Generative AI security','training'),('tertiary','零信任架構','Zero trust architecture','consulting'),('tertiary','AI 賦能轉型','AI transformation','transformation')]
     chips='<div class="hero-keywords">'+''.join(f'<a class="expertise-tag {color}" href="{c.href(slug)}">{e(c.l(zh,en))}</a>' for color,zh,en,slug in tags)+'</div>'
     actions=c.button(c.l('邀請演講／顧問洽詢','Speaking / consulting inquiry'),'#contact')+c.button(c.l('了解服務項目','Explore services'),'#services',True)
-    trust=[('10+',c.l('年產官學研資歷','years across industry, government and academia'),c.href('about')),('10+',c.l('政府與企業 AI 專案','government and enterprise AI projects'),c.href('consulting')),('6',c.l('篇共同研究論文｜2025–2026','co-authored papers · 2025–2026'),c.href('research')),('R&D 100',c.l('2022 全球百大研發獎','2022 R&D innovation recognition'),'#achievements')]
+    trust=[('10+',c.l('年產官學研資歷','years across industry, government and academia'),c.href('about')),('10+',c.l('政府與企業 AI 專案','government and enterprise AI projects'),c.href('consulting')),('7',c.l('筆論文發表紀錄｜2025–2026','publication records · 2025–2026'),c.href('research')),('R&D 100',c.l('2022 全球百大研發獎','2022 R&D innovation recognition'),'#achievements')]
     proof='<div class="hero-trust">'+''.join(f'<a href="{href}" class="trust-item"><strong class="trust-value{ " trust-award" if value=="R&D 100" else ""}">{e(value)}</strong><span>{e(label)}</span></a>' for value,label,href in trust)+'</div>'
     result=f'<section class="hero hero-profile" id="hero"><div class="wrap"><div class="hero-copy"><span class="eyebrow">{c.l("AI 資安講師 × AI 資安顧問・產官學研三棲專家","AI SECURITY SPEAKER × CONSULTANT · INDUSTRY / GOVERNMENT / ACADEMIA")}</span><h1>{hero_title}</h1>'+paragraph(c.l('魏得恩 Wilbur Wei｜元智大學資工系助理教授・MIRAGE Lab','Wilbur Wei / Te-En Wei · Assistant Professor, Yuan Ze University · MIRAGE Lab'),'identity')+'<p class="lead">'+c.l('從課堂到董事會，我幫組織把防禦落地。<br>專精 AI Agent 資安風險、生成式 AI 防護策略、零信任架構導入<br class="desktop-break">與 Active Directory 勒索軟體防禦。','From the classroom to the boardroom, I help organisations put defence into practice.<br>My work covers AI agent risks, generative AI security, zero trust architecture and Active Directory ransomware defence.')+'</p>'+chips+f'<div class="actions">{actions}</div></div>{proof}</div></section>'
     result+=profile_section(c)
@@ -138,7 +144,7 @@ def home(c):
     topics=''.join(f'<div class="topic"><h3>{e(c.t(t))}</h3>{paragraph(c.t(d))}</div>' for t,d in TOPICS)
     result+=c.section('<div class="split"><div><span class="eyebrow">FOCUS</span><h2>'+c.l('同時看見技術風險<br>與管理決策。','Technical risk.<br>Management decisions.')+'</h2>'+paragraph(c.l('從資料、權限到工作流程，讓 AI 安全與企業需求接得起來。','Connect AI security to your business through data, permissions and workflows.'))+'</div><div>'+topics+'</div></div>',id='topics')
     result+=achievements_section(c)
-    cards=''.join(record_card(c,next(r for r in RECORDS if r['id']==id),True) for id in ['A11','A1','A3','B1'])
+    cards=''.join(record_card(c,next(r for r in RECORDS if r['id']==id),True) for id in ['A11','A1','A2','B1'])
     result+=c.section(c.heading('SELECTED EXPERIENCE',c.l('不同受眾，不同的切入方式。','Different audiences. Different starting points.'),c.link('experience',c.l('查看完整紀錄','All records')))+'<div class="grid-2">'+cards+'</div>',id='portfolio',tinted=True)
     result+=c.section(c.heading('RESEARCH',c.l('以研究支撐專業判斷。','Research that informs practice.'),c.link('research',c.l('論文與獎項','Publications & awards')))+'<div class="grid-2">'+''.join(f'<article class="card"><span class="number">{p["year"]} / CISC</span><h3>{e(p["slug"].upper())}</h3>{paragraph(c.t(p["description"]))}{c.link("research",c.l("研究摘要與書目","Read the research"),p["slug"])}</article>' for p in [PAPERS[0],PAPERS[4]])+'</div>',id='research-highlights')
     result+=c.section(c.heading('COLLABORATION',c.l('產學合作，連結研究與實務。','Connecting research and industry.'))+'<div class="grid-2"><article class="card"><h3>'+c.l('竣盟科技｜Billows Tech.','Billows Tech.')+'</h3>'+paragraph(c.l('共同推動資安欺敵誘捕產學合作，結合學術研究與產業場景。','Industry–academia collaboration on cybersecurity deception, connecting research with operational contexts.'))+f'<a class="text-link" href="{NEWS}">{c.l("元智大學合作報導","Yuan Ze University report")} ↗</a></article><article class="card"><h3>'+c.l('勤晁科技｜Zyell Solutions','Zyell Solutions')+'</h3>'+paragraph(c.l('AI 驅動異常行為偵測引擎（SEDE）研發合作，聚焦以行為分析支持資安防禦。','Research collaboration on the SEDE AI-driven anomaly-detection engine, focusing on behavioural analysis for cyber defence.'))+f'<a class="text-link" href="{ZYELL_NEWS}">{c.l("元智資工勤晁合作公告","Yuan Ze–Zyell collaboration announcement")} ↗</a></article></div>',id='cases')
@@ -149,7 +155,7 @@ def lab_feature(c):
 <div class="lab-feature-logo"><img src="{c.asset('mirage-logo-white.png')}" width="688" height="764" loading="lazy" alt="MIRAGE Lab Logo"></div>
 <div><span class="eyebrow">YUAN ZE UNIVERSITY / CSE</span><h2>MIRAGE Lab</h2>
 <p class="lab-feature-name">{c.l(LAB_ZH,'AI agent security · Red teaming · Zero trust')}</p>
-{paragraph(c.l('元智大學資訊工程學系。從 AI 代理人的授權邊界，到攻防行為與信任評估，研究安全機制如何被設計與驗證。','Based in Computer Science and Engineering at Yuan Ze University. Studying the design and evaluation of security mechanisms through agent authorisation, adversarial behaviour and trust assessment.'))}
+{paragraph(c.l('元智大學資訊工程學系。研究 AI 代理人授權與攻防驗證，並規劃拓展至無人機、機器人通訊資安，以及 PUF 硬體資安應用。','Based in Computer Science and Engineering at Yuan Ze University. Research on AI agent authorisation and defence, with planned directions in communication security for drones and robots, and PUF hardware security applications.'))}
 {c.link('lab',c.l('認識 MIRAGE Lab','Explore MIRAGE Lab'))}</div></div></section>'''
 
 def lab(c):
@@ -163,7 +169,7 @@ def lab(c):
 <div class="lab-hero-grid"><div><span class="eyebrow">YUAN ZE UNIVERSITY / CSE</span><h1>MIRAGE Lab</h1>
 <p class="lab-subtitle">{LAB_ZH}</p><p class="lab-affiliation">{e(c.t(LAB_AFFILIATION))}</p>
 <p class="lab-statement">{c.l('理解攻擊如何發生，<br>驗證防禦如何成立。','Understand the attack.<br>Evaluate the defence.')}</p>
-<div class="anchor-nav"><a href="#lab-profile">{c.l('認識實驗室','About the lab')}</a><a href="#lab-directions">{c.l('研究方向','Research areas')}</a><a href="#lab-collaboration">{c.l('研究合作','Collaborate')}</a></div></div>
+<div class="anchor-nav"><a href="#lab-profile">{c.l('認識實驗室','About the lab')}</a><a href="#lab-directions">{c.l('研究方向','Research areas')}</a><a href="#emerging-directions">{c.l('未來方向','Future directions')}</a><a href="#lab-collaboration">{c.l('研究合作','Collaborate')}</a></div></div>
 <div class="lab-emblem"><img src="{c.asset('mirage-logo-white.png')}" width="688" height="764" alt="MIRAGE Lab — {LAB_ZH}"><span>AI AGENTS · RED TEAMING · ZERO TRUST</span></div></div></div></section>'''
     profile=f'''<div class="lab-profile-grid"><div><span class="eyebrow">THE LAB</span><h2>{c.l('從攻防情境，提出可以驗證的問題。','Turn attack and defence scenarios into testable questions.')}</h2></div><div>{paragraph(c.t(LAB_INTRO),'lead')}<div class="lab-advisor"><img src="{c.asset('mirage-logo-dark.png')}" width="688" height="764" loading="lazy" alt="MIRAGE Lab Logo"><span>{c.l('指導教師','Faculty advisor')}</span><strong>{c.l('魏得恩 Wilbur Wei','Wilbur Wei / Te-En Wei')}</strong><p>{c.l('元智大學資訊工程學系助理教授','Assistant Professor, Computer Science and Engineering, Yuan Ze University')}</p>{c.link('about',c.l('教師經歷與專業背景','Faculty background'))}</div></div></div>'''
     result+=c.section(profile,id='lab-profile')
@@ -172,35 +178,39 @@ def lab(c):
         links=''.join(c.link('research',label,slug) for slug,label in papers)
         directions.append(f'<article class="lab-research-card"><span class="number">{number}</span><h3>{e(c.t(title))}</h3><p class="lab-question">{e(c.t(question))}</p>{paragraph(c.t(desc))}<div class="lab-paper-links"><small>{c.l("相關研究","Related papers")}</small>{links}</div></article>')
     result+=c.section(c.heading('RESEARCH AREAS',c.l('三個相互連結的研究方向','Three connected research areas'))+'<div class="grid-3">'+''.join(directions)+'</div>',id='lab-directions',tinted=True)
+    result+=future_research(c)
     research_body=c.heading('RELATED PUBLICATIONS',c.l('以研究成果，說明問題與方法。','Explore the questions through published work.'),c.link('research',c.l('閱讀完整論文書目','Full publication list')))
     research_body+=paragraph(c.l('指導教師與共同作者的相關研究包含 AHAF、HMELF、MARS、STIE-ZTA，以及 AD 風險與 APT 情資分析。研究頁保留各篇論文的作者、發表出處及研究範圍。','Related work by the faculty advisor and co-authors includes AHAF, HMELF, MARS, STIE-ZTA, AD risk and APT intelligence analysis. The research page provides author lists, publication venues and the scope of each study.'))
     result+=c.section(research_body)
-    result+=f'''<section class="lab-collaboration" id="lab-collaboration"><div class="wrap lab-profile-grid"><div><span class="eyebrow">RESEARCH & COLLABORATION</span><h2>{c.l('一起釐清值得研究的問題。','Find a research question worth investigating.')}</h2></div><div>{paragraph(c.l('歡迎就 AI 代理人安全、攻防驗證、零信任與威脅分析討論學術或產學合作。來信可簡述研究問題、已有背景與合作構想。','For academic or industry research on AI agent security, adversarial evaluation, zero trust and threat analysis, share the research question, relevant background and your collaboration idea.'))}<div class="actions">{c.button(c.l('討論研究合作','Discuss research collaboration'),academic_mail)}</div><p class="lab-email"><a href="mailto:{ACADEMIC}">{ACADEMIC}</a></p></div></div></section>'''
+    result+=f'''<section class="lab-collaboration" id="lab-collaboration"><div class="wrap lab-profile-grid"><div><span class="eyebrow">RESEARCH & COLLABORATION</span><h2>{c.l('一起釐清值得研究的問題。','Find a research question worth investigating.')}</h2></div><div>{paragraph(c.l('歡迎就 AI 代理人安全、攻防驗證與零信任，以及規劃中的無人機／機器人通訊資安、PUF 硬體資安應用討論學術或產學合作。來信可簡述研究問題、已有背景與合作構想。','For academic or industry research on AI agent security and zero trust, or planned work on drone / robot communication security and PUF applications, share the research question, relevant background and your collaboration idea.'))}<div class="actions">{c.button(c.l('討論研究合作','Discuss research collaboration'),academic_mail)}</div><p class="lab-email"><a href="mailto:{ACADEMIC}">{ACADEMIC}</a></p></div></div></section>'''
     return result
 
 def speaking(c):
-    result=page_hero(c,c.l('讓受眾聽得懂，也知道如何行動。','Talks that connect understanding with action.'),c.l('為主管、產業公協會與教育機構，把 AI 風險轉成聽眾能判斷的情境。先確認受眾與活動目標，再選擇案例、深度與形式。','For leaders, industry associations and educators: turn AI risks into situations the audience can reason about. We start with the audience and the purpose of the event.'),[('talk-topics',c.l('演講方向','Topics')),('selected',c.l('代表紀錄','Selected records')),('faq',c.l('邀約問題','Questions'))])
+    result=page_hero(c,c.l('讓受眾聽得懂，也知道如何行動。','Talks that connect understanding with action.'),c.l('為主管、產業公協會與教育機構，把 AI 應用機會、流程改善與使用風險轉成聽眾能判斷的情境。先確認受眾與活動目標，再選擇案例、深度與形式。','For leaders, industry associations and educators: explore AI opportunities, workflow improvements and risks through situations the audience can reason about. We start with the audience and the purpose of the event.'),[('talk-topics',c.l('演講方向','Topics')),('selected',c.l('代表紀錄','Selected records')),('faq',c.l('邀約問題','Questions'))])
     result+=c.section(c.heading('TOPICS',c.l('可以從這些問題切入。','Questions we can explore together.'))+'<div class="grid-2">'+''.join(f'<article class="card"><h3>{e(c.t(t))}</h3>{paragraph(c.t(d))}</article>' for t,d in TOPICS)+'</div>',id='talk-topics')
-    result+=c.section(c.heading('SELECTED TALKS',c.l('從製造業現場到校務決策。','From manufacturing operations to campus decisions.'),c.link('experience',c.l('所有演講與授課','All speaking & teaching')))+record_list(c,['A11','A1','A3','A4','A9','A10']),id='selected',tinted=True)
+    result+=c.section(c.heading('SELECTED TALKS',c.l('從製造業現場到校務決策。','From manufacturing operations to campus decisions.'),c.link('experience',c.l('所有演講與授課','All speaking & teaching')))+record_list(c,['A11','A1','A2','A3','A4','A9','A10']),id='selected',tinted=True)
     result+=c.section(c.heading('FORMAT',c.l('時長與互動，配合活動目的。','A format that fits the purpose.'))+paragraph(c.l('已有研討會短講、兩小時研習及三小時企業培訓紀錄。可以討論案例解說、問答與情境練習的配置；課程時數依活動與學習目標確認。','Past engagements include conference talks, two-hour seminars and three-hour corporate sessions. We can discuss the balance of examples, questions and scenario exercises.'))+c.button(c.l('提供活動需求','Send an event brief'),c.mail('speaking')))
+    result+=c.section(c.heading('UPCOMING',c.l('已排定的演講','Scheduled talks'))+record_list(c,['A7','A12','A13','A14','A15','A16','A17']),id='upcoming')
     return result+faq(c,'speaking')
 
 def training(c):
     result=page_hero(c,c.l('把安全判斷，練進團隊的工作裡。','Build security judgement into the team’s work.'),c.l('從管理者、一般同仁到技術團隊，依工作情境安排課綱與練習。先了解現有工具與學習目標，再討論時數、環境與交付方式。','For managers, general staff and technical teams. We shape the curriculum around work scenarios, existing tools and learning goals before deciding on duration and exercises.'),[('audiences',c.l('分眾課程','Audiences')),('courses',c.l('歷年課程','Course records')),('methods',c.l('教材方法','Courseware'))])
-    audiences=[(bi('主管與管理團隊','Leaders and managers'),bi('AI 導入風險、資料使用界線、零信任與治理決策。','AI adoption risks, data boundaries, zero trust and governance decisions.')),(bi('一般同仁與跨部門團隊','General staff and cross-functional teams'),bi('AI 工具安全使用、資料判斷、查核與改寫，從日常工作建立習慣。','Safe AI use, data handling, verification and rewriting in everyday work.')),(bi('資安、IT 與研發團隊','Security, IT and engineering teams'),bi('LLM 威脅建模、AI 輔助 SOC、滲透與誘捕防禦，依先備能力安排實作。','LLM threat modelling, AI-assisted SOC work, penetration testing and deception labs matched to prerequisites.'))]
+    audiences=[(bi('主管與管理團隊','Leaders and managers'),bi('AI 應用情境排序、流程效益評估、導入風險與治理決策。','AI use-case priorities, workflow value, adoption risks and governance decisions.')),(bi('一般同仁與跨部門團隊','General staff and cross-functional teams'),bi('文件整理、企業知識查詢與 AI 工作流，搭配資料判斷、查核與安全使用。','Document workflows, internal knowledge queries and AI-assisted work, with data handling, verification and safe use.')),(bi('資安、IT 與研發團隊','Security, IT and engineering teams'),bi('AI 工具串接與試點評估、LLM 威脅建模、AI 輔助 SOC、滲透與誘捕防禦，依先備能力安排實作。','AI tool integration and pilot evaluation, LLM threat modelling, AI-assisted SOC work, penetration testing and deception labs matched to prerequisites.'))]
     result+=c.section(c.heading('AUDIENCES',c.l('先確認誰要學，再決定怎麼教。','Start with who is learning.'))+'<div class="grid-3">'+''.join(f'<article class="card"><h3>{e(c.t(t))}</h3>{paragraph(c.t(d))}</article>' for t,d in audiences)+'</div>',id='audiences')
     result+=c.section(c.heading('COURSE RECORDS',c.l('自強基金會｜2024–2026','TCFST | 2024–2026'))+paragraph(c.l('以下為自強基金會課程紀錄與 2026 年課程介紹。每筆保留進行狀態，方便參考主題與內容深度。','Past courses and 2026 course overviews at Tze-Chiang Foundation of Science & Technology. Each entry retains its status.'))+record_list(c,['B1','B6','B7','B9','B10','B11','B8']),id='courses',tinted=True)
     result+=c.section(c.heading('GOVERNMENT TRAINING',c.l('資安署相關授課經驗','Government training experience'))+record_list(c,['B12','B14'])+c.link('experience',c.l('查看授課與合作紀錄','View teaching and collaboration records')))
+    result+=transformation_training(c)
     result+=c.section(c.heading('COURSEWARE',c.l('課綱之外，也準備好學習環境。','Prepare the learning environment, too.'))+paragraph(c.l('教材製作包含來源查核、學員環境實跑與情境練習設計。以合成資料或適合教學的案例支持練習，並依課程需求確認工具與版本。','Courseware development includes source verification, testing in the learner’s environment and scenario design. Exercises use synthetic data or suitable teaching cases, with tools and versions checked for each course.'))+c.link('teaching',c.l('閱讀教材與教學方法','Read the teaching approach')),id='methods',tinted=True)
     return result+faq(c,'training')
 
 def consulting(c):
-    result=page_hero(c,c.l('讓安全要求，進入真正的導入決策。','Bring security into deployment decisions.'),c.l('從你的業務情境與系統現況出發，釐清 AI、存取控制及資安治理問題，討論可執行的改善順序。','Start with your business context and systems, clarify AI and access-control risks, and agree on actionable security priorities.'),[('scope',c.l('顧問方向','Areas')),('process',c.l('合作流程','Process')),('evidence',c.l('相關經驗','Experience'))])
-    scopes=[(bi('AI 系統與 Agent 安全','AI systems and agent security'),bi('梳理模型、工具、資料與使用者之間的信任邊界，討論提示注入、權限與人工確認。','Map trust boundaries across models, tools, data and users; discuss prompt injection, permissions and human approval.')),(bi('零信任與 AD 風險','Zero trust and AD risk'),bi('從身分、存取路徑與帳號影響程度，討論架構與改善優先順序。','Review identity, access paths and account impact to prioritise architectural improvements.')),(bi('AI 輔助偵測與安全營運','AI-assisted detection and operations'),bi('評估資料、偵測方法與工作流程的配合方式，討論誤報、分析依據與人員決策。','Examine how data, detection methods and workflows fit together, including false alerts, evidence and analyst decisions.')),(bi('治理與稽核準備','Governance and audit preparation'),bi('盤點政策、控制措施及證據，協助團隊釐清資安治理與 ISO 27001 相關準備工作。','Review policies, controls and evidence to clarify security governance and ISO 27001 preparation work.'))]
+    result=page_hero(c,c.l('讓安全要求，進入真正的導入決策。','Bring security into deployment decisions.'),c.l('從你的業務情境與系統現況出發，釐清流程瓶頸、AI 導入機會與安全要求，討論可執行的改善順序。','Start with your business context and systems, clarify workflow bottlenecks, AI opportunities and security requirements, and agree on practical priorities.'),[('scope',c.l('顧問方向','Areas')),('process',c.l('合作流程','Process')),('evidence',c.l('相關經驗','Experience'))])
+    scopes=[(bi('AI 系統與 Agent 安全','AI systems and agent security'),bi('梳理模型、工具、資料與使用者之間的信任邊界，討論提示注入、權限與人工確認。','Map trust boundaries across models, tools, data and users; discuss prompt injection, permissions and human approval.')),(bi('零信任與 AD 風險','Zero trust and AD risk'),bi('從身分、存取路徑與帳號影響程度，討論架構與改善優先順序。','Review identity, access paths and account impact to prioritise architectural improvements.')),(bi('AI 輔助偵測與安全營運','AI-assisted detection and operations'),bi('評估資料、偵測方法與工作流程的配合方式，討論誤報、分析依據與人員決策。','Examine how data, detection methods and workflows fit together, including false alerts, evidence and analyst decisions.')),(bi('治理與稽核準備','Governance and audit preparation'),bi('盤點政策、控制措施及證據，協助團隊釐清資安治理與 ISO 27001 相關準備工作。','Review policies, controls and evidence to clarify security governance and ISO 27001 preparation work.')),(bi('AI 導入與流程優化','AI adoption and workflow improvement'),bi('盤點重複作業、資料與工具，提出導入情境與試點優先順序。','Review repetitive tasks, data and tools to identify use cases and pilot priorities.')),(bi('試點規劃與團隊導入','Pilot planning and team adoption'),bi('約定成效指標、人的查核責任與操作流程，結合培訓協助團隊接手。','Agree on evaluation measures, human review responsibilities and procedures, with training to help teams take over.'))]
     result+=c.section(c.heading('SCOPE',c.l('可以一起釐清的問題。','Areas we can work through.'))+'<div class="grid-2">'+''.join(f'<article class="card"><h3>{e(c.t(t))}</h3>{paragraph(c.t(d))}</article>' for t,d in scopes)+'</div>',id='scope')
     steps=[(bi('需求與範圍','Context and scope'),bi('確認業務情境、決策者、導入階段與期望成果。','Agree on the business context, decision-makers, deployment stage and outcomes.')),(bi('盤點與評估','Review and assessment'),bi('依約定範圍檢視架構、資料流程、權限與現有控制。','Review architecture, data flows, permissions and existing controls within the agreed scope.')),(bi('建議與優先順序','Recommendations and priorities'),bi('將風險連到控制建議，討論可行性、責任與改善順序。','Connect risks to controls and discuss feasibility, responsibilities and priorities.')),(bi('交付與後續討論','Deliverables and follow-through'),bi('依約定提供分析與建議，必要時搭配內訓或後續顧問討論。','Deliver the agreed analysis and recommendations, with training or follow-up advice where appropriate.'))]
     result+=c.section('<div class="split"><div><span class="eyebrow">PROCESS</span><h2>'+c.l('先把範圍說清楚。','Start with a clear scope.')+'</h2>'+paragraph(c.l('可討論專案或持續顧問形式，依問題規模與團隊需要確認。','Project-based or ongoing advice can be discussed according to the problem and the team’s needs.'))+'</div><ol class="process">'+''.join(f'<li><div><h3>{e(c.t(t))}</h3>{paragraph(c.t(d))}</div></li>' for t,d in steps)+'</ol></div>',id='process',tinted=True)
     result+=c.section(c.heading('EXPERIENCE & RESEARCH',c.l('從產學合作與研究，累積判斷依據。','Experience and research behind the advice.'))+'<div class="grid-2"><article class="card"><h3>'+c.l('Billows Tech.／Zyell Solutions','Billows Tech. / Zyell Solutions')+'</h3>'+paragraph(c.l('竣盟科技的資安欺敵誘捕平台產學合作，以及勤晁科技的 SEDE 異常行為偵測研發，連結研究方法與企業問題。','Collaboration with Billows Tech. on deception technology and with Zyell Solutions on SEDE anomaly detection connects research methods with industry problems.'))+f'<div class="evidence-links"><a class="text-link" href="{NEWS}">{c.l("竣盟合作報導","Billows Tech. collaboration report")} ↗</a><a class="text-link" href="{ZYELL_NEWS}">{c.l("勤晁合作報導","Zyell Solutions collaboration announcement")} ↗</a></div></article><article class="card"><h3>AHAF / STIE-ZTA / AD Risk</h3>'+paragraph(c.l('AI Agent 授權、持續信任評估與 AD 帳號風險研究，支援顧問需求的討論。研究結果保留各自實驗範圍。','Research on agent authorisation, continuous trust evaluation and AD account risk informs consulting discussions, within each study’s scope.'))+c.link('research',c.l('查看研究依據','Explore the research'))+'</article></div>',id='evidence')
+    result+=askey_case(c)
     result+=c.section(c.heading('START A CONVERSATION',c.l('用一段需求說明，開始討論。','Start with a short brief.'))+paragraph(c.l('請先提供不含機密的背景、問題與期望成果。我們再確認評估範圍、所需資料、時程與交付方式。','Send a non-confidential outline of your context, problem and desired outcome. We can then agree on the scope, inputs, timeline and deliverables.'))+c.button(c.l('討論顧問需求','Discuss consulting'),c.mail('consulting')),tinted=True)
     return result+faq(c,'consulting')
 
@@ -209,20 +219,26 @@ def experience(c):
     kinds=[('',bi('全部類型','All types')),('talk',bi('演講','Talks')),('course',bi('課程','Courses')),('series',bi('系列課程','Course series')),('workshop',bi('工作坊設計','Workshop design')),('teaching',bi('教材','Courseware')),('collaboration',bi('授課合作','Teaching collaboration'))]
     filters=f'<div class="filter-bar" id="record-filters" hidden><label for="record-search">{c.l("搜尋主題或單位","Search topics or organisations")}<input type="search" id="record-search" placeholder="{c.l("例如：零信任、自強基金會","e.g. zero trust, TCFST")}"></label><label for="record-kind">{c.l("類型","Type")}<select id="record-kind">'+''.join(f'<option value="{key}">{e(c.t(label))}</option>' for key,label in kinds)+f'</select></label><div id="record-count" class="filter-count" aria-live="polite"></div></div>'
     records=sorted(RECORDS,key=lambda r:-(r['year'] or 0))
-    result+=c.section(filters+''.join(record_card(c,r) for r in records)+f'<p id="record-empty" class="empty-state" hidden>{c.l("沒有符合的紀錄，請更換關鍵字或類型。","No matching records. Try a different term or category.")}</p>'+paragraph(c.l('紀錄更新：2026 年 9 月。課程設計與籌備項目依狀態標示。','Records updated September 2026. Curriculum design and planned courses are labelled accordingly.'),'status-note'))
+    result+=c.section(filters+''.join(record_card(c,r) for r in records)+f'<p id="record-empty" class="empty-state" hidden>{c.l("沒有符合的紀錄，請更換關鍵字或類型。","No matching records. Try a different term or category.")}</p>'+paragraph(c.l('紀錄更新：2026 年 9 月 29 日。課程設計與籌備項目依狀態標示。','Records updated 29 September 2026. Curriculum design and planned courses are labelled accordingly.'),'status-note'))
     return result
 
 def research(c):
-    result=page_hero(c,c.l('從 AI 代理人到零信任，研究防禦如何成立。','Studying how defence works—from AI agents to zero trust.'),c.l('魏得恩／Te-En Wei（Wilbur Wei）與共同作者的研究成果。MIRAGE Lab 關注 AI Agent 授權、AI 輔助資安、加密橫向移動與風險評估。','Publications by Te-En Wei (Wilbur Wei) and co-authors. MIRAGE Lab focuses on agent authorisation, AI-assisted security, encrypted lateral movement and risk assessment.'),[('awards',c.l('論文獎','Paper awards')),('publications',c.l('論文書目','Publications'))])
+    result=page_hero(c,c.l('從 AI 資安，延伸至通訊與硬體的信任。','From AI security to trust in communications and hardware.'),c.l('魏得恩／Te-En Wei（Wilbur Wei）與共同作者的研究成果。既有成果涵蓋 AI Agent、零信任與風險評估；接下來規劃深耕無人機與機器人通訊資安，以及 PUF 硬體資安應用。','Publications by Te-En Wei (Wilbur Wei) and co-authors. Published work covers AI agents, zero trust and risk assessment. Future directions include drone and robot communication security, and PUF hardware security applications.'),[('emerging-directions',c.l('未來研究方向','Future directions')),('awards',c.l('論文獎','Paper awards')),('publications',c.l('論文書目','Publications'))])
     result+=f'<div class="lab-related"><div class="wrap"><span>{c.l("元智大學資訊工程學系 · MIRAGE Lab", "Yuan Ze University · MIRAGE Lab")}</span>{c.link("lab",c.l("認識實驗室與研究方向","Meet the lab"))}</div></div>'
+    result+=future_research(c)
     awards=''.join(f'<article class="award"><span class="year">CISC {p["year"]}</span><h3>{e(c.t(p["award"]))}</h3><p>{e(p["slug"].upper())}</p><a href="#{p["slug"]}">{c.l("閱讀獲獎論文摘要","Read the awarded paper")} ↗</a></article>' for p in PAPERS if p['award'])
     result+=c.section(c.heading('RECOGNITION',c.l('三項共同研究論文獎','Three awards for co-authored papers'))+'<div class="award-list">'+awards+'</div>',id='awards',tinted=True)
     articles=[]
     for p in PAPERS:
         authors='、'.join(f'<strong>{e(a)}</strong>' if a in ['魏得恩','Te-En Wei'] else e(a) for a in p['authors'])
-        articles.append(f'<article class="publication" id="{p["slug"]}"><span class="eyebrow">{p["year"]} / {p["slug"].upper()}</span><h3>{e(p["title"])}</h3><p class="authors">{authors}</p><p class="meta">{e(c.t(p["venue"]))}</p>{paragraph(c.t(p["description"]))}<div class="pub-links">{c.link("consulting",c.l("相關顧問需求","Discuss related consulting"))}{c.link("training",c.l("相關內訓方向","Explore training"))}</div></article>')
-    result+=c.section(c.heading('PUBLICATIONS · 2025–2026',c.l('六篇論文：五篇會議、一篇期刊','Six papers: five conference papers and one journal article'))+''.join(articles),id='publications')
-    result+=c.section(paragraph(c.l('學術書目使用論文發表時的題名與作者順序；期刊論文的會議前身不另計一篇。若需討論研究合作或取得進一步書目資訊，歡迎透過學術信箱聯絡。','Titles and author order follow the publication records. The journal article’s earlier conference version is not counted again. For research collaboration or further bibliographic details, please use the academic email.'))+f'<a href="mailto:{ACADEMIC}">{ACADEMIC}</a>',tinted=True)
+        extra=paragraph(p['alternate_title'],'original-title') if p.get('alternate_title') else ''
+        if p.get('source_url'):
+            extra+=f'<a class="text-link" href="{e(p["source_url"],quote=True)}">{c.l("學會期刊原文與書目","Journal article and citation")} ↗</a>'+paragraph(c.t(p['source_note']),'notice')
+        if p.get('related_slug'):
+            extra+='<div class="publication-version">'+paragraph(c.t(p['version_note']))+c.link('research',c.l('查看相關版本','Related version'),p['related_slug'])+'</div>'
+        articles.append(f'<article class="publication" id="{p["slug"]}"><span class="eyebrow">{p["year"]} / {p["slug"].upper()}</span><h3>{e(p["title"])}</h3><p class="authors">{authors}</p><p class="meta">{e(c.t(p["venue"]))}</p>{paragraph(c.t(p["description"]))}{extra}<div class="pub-links">{c.link("consulting",c.l("相關顧問需求","Discuss related consulting"))}{c.link("training",c.l("相關內訓方向","Explore training"))}</div></article>')
+    result+=c.section(c.heading('PUBLICATIONS · 2025–2026',c.l('七筆發表紀錄：六篇會議、一篇期刊','Seven records: six conference papers and one journal article'))+''.join(articles),id='publications')
+    result+=c.section(paragraph(c.l('學術書目保留各版本的題名與作者順序。七筆發表紀錄包含 APT 情資研究的會議與期刊版本，兩者屬於同一研究脈絡，並非七項互不相關的研究。若需討論研究合作或取得進一步書目資訊，歡迎透過學術信箱聯絡。','Titles and author order follow each publication version. The seven records include the conference and journal versions of the APT intelligence study; these are related publications, not seven independent studies. For research collaboration or further bibliographic details, please use the academic email.'))+f'<a href="mailto:{ACADEMIC}">{ACADEMIC}</a>',tinted=True)
     return result
 
 def about(c):
@@ -241,10 +257,40 @@ def teaching(c):
     result+=c.section(c.heading('IN DEVELOPMENT',c.l('持續開發的教學內容','Teaching content in development'))+record_list(c,['B3'])+c.link('training',c.l('討論內訓需求','Explore training options')))
     return result
 
-RENDERERS={'':home,'speaking':speaking,'training':training,'consulting':consulting,'experience':experience,'research':research,'about':about,'teaching':teaching,'lab':lab}
+
+def transformation_feature(c):
+    return c.section(c.heading('AI TRANSFORMATION',c.l('從一段值得改善的流程開始。','Start with one workflow worth improving.'))+paragraph(c.t(TRANSFORMATION_INTRO))+c.link('transformation',c.l('查看導入方式與合作經驗','Explore the approach and experience')),id='ai-transformation',tinted=True)
+
+def askey_case(c):
+    return c.section(c.heading('COLLABORATION EXPERIENCE',c.l('企業合作經驗','Industry collaboration'))+f'<article class="case-summary"><h3>{e(c.t(ASKEY_TITLE))}</h3>'+paragraph(c.t(ASKEY_DESCRIPTION))+c.link('consulting' if c.slug=='transformation' else 'transformation',c.l('討論相關合作方式','Explore engagement options'))+'</article>',id='askey-transformation',tinted=True)
+
+def transformation_training(c):
+    items=[(bi('帶入工作中的一段流程','Bring a workflow from everyday work'),bi('選出耗時的步驟與可用資料，畫出導入前後的分工。','Identify time-consuming steps and available data, then map responsibilities before and after AI adoption.')),(bi('做出可查核的 AI 工作成果','Produce AI-assisted work that can be checked'),bi('練習摘要、資料整理、初稿或知識查詢，建立查核清單。','Practise summarisation, information organisation, drafting or knowledge queries, with a review checklist.')),(bi('讓同仁能持續使用','Help staff continue using the workflow'),bi('整理操作 SOP、例外處理與成效紀錄方式，討論回到工作現場如何調整。','Document procedures, exceptions and evaluation methods, then discuss adaptation to the workplace.'))]
+    cards=''.join(f'<article class="card"><h3>{e(c.t(t))}</h3>{paragraph(c.t(d))}</article>' for t,d in items)
+    return c.section(c.heading('AI WORKFLOW TRAINING',c.l('以工作成果為目標的內訓規劃','Training designed around work outputs'))+paragraph(c.l('以下可作為企業專屬課程的設計方向，練習內容與工具依團隊需求確認。','These are possible directions for a tailored programme. Exercises and tools are agreed around the team’s needs.'))+'<div class="grid-3">'+cards+'</div>'+c.link('transformation',c.l('把內訓接到 AI 導入規劃','Connect training with AI adoption')),id='workflow-training')
+
+def future_research(c):
+    cards=[]
+    for id,title,question,desc in FUTURE_DIRECTIONS:
+        cards.append(f'<article class="card future-research-card" id="{id}"><span class="tag status-preparation">{c.l("研究規劃","Planned research")}</span><h3>{e(c.t(title))}</h3><p class="research-question">{e(c.t(question))}</p>{paragraph(c.t(desc))}</article>')
+    return c.section(c.heading('FUTURE RESEARCH',c.l('下一步：通訊資安與硬體資安','Next: communication and hardware security'))+paragraph(c.t(FUTURE_INTRO))+'<div class="grid-2">'+''.join(cards)+'</div>'+paragraph(c.l('這兩項為未來研究方向；已發表論文與獎項另列於研究成果中。','These are prospective directions. Published papers and awards are listed separately.'),'status-note'),id='emerging-directions')
+
+def transformation(c):
+    result=page_hero(c,c.l('讓 AI 導入，成為工作流程的改善。','Turn AI adoption into better workflows.'),c.t(TRANSFORMATION_INTRO),[('use-cases',c.l('應用情境','Use cases')),('adoption-process',c.l('導入方式','Approach')),('askey-transformation',c.l('合作經驗','Experience')),('faq',c.l('常見問題','Questions'))])
+    cards=[]
+    for title,desc,metrics in SCENARIOS:
+        cards.append(f'<article class="card"><h3>{e(c.t(title))}</h3>{paragraph(c.t(desc))}<p class="measure"><strong>{c.l("可觀察指標：","Possible measures: ")}</strong>{e(c.t(metrics))}</p></article>')
+    result+=c.section(c.heading('BUSINESS USE CASES',c.l('先找出要改善的工作。','Identify the work to improve.'))+paragraph(c.l('以下是可討論的導入情境；依企業現況評估可行性與優先順序。','The following are potential use cases. Feasibility and priority depend on the organisation’s context.'))+'<div class="grid-2">'+''.join(cards)+'</div>',id='use-cases')
+    result+=c.section(c.heading('ADOPTION APPROACH',c.l('從盤點到試點，再讓團隊接手。','Assess, pilot and help the team take over.'))+'<ol class="process">'+''.join(f'<li><div><h3>{e(c.t(t))}</h3>{paragraph(c.t(d))}</div></li>' for t,d in STEPS)+'</ol>',id='adoption-process',tinted=True)
+    result+=askey_case(c)
+    result+=c.section(c.heading('RELATED EXPERIENCE',c.l('把流程改善帶進演講與課程設計。','Bringing workflow improvement into talks and course design.'))+record_list(c,['A2','A6'])+c.link('experience',c.l('查看所有演講與授課紀錄','All speaking and teaching records')))
+    result+=c.section(c.heading('WORK TOGETHER',c.l('讓需求決定合作方式。','Choose the format around your needs.'))+paragraph(c.l('可從主管演講建立共識，以內訓讓同仁練習，或透過顧問合作盤點流程、規劃試點與量測方式。交付項目、系統串接範圍與時程會在合作前確認。','Start with a leadership talk, give staff practice through training, or use consulting to map workflows and plan pilots and evaluation. Deliverables, integration scope and timing are agreed before the engagement.'))+'<div class="actions">'+c.button(c.l('提供流程改善需求','Share a workflow brief'),c.mail('transformation'))+c.button(c.l('查看企業內訓','Explore corporate training'),c.href('training'),True)+'</div>')
+    return result+faq(c,'transformation')
+
+RENDERERS={'transformation':transformation,'':home,'speaking':speaking,'training':training,'consulting':consulting,'experience':experience,'research':research,'about':about,'teaching':teaching,'lab':lab}
 
 def contact(c):
-    return f'<section class="contact" id="contact"><div class="wrap contact-grid"><div><span class="eyebrow">LET’S TALK</span><h2>{c.l("從你的情境，開始討論。","Tell me about your context.")}</h2>'+paragraph(c.l('提供活動或團隊背景、想解決的問題與預計時程，就能開始討論合適的合作方式。','Share your event or team context, the problem to address and the expected timeline.'))+f'<div class="actions">{c.button(c.l("演講邀約","Speaking"),c.mail("speaking"))}{c.button(c.l("內訓洽詢","Training"),c.mail("training"))}{c.button(c.l("顧問需求","Consulting"),c.mail("consulting"))}</div></div><div><div class="email-block"><small>{c.l("演講、企業內訓與顧問","Speaking, training and consulting")}</small><a href="mailto:{EMAIL}">{EMAIL}</a></div><div class="email-block"><small>{c.l("學術與產學合作","Academic and industry research")}</small><a href="mailto:{ACADEMIC}">{ACADEMIC}</a></div><p class="status-note">{c.l("點選邀約可準備洽詢內容，再複製或選擇郵件方式寄出。","Prepare an inquiry, then copy it or choose an email option to send it.")}</p></div></div></section>'
+    return f'<section class="contact" id="contact"><div class="wrap contact-grid"><div><span class="eyebrow">LET’S TALK</span><h2>{c.l("從你的情境，開始討論。","Tell me about your context.")}</h2>'+paragraph(c.l('提供活動或團隊背景、想解決的問題與預計時程，就能開始討論合適的合作方式。','Share your event or team context, the problem to address and the expected timeline.'))+f'<div class="actions">{c.button(c.l("演講邀約","Speaking"),c.mail("speaking"))}{c.button(c.l("內訓洽詢","Training"),c.mail("training"))}{c.button(c.l("顧問需求","Consulting"),c.mail("consulting"))}{c.button(c.l("AI 賦能轉型","AI transformation"),c.mail("transformation"))}</div></div><div><div class="email-block"><small>{c.l("演講、內訓、資安顧問與 AI 賦能轉型","Speaking, training, security consulting and AI transformation")}</small><a href="mailto:{EMAIL}">{EMAIL}</a></div><div class="email-block"><small>{c.l("學術與產學合作","Academic and industry research")}</small><a href="mailto:{ACADEMIC}">{ACADEMIC}</a></div><p class="status-note">{c.l("點選邀約可準備洽詢內容，再複製或選擇郵件方式寄出。","Prepare an inquiry, then copy it or choose an email option to send it.")}</p></div></div></section>'
 
 def inquiry_dialog(c):
     return f'''<dialog id="inquiry-dialog" class="inquiry-dialog" aria-labelledby="inquiry-title" aria-describedby="inquiry-intro">
@@ -263,7 +309,7 @@ def inquiry_dialog(c):
 def schema(c):
     pid=c.base+'#person'
     lang='zh-Hant' if c.lang=='zh' else 'en'
-    graph=[{'@type':'Person','@id':pid,'name':'魏得恩' if c.lang=='zh' else 'Wilbur Wei','alternateName':['Wilbur Wei','Te-En Wei','魏得恩'],'url':c.url('about'),'jobTitle':c.l('元智大學資訊工程學系助理教授；AI 資安講師與顧問','Assistant Professor; AI security speaker and consultant'),'worksFor':{'@type':'CollegeOrUniversity','name':c.l('元智大學','Yuan Ze University'),'url':'https://www.yzu.edu.tw/'},'knowsAbout':['AI Agent Security','LLM Threat Modeling','Zero Trust Architecture','AI for Cybersecurity','Active Directory Security'],'email':EMAIL,'sameAs':[FACULTY_URL]},
+    graph=[{'@type':'Person','@id':pid,'name':'魏得恩' if c.lang=='zh' else 'Wilbur Wei','alternateName':['Wilbur Wei','Te-En Wei','魏得恩'],'url':c.url('about'),'jobTitle':c.l('元智大學資訊工程學系助理教授；AI 資安講師與顧問','Assistant Professor; AI security speaker and consultant'),'worksFor':{'@type':'CollegeOrUniversity','name':c.l('元智大學','Yuan Ze University'),'url':'https://www.yzu.edu.tw/'},'knowsAbout':['AI-enabled Business Transformation','Business Workflow Improvement','AI Agent Security','LLM Threat Modeling','Zero Trust Architecture','AI for Cybersecurity','Active Directory Security'],'email':EMAIL,'sameAs':[FACULTY_URL]},
     {'@type':'WebSite','@id':c.base+'#website','url':c.base,'name':'Wilbur Wei · AI Security','inLanguage':['zh-Hant','en'],'publisher':{'@id':pid}},
     {'@type':'ProfilePage' if c.slug=='about' else 'WebPage','@id':c.url()+'#webpage','url':c.url(),'name':c.t(PAGES[c.slug]['title']),'description':c.t(PAGES[c.slug]['description']),'inLanguage':lang,'isPartOf':{'@id':c.base+'#website'},'about':{'@id':pid}}]
     if c.slug == 'about':
@@ -281,18 +327,23 @@ def schema(c):
                       'member':{'@id':pid},'email':ACADEMIC})
     if c.slug:
         graph.append({'@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':1,'name':c.l('首頁','Home'),'item':c.url('')},{'@type':'ListItem','position':2,'name':c.t(PAGES[c.slug]['label']),'item':c.url()}]})
-    if c.slug in ['speaking','training','consulting']:
+    if c.slug in ['transformation','speaking','training','consulting']:
         svc=next(s for s in SERVICES if s[0]==c.slug)
         graph.append({'@type':'Service','@id':c.url()+'#service','name':c.t(svc[1]),'description':c.t(svc[3]),'provider':{'@id':pid},'url':c.url()})
     if c.slug=='research':
         for p in PAPERS:
             graph.append({'@type':'ScholarlyArticle','@id':c.url()+'#'+p['slug'],'headline':p['title'],'url':c.url()+'#'+p['slug'],'author':[{'@id':pid} if a in ['Te-En Wei','魏得恩'] else {'@type':'Person','name':a} for a in p['authors']],'abstract':c.t(p['description']),'citation':c.t(p['venue'])})
+    if c.slug=='research':
+        for article,p in zip([node for node in graph if node['@type']=='ScholarlyArticle'],PAPERS):
+            if p.get('alternate_title'): article['alternativeHeadline']=p['alternate_title']
+            if p.get('source_url'): article['sameAs']=p['source_url']
+            if p['slug']=='apt-intelligence': article['isBasedOn']={'@id':c.url()+'#'+p['related_slug']}
     return {'@context':'https://schema.org','@graph':graph}
 
 def render(c):
     meta=PAGES[c.slug]
     lang='zh-Hant' if c.lang=='zh' else 'en'
-    nav=''.join(f'<a href="{c.href(slug)}"'+(' aria-current="page"' if c.slug==slug else '')+f'>{e(c.t(PAGES[slug]["label"]))}</a>' for slug in ['speaking','training','consulting','experience','research','lab','about'])
+    nav=''.join(f'<a href="{c.href(slug)}"'+(' aria-current="page"' if c.slug==slug else '')+f'>{e(c.t(PAGES[slug]["label"]))}</a>' for slug in ['speaking','training','consulting','transformation','experience','research','lab','about'])
     language=c.href(c.slug,'en' if c.lang=='zh' else 'zh')
     alternates=''.join(f'<link rel="alternate" hreflang="{hl}" href="{e(c.url(lang=l))}">' for hl,l in [('zh-Hant','zh'),('en','en'),('x-default','zh')])
     body=RENDERERS[c.slug](c)

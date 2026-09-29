@@ -25,3 +25,7 @@ LAB_DIRECTIONS = [
         'Connect continuous trust inference, Active Directory account risk and APT intelligence to access and defence decisions grounded in multiple sources of evidence.'),
      [('stie-zta', 'STIE-ZTA'), ('ad-risk', 'AD Risk'), ('apt-intelligence', 'APT Intelligence')]),
 ]
+
+# Prospective scope is also exposed in the visible intro and Organization description.
+LAB_INTRO["zh"] += " 接下來規劃深耕無人機與機器人通訊資安，以及 PUF 硬體資安應用。"
+LAB_INTRO["en"] += " Future directions include drone and robot communication security and PUF hardware security applications."

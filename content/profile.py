@@ -21,7 +21,7 @@ ROLES = [
 METRICS = [
     ('10+', bi('年產官學研資歷', 'years across industry, government and academia')),
     ('10+', bi('政府與企業 AI 專案', 'government and enterprise AI projects')),
-    ('6', bi('篇共同研究論文｜2025–2026', 'co-authored papers · 2025–2026')),
+    ('7', bi('筆論文發表紀錄｜2025–2026', 'publication records · 2025–2026')),
     ('3', bi('項論文獎｜CISC 2025–2026', 'paper awards · CISC 2025–2026')),
 ]
 
@@ -30,8 +30,8 @@ ACHIEVEMENT_INTRO = bi(
     'From cybersecurity audits for the Ministry of Health and Welfare to enterprise AI security assessments, anomaly detection and industry research, my work connects technology and management. These experiences help me address different stakeholders’ needs, identify risks, prioritise improvements and put defence into everyday practice.')
 
 METRIC_CONTEXT = bi(
-    '近期論文包含五篇會議論文、一篇期刊論文；三項論文獎為一項最佳論文獎、兩項佳作論文獎。年資與專案數為歷年經驗彙整。',
-    'Recent publications include five conference papers and one journal article. The three paper awards comprise one Best Paper Award and two Honorable Mention Awards. Years and project counts summarise career experience.')
+    '近期論文包含六篇會議論文、一篇期刊論文（含同一 APT 研究的兩個版本）；三項論文獎為一項最佳論文獎、兩項佳作論文獎。年資與專案數為歷年經驗彙整。',
+    'Recent publications include six conference papers and one journal article, including two versions of the same APT study. The three paper awards comprise one Best Paper Award and two Honorable Mention Awards. Years and project counts summarise career experience.')
 
 AWARD_DESCRIPTION = bi('2022 全球百大研發創新獎獲獎經歷，連結 AI 資安研究與實際應用。',
                        'R&D 100 recognition in 2022, connecting AI cybersecurity research with practical applications.')

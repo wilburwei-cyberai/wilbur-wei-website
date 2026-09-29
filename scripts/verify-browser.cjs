@@ -6,10 +6,10 @@ const assert=require('assert');
 (async()=>{
  const browser=await chromium.launch({headless:true,channel:process.env.WILBUR_BROWSER_CHANNEL || 'chrome'});
  const errors=[];
- const base=process.env.WILBUR_PREVIEW_URL || 'http://127.0.0.1:8768';
- const output=process.env.WILBUR_QA_DIR || path.resolve(__dirname,'../../網站v3檢查');
+ const base=process.env.WILBUR_PREVIEW_URL || 'http://127.0.0.1:8769';
+ const output=process.env.WILBUR_QA_DIR || path.resolve(__dirname,'../../網站v4檢查');
  fs.mkdirSync(output,{recursive:true});
- const pages=['','speaking/','training/','consulting/','experience/','research/','about/','teaching/','lab/'];
+ const pages=['','speaking/','training/','consulting/','transformation/','experience/','research/','about/','teaching/','lab/'];
  let checks=0;
  for(const width of [1440,390]) {
   const page=await browser.newPage({viewport:{width,height:960}});
@@ -54,12 +54,12 @@ const assert=require('assert');
   await page.close();
  }
  // Check the desktop/mobile navigation boundary with the longer English labels.
- for(const width of [1120,1024,768]) {
+ for(const width of [1320,1120,768]) {
   const page=await browser.newPage({viewport:{width,height:960}});
   for(const lang of ['', 'en/']) {
    await page.goto(`${base}/${lang}`,{waitUntil:'networkidle'});
    assert(!await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),`navigation overflow ${width} ${lang}`);
-   if(width===1120){
+   if(width===1320){
     const brand=await page.locator('.brand').boundingBox();
     const nav=await page.locator('#site-nav').boundingBox();
     assert(brand.x+brand.width<nav.x,`navigation overlaps brand ${lang}`);
@@ -89,11 +89,11 @@ const assert=require('assert');
  const params=new URL(mail).searchParams;assert(params.get('subject'));assert(params.get('body').includes('How you found me'));
  const noJS=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
  const plain=await noJS.newPage();await plain.goto(base+'/en/experience/');
- assert.equal(await plain.locator('[data-record]:visible').count(),23);
+ assert.equal(await plain.locator('[data-record]:visible').count(),29);
  assert(await plain.locator('#site-nav a').first().isVisible());
  assert.equal(await plain.locator('.nav-toggle:visible').count(),0);
  assert.equal(errors.length,0,errors.join('\n'));
  await browser.close();
- fs.writeFileSync(path.join(output,'browser-results.json'),JSON.stringify({pageViewportChecks:checks,consoleErrors:errors,checks:['mobile navigation / Escape','language counterpart','record search/type/empty state','email subject/body','no-JavaScript navigation and all 23 records']},null,2));
+ fs.writeFileSync(path.join(output,'browser-results.json'),JSON.stringify({pageViewportChecks:checks,consoleErrors:errors,checks:['mobile navigation / Escape','language counterpart','record search/type/empty state','email subject/body','no-JavaScript navigation and all 29 records']},null,2));
  console.log('PASS:',checks,'page/viewport checks; interaction, mailto and no-JavaScript checks. Screenshots:',output);
 })().catch(e=>{console.error(e);process.exit(1)});

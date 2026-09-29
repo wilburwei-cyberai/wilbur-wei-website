@@ -130,13 +130,52 @@
     ],
     "year": 2025,
     "venue": {
-      "zh": "《資訊安全通訊》（Communications of the CCISA）第 31 卷第 3 期，2025 年 8 月・期刊論文（前期成果發表於 CISC 2025）",
-      "en": "Communications of the CCISA, Vol. 31, No. 3, August 2025 · Journal article (an earlier version appeared at CISC 2025)"
+      "zh": "《資訊安全通訊》（Communications of the CCISA）第 31 卷第 3 期，頁 1–19，2025 年 8 月・期刊論文",
+      "en": "Communications of the CCISA, Vol. 31, No. 3, pp. 1–19, August 2025 · Journal article"
     },
     "description": {
       "zh": "以 AD 攻擊為案例，將非結構化威脅情資轉為特徵網絡，結合風險分析及語言模型，研究如何支持漏洞判讀與修補優先順序。",
       "en": "An AD-focused study that turns unstructured threat intelligence into feature networks and combines risk analysis with language models to support vulnerability assessment and patch prioritisation."
     },
-    "award": null
+    "award": null,
+    "alternate_title": "AI-Based Construction of APT Hacker Family Attack Intelligence Topology and Risk Assessment Framework: A Case Study of Active Directory Server Attacks",
+    "source_url": "https://cccisa.ccisa.org.tw/article/view/3209",
+    "related_slug": "apt-intelligence-cisc-2025",
+    "version_note": {
+      "zh": "本篇為 CISC 2025 會議研究的期刊延伸版本。",
+      "en": "This is the journal extension of the CISC 2025 conference study."
+    },
+    "source_note": {
+      "zh": "英文題名與卷期頁碼可於學會期刊頁查核；作者姓名採本頁中文署名。",
+      "en": "The journal page provides the English title and bibliographic details. Author names here follow the Chinese byline."
+    }
+  },
+  {
+    "id": "P7",
+    "slug": "apt-intelligence-cisc-2025",
+    "title": "AI 方法建構 APT 家族攻擊情資特徵拓樸及風險矩陣 - 以 AD 伺服器攻擊為案例研究",
+    "authors": [
+      "王仁甫",
+      "陳品翰",
+      "陳思宥",
+      "呂書晴",
+      "林瑜君",
+      "魏得恩"
+    ],
+    "year": 2025,
+    "venue": {
+      "zh": "第三十五屆全國資訊安全會議（CISC 2025），2025 年 5 月・會議論文",
+      "en": "35th Cryptology and Information Security Conference (CISC 2025), May 2025 · Conference paper"
+    },
+    "description": {
+      "zh": "以 AD 伺服器攻擊為案例，研究運用 AI 方法建構 APT 家族攻擊情資的特徵拓樸與風險矩陣。",
+      "en": "An AD server attack case study examining AI methods for constructing APT-family attack intelligence feature topology and a risk matrix."
+    },
+    "award": null,
+    "related_slug": "apt-intelligence",
+    "version_note": {
+      "zh": "本篇為會議版本；後續期刊版本的題名與作者名單有所調整，兩筆分別保留各自書目。",
+      "en": "This is the conference version. The later journal version has a revised title and author list; each record retains its own bibliography."
+    }
   }
 ]
