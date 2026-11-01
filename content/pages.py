@@ -4,7 +4,7 @@ from records import bi
 PAGES = {'lab': {'label': {'zh': 'MIRAGE Lab', 'en': 'MIRAGE Lab'},
          'title': {'zh': 'MIRAGE Lab｜元智資工 AI、通訊與硬體資安研究',
                    'en': 'MIRAGE Lab | AI, Communication & Hardware Security'},
-         'description': {'zh': '元智大學資工系 MIRAGE Lab 代理人紅隊攻防實境實驗室，由魏得恩 Wilbur Wei 指導。既有研究涵蓋 AI '
+         'description': {'zh': '元智大學資工系 MIRAGE Lab 代理人紅隊攻防實境實驗室，由魏得恩 Wilbur Wei 主持。既有研究涵蓋 AI '
                                'Agent、紅隊攻防與零信任，規劃拓展至無人機、機器人通訊資安與 PUF 應用。',
                          'en': 'MIRAGE Lab at Yuan Ze University studies AI agent security, red teaming and zero '
                                'trust, with planned directions in drone and robot communication security and PUF '

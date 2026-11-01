@@ -5,8 +5,8 @@ LAB_NAME = 'MIRAGE Lab'
 LAB_ZH = '代理人紅隊攻防實境實驗室'
 LAB_AFFILIATION = bi('元智大學資訊工程學系', 'Department of Computer Science and Engineering, Yuan Ze University')
 LAB_INTRO = bi(
-    'MIRAGE Lab 設於元智大學資訊工程學系，由魏得恩（Wilbur Wei／Te-En Wei）助理教授指導。研究聚焦 AI 代理人安全、紅隊攻防與零信任，從攻擊情境、授權邊界與行為證據，探討防禦如何設計與驗證。',
-    'MIRAGE Lab is based in the Department of Computer Science and Engineering at Yuan Ze University, advised by Assistant Professor Wilbur Wei (Te-En Wei). Its research focuses on AI agent security, red teaming and zero trust, examining how attack scenarios, authorisation boundaries and behavioural evidence inform the design and evaluation of defences.'
+    'MIRAGE Lab 設於元智大學資訊工程學系，由魏得恩（Wilbur Wei／Te-En Wei）助理教授主持。研究聚焦 AI 代理人安全、紅隊攻防與零信任，從攻擊情境、授權邊界與行為證據，探討防禦如何設計與驗證。',
+    'MIRAGE Lab is based in the Department of Computer Science and Engineering at Yuan Ze University. Assistant Professor Wilbur Wei (Te-En Wei) is its Director. Its research focuses on AI agent security, red teaming and zero trust, examining how attack scenarios, authorisation boundaries and behavioural evidence inform the design and evaluation of defences.'
 )
 LAB_DIRECTIONS = [
     ('01', bi('AI 代理人安全', 'AI agent security'),

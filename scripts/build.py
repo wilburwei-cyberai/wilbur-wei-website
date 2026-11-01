@@ -137,7 +137,7 @@ def home(c):
     tags=[('primary','AI 資安講師','AI security speaker','speaking'),('primary','AI 資安顧問','AI security consultant','consulting'),('secondary','AI Agent 資安','AI agent security','consulting'),('secondary','生成式 AI 資安','Generative AI security','training'),('tertiary','零信任架構','Zero trust architecture','consulting'),('tertiary','AI 賦能轉型','AI transformation','transformation')]
     chips='<div class="hero-keywords">'+''.join(f'<a class="expertise-tag {color}" href="{c.href(slug)}">{e(c.l(zh,en))}</a>' for color,zh,en,slug in tags)+'</div>'
     actions=c.button(c.l('邀請演講／顧問洽詢','Speaking / consulting inquiry'),'#contact')+c.button(c.l('了解服務項目','Explore services'),'#services',True)
-    trust=[('10+',c.l('年產官學研資歷','years across industry, government and academia'),c.href('about')),('10+',c.l('政府與企業 AI 專案','government and enterprise AI projects'),c.href('consulting')),('7',c.l('筆論文發表紀錄｜2025–2026','publication records · 2025–2026'),c.href('research')),('R&D 100',c.l('2022 全球百大研發獎','2022 R&D innovation recognition'),'#achievements')]
+    trust=[('10+',c.l('年產官學研資歷','years across industry, government and academia'),c.href('about')),('10+',c.l('政府與企業 AI 專案','government and enterprise AI projects'),c.href('consulting')),('7',c.l('筆論文發表紀錄｜2025–2026','publication records · 2025–2026'),c.href('research')),('R&D 100',c.l('2022 R&D 100 Awards','2022 R&D 100 Awards'),'#achievements')]
     proof='<div class="hero-trust">'+''.join(f'<a href="{href}" class="trust-item"><strong class="trust-value{ " trust-award" if value=="R&D 100" else ""}">{e(value)}</strong><span>{e(label)}</span></a>' for value,label,href in trust)+'</div>'
     result=f'<section class="hero hero-profile" id="hero"><div class="wrap"><div class="hero-copy"><span class="eyebrow">{c.l("AI 資安講師 × AI 資安顧問・產官學研三棲專家","AI SECURITY SPEAKER × CONSULTANT · INDUSTRY / GOVERNMENT / ACADEMIA")}</span><h1>{hero_title}</h1>'+paragraph(c.l('魏得恩 Wilbur Wei｜元智大學資工系助理教授・MIRAGE Lab','Wilbur Wei / Te-En Wei · Assistant Professor, Yuan Ze University · MIRAGE Lab'),'identity')+'<p class="lead">'+c.l('從課堂到董事會，我幫組織把防禦落地。<br>專精 AI Agent 資安風險、生成式 AI 防護策略、零信任架構導入<br class="desktop-break">與 Active Directory 勒索軟體防禦。','From the classroom to the boardroom, I help organisations put defence into practice.<br>My work covers AI agent risks, generative AI security, zero trust architecture and Active Directory ransomware defence.')+'</p>'+chips+f'<div class="actions">{actions}</div></div>{proof}</div></section>'
     result+=profile_section(c)
@@ -172,7 +172,7 @@ def lab(c):
 <p class="lab-statement">{c.l('理解攻擊如何發生，<br>驗證防禦如何成立。','Understand the attack.<br>Evaluate the defence.')}</p>
 <div class="anchor-nav"><a href="#lab-profile">{c.l('認識實驗室','About the lab')}</a><a href="#lab-directions">{c.l('研究方向','Research areas')}</a><a href="#projects">{c.l('研究計畫','Projects')}</a><a href="#emerging-directions">{c.l('未來方向','Future directions')}</a><a href="#lab-collaboration">{c.l('研究合作','Collaborate')}</a></div></div>
 <div class="lab-emblem"><img src="{c.asset('mirage-logo-white.png')}" width="688" height="764" alt="MIRAGE Lab — {LAB_ZH}"><span>AI AGENTS · RED TEAMING · ZERO TRUST</span></div></div></div></section>'''
-    profile=f'''<div class="lab-profile-grid"><div><span class="eyebrow">THE LAB</span><h2>{c.l('從攻防情境，提出可以驗證的問題。','Turn attack and defence scenarios into testable questions.')}</h2></div><div>{paragraph(c.t(LAB_INTRO),'lead')}<div class="lab-advisor"><img src="{c.asset('mirage-logo-dark.png')}" width="688" height="764" loading="lazy" alt="MIRAGE Lab Logo"><span>{c.l('指導教師','Faculty advisor')}</span><strong>{c.l('魏得恩 Wilbur Wei','Wilbur Wei / Te-En Wei')}</strong><p>{c.l('元智大學資訊工程學系助理教授','Assistant Professor, Computer Science and Engineering, Yuan Ze University')}</p>{c.link('about',c.l('教師經歷與專業背景','Faculty background'))}</div></div></div>'''
+    profile=f'''<div class="lab-profile-grid"><div><span class="eyebrow">THE LAB</span><h2>{c.l('從攻防情境，提出可以驗證的問題。','Turn attack and defence scenarios into testable questions.')}</h2></div><div>{paragraph(c.t(LAB_INTRO),'lead')}<div class="lab-advisor"><img src="{c.asset('mirage-logo-dark.png')}" width="688" height="764" loading="lazy" alt="MIRAGE Lab Logo"><span>{c.l('主持','Director')}</span><strong>{c.l('魏得恩 Wilbur Wei','Wilbur Wei / Te-En Wei')}</strong><p>{c.l('元智大學資訊工程學系助理教授','Assistant Professor, Computer Science and Engineering, Yuan Ze University')}</p>{c.link('about',c.l('教師經歷與專業背景','Faculty background'))}</div></div></div>'''
     result+=c.section(profile,id='lab-profile')
     directions=[]
     for number,title,question,desc,papers in LAB_DIRECTIONS:
@@ -182,7 +182,7 @@ def lab(c):
     result+=research_projects(c)
     result+=future_research(c)
     research_body=c.heading('RELATED PUBLICATIONS',c.l('以研究成果，說明問題與方法。','Explore the questions through published work.'),c.link('research',c.l('閱讀完整論文書目','Full publication list')))
-    research_body+=paragraph(c.l('指導教師與共同作者的相關研究包含 AHAF、HMELF、MARS、STIE-ZTA，以及 AD 風險與 APT 情資分析。研究頁保留各篇論文的作者、發表出處及研究範圍。','Related work by the faculty advisor and co-authors includes AHAF, HMELF, MARS, STIE-ZTA, AD risk and APT intelligence analysis. The research page provides author lists, publication venues and the scope of each study.'))
+    research_body+=paragraph(c.l('主持人與共同作者的相關研究包含 AHAF、HMELF、MARS、STIE-ZTA，以及 AD 風險與 APT 情資分析。研究頁保留各篇論文的作者、發表出處及研究範圍。','Related work by the Director and co-authors includes AHAF, HMELF, MARS, STIE-ZTA, AD risk and APT intelligence analysis. The research page provides author lists, publication venues and the scope of each study.'))
     result+=c.section(research_body)
     result+=f'''<section class="lab-collaboration" id="lab-collaboration"><div class="wrap lab-profile-grid"><div><span class="eyebrow">RESEARCH & COLLABORATION</span><h2>{c.l('一起釐清值得研究的問題。','Find a research question worth investigating.')}</h2></div><div>{paragraph(c.l('歡迎就 AI 代理人安全、攻防驗證與零信任，以及規劃中的無人機／機器人通訊資安、PUF 硬體資安應用討論學術或產學合作。來信可簡述研究問題、已有背景與合作構想。','For academic or industry research on AI agent security and zero trust, or planned work on drone / robot communication security and PUF applications, share the research question, relevant background and your collaboration idea.'))}<div class="actions">{c.button(c.l('討論研究合作','Discuss research collaboration'),academic_mail)}</div><p class="lab-email"><a href="mailto:{ACADEMIC}">{ACADEMIC}</a></p></div></div></section>'''
     return result
@@ -225,6 +225,29 @@ def experience(c):
     return result
 
 
+def paper_title(c, paper):
+    if c.lang == 'en' and paper.get('alternate_title'):
+        return paper['alternate_title']
+    return paper['title']
+
+def paper_original_title(c, paper):
+    if not paper.get('alternate_title'):
+        return ''
+    return paper['title'] if c.lang == 'en' else paper['alternate_title']
+
+def author_name(c, author):
+    return author[c.lang] if isinstance(author, dict) else author
+
+def author_is_owner(author):
+    names = author.values() if isinstance(author, dict) else (author,)
+    return any(name in ('魏得恩', 'Te-En Wei') for name in names)
+
+def author_separator(c, authors):
+    names = [author_name(c, author) for author in authors]
+    if any('\u4e00' <= char <= '\u9fff' for name in names for char in name):
+        return '、'
+    return ', ' if c.lang == 'en' else '、'
+
 def research_projects(c):
     entries=[]
     for project in RESEARCH_PROJECTS:
@@ -246,13 +269,15 @@ def research(c):
     result+=c.section(c.heading('RECOGNITION',c.l('三項共同研究論文獎','Three awards for co-authored papers'))+'<div class="award-list">'+awards+'</div>',id='awards',tinted=True)
     articles=[]
     for p in PAPERS:
-        authors='、'.join(f'<strong>{e(a)}</strong>' if a in ['魏得恩','Te-En Wei'] else e(a) for a in p['authors'])
-        extra=paragraph(p['alternate_title'],'original-title') if p.get('alternate_title') else ''
+        sep=author_separator(c, p['authors'])
+        authors=sep.join(f'<strong>{e(author_name(c,a))}</strong>' if author_is_owner(a) else e(author_name(c,a)) for a in p['authors'])
+        original=paper_original_title(c,p)
+        extra=paragraph(original,'original-title') if original else ''
         if p.get('source_url'):
             extra+=f'<a class="text-link" href="{e(p["source_url"],quote=True)}">{c.l("學會期刊原文與書目","Journal article and citation")} ↗</a>'+paragraph(c.t(p['source_note']),'notice')
         if p.get('related_slug'):
             extra+='<div class="publication-version">'+paragraph(c.t(p['version_note']))+c.link('research',c.l('查看相關版本','Related version'),p['related_slug'])+'</div>'
-        articles.append(f'<article class="publication" id="{p["slug"]}"><span class="eyebrow">{p["year"]} / {p["slug"].upper()}</span><h3>{e(p["title"])}</h3><p class="authors">{authors}</p><p class="meta">{e(c.t(p["venue"]))}</p>{paragraph(c.t(p["description"]))}{extra}<div class="pub-links">{c.link("consulting",c.l("相關顧問需求","Discuss related consulting"))}{c.link("training",c.l("相關內訓方向","Explore training"))}</div></article>')
+        articles.append(f'<article class="publication" id="{p["slug"]}"><span class="eyebrow">{p["year"]} / {p["slug"].upper()}</span><h3>{e(paper_title(c,p))}</h3><p class="authors">{authors}</p><p class="meta">{e(c.t(p["venue"]))}</p>{paragraph(c.t(p["description"]))}{extra}<div class="pub-links">{c.link("consulting",c.l("相關顧問需求","Discuss related consulting"))}{c.link("training",c.l("相關內訓方向","Explore training"))}</div></article>')
     result+=c.section(c.heading('PUBLICATIONS · 2025–2026',c.l('七筆發表紀錄：六篇會議、一篇期刊','Seven records: six conference papers and one journal article'))+''.join(articles),id='publications')
     result+=c.section(paragraph(c.l('學術書目保留各版本的題名與作者順序。七筆發表紀錄包含 APT 情資研究的會議與期刊版本，兩者屬於同一研究脈絡，並非七項互不相關的研究。若需討論研究合作或取得進一步書目資訊，歡迎透過學術信箱聯絡。','Titles and author order follow each publication version. The seven records include the conference and journal versions of the APT intelligence study; these are related publications, not seven independent studies. For research collaboration or further bibliographic details, please use the academic email.'))+f'<a href="mailto:{ACADEMIC}">{ACADEMIC}</a>',tinted=True)
     return result
@@ -356,10 +381,11 @@ def schema(c):
         graph.append({'@type':'Service','@id':c.url()+'#service','name':c.t(svc[1]),'description':c.t(svc[3]),'provider':{'@id':pid},'url':c.url()})
     if c.slug=='research':
         for p in PAPERS:
-            graph.append({'@type':'ScholarlyArticle','@id':c.url()+'#'+p['slug'],'headline':p['title'],'url':c.url()+'#'+p['slug'],'author':[{'@id':pid} if a in ['Te-En Wei','魏得恩'] else {'@type':'Person','name':a} for a in p['authors']],'abstract':c.t(p['description']),'citation':c.t(p['venue'])})
+            graph.append({'@type':'ScholarlyArticle','@id':c.url()+'#'+p['slug'],'headline':paper_title(c,p),'url':c.url()+'#'+p['slug'],'author':[{'@id':pid} if author_is_owner(a) else {'@type':'Person','name':author_name(c,a)} for a in p['authors']],'abstract':c.t(p['description']),'citation':c.t(p['venue'])})
     if c.slug=='research':
         for article,p in zip([node for node in graph if node['@type']=='ScholarlyArticle'],PAPERS):
-            if p.get('alternate_title'): article['alternativeHeadline']=p['alternate_title']
+            original=paper_original_title(c,p)
+            if original: article['alternativeHeadline']=original
             if p.get('source_url'): article['sameAs']=p['source_url']
             if p['slug']=='apt-intelligence': article['isBasedOn']={'@id':c.url()+'#'+p['related_slug']}
     return {'@context':'https://schema.org','@graph':graph}
