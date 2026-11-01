@@ -26,15 +26,12 @@
   {
     "id": "P2",
     "slug": "hmelf",
-    "title": {
-      "zh": "HMELF 研究加密橫向移動偵測：以 Ligolo-ng 加密隧道攻擊為例",
-      "en": "HMELF for Encrypted Lateral Movement Detection: A Case Study of Ligolo-ng Encrypted Tunnel Attacks"
-    },
+    "title": "HMELF 研究加密橫向移動偵測：以 Ligolo-ng 加密隧道攻擊為例",
     "authors": [
-      {"zh": "王仁甫", "en": "Jen-Fu Wang"},
-      {"zh": "歐陽翰", "en": "歐陽翰"},
-      {"zh": "蘇柏翰", "en": "蘇柏翰"},
-      {"zh": "魏得恩", "en": "Te-En Wei"}
+      "王仁甫",
+      "歐陽翰",
+      "蘇柏翰",
+      "魏得恩"
     ],
     "year": 2026,
     "venue": {
@@ -74,15 +71,12 @@
   {
     "id": "P4",
     "slug": "ad-risk",
-    "title": {
-      "zh": "Active Directory 高權限帳號風險評估模型：以 APT29 攻擊為例",
-      "en": "Active Directory High-Privilege Account Risk Assessment Model: A Case Study of an APT29 Attack"
-    },
+    "title": "Active Directory 高權限帳號風險評估模型：以 APT29 攻擊為例",
     "authors": [
-      {"zh": "王仁甫", "en": "Jen-Fu Wang"},
-      {"zh": "周樂樂", "en": "周樂樂"},
-      {"zh": "蘇柏翰", "en": "蘇柏翰"},
-      {"zh": "魏得恩", "en": "Te-En Wei"}
+      "王仁甫",
+      "周樂樂",
+      "蘇柏翰",
+      "魏得恩"
     ],
     "year": 2026,
     "venue": {
@@ -161,12 +155,12 @@
     "slug": "apt-intelligence-cisc-2025",
     "title": "AI 方法建構 APT 家族攻擊情資特徵拓樸及風險矩陣 - 以 AD 伺服器攻擊為案例研究",
     "authors": [
-      {"zh": "王仁甫", "en": "Jen-Fu Wang"},
-      {"zh": "陳品翰", "en": "Pin-Han Chen"},
-      {"zh": "陳思宥", "en": "Ssu-Yu Chen"},
-      {"zh": "呂書晴", "en": "Shu-Ching Lu"},
-      {"zh": "林瑜君", "en": "林瑜君"},
-      {"zh": "魏得恩", "en": "Te-En Wei"}
+      "王仁甫",
+      "陳品翰",
+      "陳思宥",
+      "呂書晴",
+      "林瑜君",
+      "魏得恩"
     ],
     "year": 2025,
     "venue": {

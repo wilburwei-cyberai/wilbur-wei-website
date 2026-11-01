@@ -226,22 +226,14 @@ def experience(c):
 
 
 def paper_title(c, paper):
-    title = paper['title']
-    if isinstance(title, dict):
-        return title[c.lang]
     if c.lang == 'en' and paper.get('alternate_title'):
         return paper['alternate_title']
-    return title
+    return paper['title']
 
 def paper_original_title(c, paper):
-    title = paper['title']
-    if isinstance(title, dict):
-        if c.lang == 'en' and title.get('zh') not in (None, title.get('en')):
-            return title['zh']
+    if not paper.get('alternate_title'):
         return ''
-    if paper.get('alternate_title'):
-        return title if c.lang == 'en' else paper['alternate_title']
-    return ''
+    return paper['title'] if c.lang == 'en' else paper['alternate_title']
 
 def author_name(c, author):
     return author[c.lang] if isinstance(author, dict) else author
@@ -249,6 +241,12 @@ def author_name(c, author):
 def author_is_owner(author):
     names = author.values() if isinstance(author, dict) else (author,)
     return any(name in ('魏得恩', 'Te-En Wei') for name in names)
+
+def author_separator(c, authors):
+    names = [author_name(c, author) for author in authors]
+    if any('\u4e00' <= char <= '\u9fff' for name in names for char in name):
+        return '、'
+    return ', ' if c.lang == 'en' else '、'
 
 def research_projects(c):
     entries=[]
@@ -271,7 +269,7 @@ def research(c):
     result+=c.section(c.heading('RECOGNITION',c.l('三項共同研究論文獎','Three awards for co-authored papers'))+'<div class="award-list">'+awards+'</div>',id='awards',tinted=True)
     articles=[]
     for p in PAPERS:
-        sep=', ' if c.lang=='en' else '、'
+        sep=author_separator(c, p['authors'])
         authors=sep.join(f'<strong>{e(author_name(c,a))}</strong>' if author_is_owner(a) else e(author_name(c,a)) for a in p['authors'])
         original=paper_original_title(c,p)
         extra=paragraph(original,'original-title') if original else ''
