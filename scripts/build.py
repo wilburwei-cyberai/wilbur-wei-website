@@ -192,7 +192,7 @@ def speaking(c):
     result+=c.section(c.heading('TOPICS',c.l('可以從這些問題切入。','Questions we can explore together.'))+'<div class="grid-2">'+''.join(f'<article class="card"><h3>{e(c.t(t))}</h3>{paragraph(c.t(d))}</article>' for t,d in TOPICS)+'</div>',id='talk-topics')
     result+=c.section(c.heading('SELECTED TALKS',c.l('從製造業現場到校務決策。','From manufacturing operations to campus decisions.'),c.link('experience',c.l('所有演講與授課','All speaking & teaching')))+record_list(c,['A11','A1','A2','A3','A4','A9','A10']),id='selected',tinted=True)
     result+=c.section(c.heading('FORMAT',c.l('時長與互動，配合活動目的。','A format that fits the purpose.'))+paragraph(c.l('已有研討會短講、兩小時研習及三小時企業培訓紀錄。可以討論案例解說、問答與情境練習的配置；課程時數依活動與學習目標確認。','Past engagements include conference talks, two-hour seminars and three-hour corporate sessions. We can discuss the balance of examples, questions and scenario exercises.'))+c.button(c.l('提供活動需求','Send an event brief'),c.mail('speaking')))
-    result+=c.section(c.heading('UPCOMING',c.l('已排定的演講','Scheduled talks'))+record_list(c,['A7','A12','A13','A14','A15','A16','A17']),id='upcoming')
+    result+=c.section(c.heading('UPCOMING',c.l('已排定的演講','Scheduled talks'))+record_list(c,[r['id'] for r in RECORDS if r['kind']=='talk' and r['status']=='scheduled']),id='upcoming')
     return result+faq(c,'speaking')
 
 def training(c):
@@ -221,7 +221,7 @@ def experience(c):
     kinds=[('',bi('全部類型','All types')),('talk',bi('演講','Talks')),('course',bi('課程','Courses')),('series',bi('系列課程','Course series')),('workshop',bi('工作坊設計','Workshop design')),('teaching',bi('教材','Courseware')),('collaboration',bi('授課合作','Teaching collaboration'))]
     filters=f'<div class="filter-bar" id="record-filters" hidden><label for="record-search">{c.l("搜尋主題或單位","Search topics or organisations")}<input type="search" id="record-search" placeholder="{c.l("例如：零信任、自強基金會","e.g. zero trust, TCFST")}"></label><label for="record-kind">{c.l("類型","Type")}<select id="record-kind">'+''.join(f'<option value="{key}">{e(c.t(label))}</option>' for key,label in kinds)+f'</select></label><div id="record-count" class="filter-count" aria-live="polite"></div></div>'
     records=sorted(RECORDS,key=lambda r:-(r['year'] or 0))
-    result+=c.section(filters+''.join(record_card(c,r) for r in records)+f'<p id="record-empty" class="empty-state" hidden>{c.l("沒有符合的紀錄，請更換關鍵字或類型。","No matching records. Try a different term or category.")}</p>'+paragraph(c.l('紀錄更新：2026 年 9 月 29 日。課程設計與籌備項目依狀態標示。','Records updated 29 September 2026. Curriculum design and planned courses are labelled accordingly.'),'status-note'))
+    result+=c.section(filters+''.join(record_card(c,r) for r in records)+f'<p id="record-empty" class="empty-state" hidden>{c.l("沒有符合的紀錄，請更換關鍵字或類型。","No matching records. Try a different term or category.")}</p>'+paragraph(c.l('紀錄更新：2026 年 11 月 1 日。課程設計與籌備項目依狀態標示。','Records updated 1 November 2026. Curriculum design and planned courses are labelled accordingly.'),'status-note'))
     return result
 
 
