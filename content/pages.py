@@ -45,10 +45,10 @@ PAGES = {'lab': {'label': {'zh': 'MIRAGE Lab', 'en': 'MIRAGE Lab'},
                 'title': {'zh': '演講、授課與教材紀錄｜魏得恩 Wilbur Wei',
                           'en': 'Speaking, Teaching & Courseware Records | Wilbur Wei'},
                 'description': {'zh': '魏得恩 Wilbur Wei 的 2024–2026 演講、授課與教材紀錄，包含 SEMICON Taiwan '
-                                      '2025、觀音產業園區與自強基金會，以及已排定的臺大電信所、國防大學、中壢產業園區與亞旭演講。',
+                                      '2025、臺大電信所、國防大學、觀音產業園區與自強基金會，以及已排定的中壢產業園區講座與自強基金會課程。',
                                 'en': 'Wilbur Wei’s 2024–2026 speaking, teaching and courseware records, '
-                                      'including SEMICON Taiwan 2025 and scheduled talks for NTU, National '
-                                      'Defense University, Zhongli Industrial Park and Askey.'}},
+                                      'including SEMICON Taiwan 2025, NTU, National Defense University and '
+                                      'TCFST, with scheduled sessions at Zhongli Industrial Park and TCFST.'}},
  'research': {'label': {'zh': '研究', 'en': 'Research'},
               'title': {'zh': 'AI、通訊與硬體資安研究｜魏得恩 Te-En Wei',
                         'en': 'AI, Communication & Hardware Security Research | Te-En Wei'},
