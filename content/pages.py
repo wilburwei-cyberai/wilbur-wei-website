@@ -193,4 +193,19 @@ FAQ = {'speaking': [({'zh': '可以依產業與聽眾調整內容嗎？', 'en': 
 # Keep project discovery in the research page's search/share description.
 PAGES['research']['description'] = bi(
     '魏得恩 Te-En Wei（Wilbur Wei）的研究計畫與成果：FY115 國科會 LLM 驅動紅隊代理平台計畫、七筆論文發表紀錄與三項論文獎，以及通訊與硬體資安的未來研究規劃。',
-    'Research by Te-En Wei (Wilbur Wei): the FY115 NSTC LLM-driven red team agent platform project, seven publication records, three paper awards, and future communication and hardware security directions.')
+    'Research by Te-En Wei (Wilbur Wei): an FY115 NSTC LLM-driven red team agent project, seven publication records, three paper awards and planned research.')
+
+# GEO draft: search/AI-answer descriptions. English kept to ≤160 characters so they
+# are not truncated. Speaking and experience descriptions no longer mention scheduled talks
+# (the Zhongli talk is now past; no talk is currently scheduled).
+PAGES['']['description']['en'] = 'Wilbur Wei (Te-En Wei), Assistant Professor at Yuan Ze University: AI security talks, training and consulting on AI agents, zero trust and AI transformation.'
+PAGES['speaking']['description']['en'] = 'AI security talks by Wilbur Wei on safe AI use, AI agent security, zero trust and AI transformation, with records from SEMICON Taiwan 2025 to industrial parks.'
+PAGES['speaking']['description']['zh'] = '為企業、產業公協會與教育機構安排 AI 資安演講，主題包含 AI 工具安全使用、AI Agent 攻防、零信任，並提供 AI 賦能轉型與流程優化方向。查看魏得恩 Wilbur Wei 的代表演講紀錄。'
+PAGES['training']['description']['en'] = 'Corporate AI security training with Wilbur Wei: safe AI use, LLM threat modelling, SOC labs and AI workflows, tailored to managers, staff and technical teams.'
+PAGES['consulting']['description']['en'] = 'Consulting with Wilbur Wei on AI agent security, zero trust, AD risk and governance, plus AI adoption and workflow assessment with practical priorities.'
+PAGES['experience']['description']['zh'] = '魏得恩 Wilbur Wei 的 2024–2026 演講、授課與教材紀錄，包含 SEMICON Taiwan 2025、臺大電信所、國防大學、觀音與中壢產業園區、自強基金會，以及已排定的自強基金會課程。'
+PAGES['experience']['description']['en'] = 'Wilbur Wei’s 2024–2026 talks, teaching and courseware, including SEMICON Taiwan 2025, NTU, National Defense University, Zhongli Industrial Park and TCFST.'
+PAGES['lab']['description']['en'] = 'MIRAGE Lab at Yuan Ze University, directed by Wilbur Wei, studies AI agent security, red teaming and zero trust, with planned drone, robot and PUF research.'
+PAGES['about']['description']['en'] = 'About Wilbur Wei (Te-En Wei), Assistant Professor at Yuan Ze University: AI security speaker and consultant across academia, government audit and industry.'
+PAGES['transformation']['description']['en'] = 'AI transformation with Wilbur Wei: workflow assessment, AI adoption planning, pilot guidance and team training, with security design and evaluation built in.'
+PAGES['teaching']['description']['en'] = 'How Wilbur Wei designs security courseware: source verification, learner-environment testing, scenario exercises, AI-assisted drafting and human review.'

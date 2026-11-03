@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Check generated pages, crawlable links, bilingual metadata and public scope."""
 import json
+from html import escape as html_escape
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
@@ -100,4 +101,35 @@ for p,d in docs.items():
     assert 'SEMICON Taiwan 2026' not in text
     assert '../transformation/' in text or 'href="transformation/' in text or 'href="./" aria-current="page">AI' in text
     assert '百杉' not in text
+# GEO checks: AI-crawler rules, llms.txt, profile FAQ and structured data.
+base=json.loads((ROOT/'site.config.json').read_text())['site_url'].rstrip('/')+'/'
+robots=(ROOT/'robots.txt').read_text()
+for bot in ['GPTBot','OAI-SearchBot','ChatGPT-User','PerplexityBot','Google-Extended','ClaudeBot','Applebot-Extended','Bingbot']:
+    assert f'User-agent: {bot}\nAllow: /' in robots, bot
+assert 'Sitemap: '+base+'sitemap.xml' in robots
+for name in ['llms.txt','llms-full.txt']:
+    text=(ROOT/name).read_text()
+    assert base in text and '魏得恩' in text and 'Te-En Wei' in text and 'Director' in text or name=='llms-full.txt', name
+    assert '2022 R&D 100 Awards' in text, name
+assert all(url in (ROOT/'llms.txt').read_text() for url in {d.canonical[0] for d in docs.values()} if '/teaching/' not in url or True)
+assert len(root.findall('{*}url/{http://www.w3.org/1999/xhtml}link'))==60
+for p,d in docs.items():
+    graph=d.ld[0]['@graph']
+    person=next(n for n in graph if n['@type']=='Person')
+    assert person['award'] and person['knowsAbout'] and person['affiliation'] and person['description'],p
+    if d.lang=='en': assert len(d.description[0])<=160,(p,len(d.description[0]))
+    faqs=[n for n in graph if n['@type']=='FAQPage']
+    text=p.read_text()
+    for f in faqs:
+        assert 'id="faq"' in text,p
+        for q in f['mainEntity']:
+            assert html_escape(q['name']) in text,(p,q['name'])
+    assert '@import' not in (ROOT/'assets/site.css').read_text()
+    if p.parent.name=='experience': assert not [n for n in graph if n['@type']=='Event' or 'startDate' in n]
+# B3 (MasterTalks) stays only where it already appears; not in llms files or Course JSON-LD.
+assert 'MasterTalks' not in (ROOT/'llms.txt').read_text()+(ROOT/'llms-full.txt').read_text()
+for lang in ['', 'en/']:
+    assert not [n for n in docs[ROOT/(lang+'experience/index.html')].ld[0]['@graph'] if n.get('@id','').endswith('#B3')]
+    about=docs[ROOT/(lang+'about/index.html')]
+    assert any(n['@type']=='FAQPage' and len(n['mainEntity'])>=8 for n in about.ld[0]['@graph'])
 print('PASS: 20 pages; unique titles/descriptions; reciprocal language URLs; valid JSON-LD/sitemap; all local links and anchors; 29 records per language; 7 publication records per language; merged/HOLD records excluded.')

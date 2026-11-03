@@ -1,5 +1,49 @@
-# Effective crawler rules belong at the host root, not a project subpath.
+# Crawler rules for Wilbur Wei · 魏得恩.
+# GitHub Pages project site: crawlers read robots.txt only at the host root
+# (https://wilburwei-cyberai.github.io/robots.txt), so these rules take effect
+# once the site moves to a custom domain or the host root. Until then, the host
+# root has no robots.txt and all crawlers are allowed by default.
+
 User-agent: *
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
 Allow: /
 
 Sitemap: https://wilburwei-cyberai.github.io/wilbur-wei-website/sitemap.xml
