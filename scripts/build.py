@@ -20,6 +20,9 @@ from transformation import INTRO as TRANSFORMATION_INTRO, SCENARIOS, STEPS, ASKE
 from research_directions import INTRO as FUTURE_INTRO, DIRECTIONS as FUTURE_DIRECTIONS
 from research_projects import RESEARCH_PROJECTS
 from profile import FACULTY_URL, ROLES, METRICS, ACHIEVEMENT_INTRO, METRIC_CONTEXT, AWARD_DESCRIPTION
+from geo import AI_CRAWLERS, SAME_AS, KNOWS_ABOUT, AWARDS, SUMMARY, PROFILE_FAQ, SALES_FAQ
+FAQ = {**FAQ, 'about': PROFILE_FAQ}
+FAQ = {slug: FAQ.get(slug, []) + SALES_FAQ.get(slug, []) for slug in dict.fromkeys([*FAQ, *SALES_FAQ])}
 PAPERS = json.loads((ROOT / 'content/publications.json').read_text())
 CONFIG = json.loads((ROOT / 'site.config.json').read_text())
 EMAIL = 'wilbur.wei.cyberai@gmail.com'
@@ -27,6 +30,7 @@ ACADEMIC = 'wilbur.wei@saturn.yzu.edu.tw'
 CV = 'https://drive.google.com/file/d/1xieEdX66-irNiDhZ4ZV2F09sCOKy4BS9/view?usp=sharing'
 NEWS = 'https://yznews.yzu.edu.tw/index.php/zh/yzu-campus-news-zh/1042-3'
 ZYELL_NEWS = 'https://www.cse.yzu.edu.tw/news/announcement?id=193'
+FONTS_CSS = 'https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Noto+Sans+TC:wght@400;500;600&amp;family=Noto+Serif+TC:wght@500;600;700&amp;display=swap'
 e = html.escape
 
 def directory(slug, lang):
@@ -98,7 +102,8 @@ def service_cards(c):
 
 def faq(c,slug):
     items = ''.join(f'<details><summary>{e(c.t(q))}</summary>{paragraph(c.t(a))}</details>' for q,a in FAQ[slug])
-    return c.section(c.heading('QUESTIONS',c.l('合作前，你可能想知道','Before we work together'))+'<div class="faq">'+items+'</div>',id='faq')
+    title = c.l('常見問題：認識魏得恩','Frequently asked questions about Wilbur Wei') if slug=='about' else c.l('常見問題','Frequently asked questions') if slug=='' else c.l('合作前，你可能想知道','Before we work together')
+    return c.section(c.heading('QUESTIONS',title)+'<div class="faq">'+items+'</div>',id='faq')
 
 
 def page_hero(c, headline, lead, anchors=None):
@@ -149,6 +154,7 @@ def home(c):
     result+=c.section(c.heading('SELECTED EXPERIENCE',c.l('不同受眾，不同的切入方式。','Different audiences. Different starting points.'),c.link('experience',c.l('查看完整紀錄','All records')))+'<div class="grid-2">'+cards+'</div>',id='portfolio',tinted=True)
     result+=c.section(c.heading('RESEARCH',c.l('以研究支撐專業判斷。','Research that informs practice.'),c.link('research',c.l('論文與獎項','Publications & awards')))+'<div class="grid-2">'+''.join(f'<article class="card"><span class="number">{p["year"]} / CISC</span><h3>{e(p["slug"].upper())}</h3>{paragraph(c.t(p["description"]))}{c.link("research",c.l("研究摘要與書目","Read the research"),p["slug"])}</article>' for p in [PAPERS[0],PAPERS[4]])+'</div><div class="callout">'+c.link('research',c.l('FY115 國科會計畫：LLM 驅動紅隊代理平台','FY115 NSTC project: LLM-driven red team agent platform'),RESEARCH_PROJECTS[0]['slug'])+'</div>',id='research-highlights')
     result+=c.section(c.heading('COLLABORATION',c.l('產學合作，連結研究與實務。','Connecting research and industry.'))+'<div class="grid-2"><article class="card"><h3>'+c.l('竣盟科技｜Billows Tech.','Billows Tech.')+'</h3>'+paragraph(c.l('共同推動資安欺敵誘捕產學合作，結合學術研究與產業場景。','Industry–academia collaboration on cybersecurity deception, connecting research with operational contexts.'))+f'<a class="text-link" href="{NEWS}">{c.l("元智大學合作報導","Yuan Ze University report")} ↗</a></article><article class="card"><h3>'+c.l('勤晁科技｜Zyell Solutions','Zyell Solutions')+'</h3>'+paragraph(c.l('AI 驅動異常行為偵測引擎（SEDE）研發合作，聚焦以行為分析支持資安防禦。','Research collaboration on the SEDE AI-driven anomaly-detection engine, focusing on behavioural analysis for cyber defence.'))+f'<a class="text-link" href="{ZYELL_NEWS}">{c.l("元智資工勤晁合作公告","Yuan Ze–Zyell collaboration announcement")} ↗</a></article></div>',id='cases')
+    result+=faq(c,'')
     return result+lab_feature(c)
 
 def lab_feature(c):
@@ -192,7 +198,8 @@ def speaking(c):
     result+=c.section(c.heading('TOPICS',c.l('可以從這些問題切入。','Questions we can explore together.'))+'<div class="grid-2">'+''.join(f'<article class="card"><h3>{e(c.t(t))}</h3>{paragraph(c.t(d))}</article>' for t,d in TOPICS)+'</div>',id='talk-topics')
     result+=c.section(c.heading('SELECTED TALKS',c.l('從製造業現場到校務決策。','From manufacturing operations to campus decisions.'),c.link('experience',c.l('所有演講與授課','All speaking & teaching')))+record_list(c,['A11','A1','A2','A3','A4','A9','A10']),id='selected',tinted=True)
     result+=c.section(c.heading('FORMAT',c.l('時長與互動，配合活動目的。','A format that fits the purpose.'))+paragraph(c.l('已有研討會短講、兩小時研習及三小時企業培訓紀錄。可以討論案例解說、問答與情境練習的配置；課程時數依活動與學習目標確認。','Past engagements include conference talks, two-hour seminars and three-hour corporate sessions. We can discuss the balance of examples, questions and scenario exercises.'))+c.button(c.l('提供活動需求','Send an event brief'),c.mail('speaking')))
-    result+=c.section(c.heading('UPCOMING',c.l('已排定的演講','Scheduled talks'))+record_list(c,[r['id'] for r in RECORDS if r['kind']=='talk' and r['status']=='scheduled']),id='upcoming')
+    upcoming=[r['id'] for r in RECORDS if r['kind']=='talk' and r['status']=='scheduled']
+    if upcoming: result+=c.section(c.heading('UPCOMING',c.l('已排定的演講','Scheduled talks'))+record_list(c,upcoming),id='upcoming')
     return result+faq(c,'speaking')
 
 def training(c):
@@ -288,6 +295,7 @@ def about(c):
     result+=achievements_section(c)
     result+=c.section(c.heading('ADVISORY BACKGROUND',c.l('顧問與合作經歷','Advisory and collaboration background'))+paragraph(c.l('顧問與合作經歷包含長茂科技（EverMore Tech.）、中華資安國際（CHT Security）及亞洲開發銀行（Asian Development Bank, ADB）。各項合作的範圍與角色依個別經歷而定；研究合作與演講紀錄另列於相關頁面。','Advisory and collaboration experience includes EverMore Tech., CHT Security and the Asian Development Bank (ADB). Roles and scope vary by engagement; research collaborations and speaking records are listed separately.'))+'<div class="actions">'+c.button(c.l('查看演講與授課','Speaking & teaching records'),c.href('experience'))+c.button(c.l('閱讀研究成果','Research publications'),c.href('research'),True)+'</div>')
     result+=c.section(c.heading('BACKGROUND & SOURCES',c.l('進一步認識我的工作','Further reading'))+'<ul class="source-list">'+f'<li><a href="{CV}" rel="noopener" target="_blank">{c.l("演講與專業簡歷（Google Drive PDF）","Speaker and professional CV (Google Drive PDF)")}</a></li><li><a href="{NEWS}">{c.l("元智大學：與竣盟科技推動欺敵誘捕產學合作","Yuan Ze University: deception research collaboration with Billows Tech.")}</a></li><li><a href="{FACULTY_URL}">{c.l("元智大學資工系：魏得恩教師介紹","Yuan Ze University: Wilbur Wei faculty profile")}</a></li></ul>'+paragraph(c.l('歷年研發成果另包含 2022 R&D 100 Awards 獲獎經歷；近期共同研究論文獎詳見研究頁。','Earlier R&D experience includes a 2022 R&D 100 Awards recognition. Recent co-authored paper awards are listed on the research page.'),'notice'),tinted=True)
+    result+=faq(c,'about')
     return result+lab_feature(c)
 
 def teaching(c):
@@ -350,16 +358,17 @@ def inquiry_dialog(c):
 def schema(c):
     pid=c.base+'#person'
     lang='zh-Hant' if c.lang=='zh' else 'en'
-    graph=[{'@type':'Person','@id':pid,'name':'魏得恩' if c.lang=='zh' else 'Wilbur Wei','alternateName':['Wilbur Wei','Te-En Wei','魏得恩'],'url':c.url('about'),'jobTitle':c.l('元智大學資訊工程學系助理教授；AI 資安講師與顧問','Assistant Professor; AI security speaker and consultant'),'worksFor':{'@type':'CollegeOrUniversity','name':c.l('元智大學','Yuan Ze University'),'url':'https://www.yzu.edu.tw/'},'knowsAbout':['AI-enabled Business Transformation','Business Workflow Improvement','AI Agent Security','LLM Threat Modeling','Zero Trust Architecture','AI for Cybersecurity','Active Directory Security'],'email':EMAIL,'sameAs':[FACULTY_URL]},
-    {'@type':'WebSite','@id':c.base+'#website','url':c.base,'name':'Wilbur Wei · AI Security','inLanguage':['zh-Hant','en'],'publisher':{'@id':pid}},
+    lab_id=c.base+'lab/#organization'
+    yzu={'@type':'CollegeOrUniversity','@id':'https://www.yzu.edu.tw/#organization','name':c.l('元智大學','Yuan Ze University'),'url':'https://www.yzu.edu.tw/'}
+    dept={'@type':'Organization','name':c.t(LAB_AFFILIATION),'url':'https://www.cse.yzu.edu.tw/','parentOrganization':yzu}
+    graph=[{'@type':'Person','@id':pid,'name':'魏得恩' if c.lang=='zh' else 'Wilbur Wei','alternateName':['Wilbur Wei','Te-En Wei','魏得恩'],'url':c.url('about'),'description':c.t(SUMMARY),'jobTitle':c.l('元智大學資訊工程學系助理教授；AI 資安講師與顧問','Assistant Professor; AI security speaker and consultant'),'worksFor':yzu,'affiliation':[dept,{'@type':'Organization','@id':lab_id,'name':LAB_NAME,'alternateName':LAB_ZH,'url':c.url('lab')}],'knowsAbout':c.t(KNOWS_ABOUT),'award':c.t(AWARDS),'email':EMAIL,'sameAs':SAME_AS},
+    {'@type':'WebSite','@id':c.base+'#website','url':c.base,'name':'Wilbur Wei · AI Security','alternateName':['魏得恩 Wilbur Wei','Wilbur Wei · 魏得恩'],'description':c.t(PAGES['']['description']),'inLanguage':['zh-Hant','en'],'publisher':{'@id':pid}},
     {'@type':'ProfilePage' if c.slug=='about' else 'WebPage','@id':c.url()+'#webpage','url':c.url(),'name':c.t(PAGES[c.slug]['title']),'description':c.t(PAGES[c.slug]['description']),'inLanguage':lang,'isPartOf':{'@id':c.base+'#website'},'about':{'@id':pid}}]
     if c.slug == 'about':
         graph[-1]['mainEntity'] = {'@id': pid}
     if c.slug == 'lab':
-        lab_id = c.base + 'lab/#organization'
         graph[-1]['mainEntity'] = {'@id': lab_id}
         graph[-1]['about'] = {'@id': lab_id}
-        graph[0]['affiliation'] = {'@id': lab_id}
         graph.append({'@type':'Organization','@id':lab_id,'name':LAB_NAME,
                       'alternateName':LAB_ZH,'url':c.url('lab'),
                       'description':c.t(LAB_INTRO),'logo':c.base+'assets/mirage-logo-dark.png',
@@ -388,6 +397,19 @@ def schema(c):
             if original: article['alternativeHeadline']=original
             if p.get('source_url'): article['sameAs']=p['source_url']
             if p['slug']=='apt-intelligence': article['isBasedOn']={'@id':c.url()+'#'+p['related_slug']}
+            article['datePublished']=str(p['year'])
+            article['inLanguage']='zh-Hant' if any('\u4e00'<=ch<='\u9fff' for ch in p['title']) else 'en'
+            if p['award']: article['award']=c.t(p['award'])
+    if c.slug in FAQ:
+        graph.append({'@type':'FAQPage','@id':c.url()+'#faq','url':c.url()+'#faq','inLanguage':lang,'isPartOf':{'@id':c.url()+'#webpage'},'about':{'@id':pid},
+                      'mainEntity':[{'@type':'Question','name':c.t(q),'acceptedAnswer':{'@type':'Answer','text':c.t(a)}} for q,a in FAQ[c.slug]]})
+    if c.slug=='experience':
+        # Courses only: no exact dates are published, so no Event/startDate is emitted.
+        for r in RECORDS:
+            if r['kind'] in ('course','series') and r['status']!='preparation':
+                graph.append({'@type':'Course','@id':c.url()+'#'+r['id'],'url':c.url()+'#'+r['id'],'name':c.t(r['title']),'description':c.t(r['description']),
+                              'provider':{'@type':'Organization','name':c.t(r['org'])},
+                              'hasCourseInstance':{'@type':'CourseInstance','instructor':{'@id':pid}}})
     return {'@context':'https://schema.org','@graph':graph}
 
 def render(c):
@@ -419,8 +441,14 @@ def render(c):
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Wilbur Wei — AI Security · Speaking · Training · Consulting">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{e(c.t(meta['title']),quote=True)}">
+<meta name="twitter:description" content="{e(c.t(meta['description']),quote=True)}">
+<meta name="twitter:image" content="{c.base}assets/social-card.png">
 <meta name="theme-color" content="#f5f2eb">
 <link rel="icon" type="image/svg+xml" href="{c.asset('favicon.svg')}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="{FONTS_CSS}">
 <link rel="stylesheet" href="{c.asset('site.css')}">
 <link rel="stylesheet" href="{c.asset('lab.css')}">
 <script defer src="{c.asset('site.js')}"></script>
@@ -435,6 +463,59 @@ def render(c):
 </body></html>
 '''
 
+def robots_txt(base):
+    lines=['# Crawler rules for Wilbur Wei · 魏得恩.',
+           '# GitHub Pages project site: crawlers read robots.txt only at the host root',
+           '# (https://wilburwei-cyberai.github.io/robots.txt), so these rules take effect',
+           '# once the site moves to a custom domain or the host root. Until then, the host',
+           '# root has no robots.txt and all crawlers are allowed by default.',
+           '','User-agent: *','Allow: /','']
+    for bot in AI_CRAWLERS:
+        lines+=[f'User-agent: {bot}','Allow: /','']
+    return '\n'.join(lines+['Sitemap: '+base+'sitemap.xml',''])
+
+LLMS_PAGES=['','about','speaking','training','consulting','transformation','experience','research','lab','teaching']
+
+def llms_txt(base):
+    zh,en=Page('','zh',base),Page('','en',base)
+    out=['# 魏得恩 Wilbur Wei｜AI 資安演講、企業內訓與顧問','','> '+SUMMARY['zh'],'> '+SUMMARY['en'],'',
+         '- 中文名：魏得恩；英文名：Wilbur Wei；學術署名：Te-En Wei',
+         '- 職稱：元智大學資訊工程學系助理教授；MIRAGE Lab（'+LAB_ZH+'）主持；AI 資安講師與顧問',
+         '- Title: Assistant Professor, Department of Computer Science and Engineering, Yuan Ze University; Director, MIRAGE Lab; AI security speaker and consultant',
+         '- 專長 / Expertise: '+'、'.join(KNOWS_ABOUT['zh'])+' / '+', '.join(KNOWS_ABOUT['en']),
+         '- 獎項 / Awards: '+'; '.join(AWARDS['en']),
+         f'- 聯絡 / Contact: {EMAIL}（演講、內訓、顧問、AI 賦能轉型 / speaking, training, consulting, AI transformation）; {ACADEMIC}（學術與產學合作 / academic and research collaboration）',
+         '','## 中文頁面','']
+    out+=[f'- [{zh.t(PAGES[s]["label"])}]({zh.url(s)}): {zh.t(PAGES[s]["description"])}' for s in LLMS_PAGES]
+    out+=['','## English pages','']
+    out+=[f'- [{en.t(PAGES[s]["label"])}]({en.url(s)}): {en.t(PAGES[s]["description"])}' for s in LLMS_PAGES]
+    out+=['','## Optional','',f'- [llms-full.txt]({base}llms-full.txt): 完整的經歷、論文與常見問題文字版 / Full text of profile, records, publications and FAQs',
+          f'- [Sitemap]({base}sitemap.xml)','']
+    return '\n'.join(out)
+
+def llms_full_txt(base):
+    out=['# 魏得恩 Wilbur Wei — full profile / 完整資料','',f'Source: {base}  ·  llms.txt: {base}llms.txt','']
+    for lang in ['zh','en']:
+        c=Page('',lang,base)
+        out+=['## '+c.l('中文','English'),'','### '+c.l('簡介','Summary'),'',c.t(SUMMARY),'']
+        out+=['### '+c.l('角色','Roles'),'']+[f'- {c.t(t)}：{c.t(d)}' if lang=='zh' else f'- {c.t(t)}: {c.t(d)}' for _,t,d in ROLES]+['']
+        out+=['### '+c.l('服務','Services'),'']+[f'- {c.t(t)}（{c.url(s)}）：{c.t(d)}' if lang=='zh' else f'- {c.t(t)} ({c.url(s)}): {c.t(d)}' for s,t,_,d in SERVICES]+['']
+        out+=['### '+c.l('演講與課程主題','Talk and training topics'),'']+[f'- {c.t(t)}：{c.t(d)}' if lang=='zh' else f'- {c.t(t)}: {c.t(d)}' for t,d in TOPICS]+['']
+        out+=['### MIRAGE Lab','',c.t(LAB_INTRO),f'URL: {c.url("lab")}','']
+        out+=['### '+c.l('研究計畫','Research projects'),'']+[f'- {c.t(p["title"])}｜{c.t(p["agency"])}｜{p["fiscal_year"]} ({p["year"]})' for p in RESEARCH_PROJECTS]+['']
+        out+=['### '+c.l('論文發表','Publications')+f' ({c.url("research")})','']
+        for p in PAPERS:
+            authors=author_separator(c,p['authors']).join(author_name(c,a) for a in p['authors'])
+            out.append(f'- {paper_title(c,p)} — {authors}. {c.t(p["venue"])}. {c.t(p["description"])}')
+        out+=['','### '+c.l('演講、授課與教材紀錄','Speaking, teaching and courseware records')+f' ({c.url("experience")})','']
+        for r in sorted((r for r in RECORDS if r['status']!='preparation'),key=lambda r:-(r['year'] or 0)):
+            out.append(f'- [{STATUS[r["status"]][lang]}] {r["year"]}｜{c.t(r["title"])}｜{c.t(r["org"])}｜{c.t(r["meta"])}' if lang=='zh' else f'- [{STATUS[r["status"]][lang]}] {r["year"]} · {c.t(r["title"])} · {c.t(r["org"])} · {c.t(r["meta"])}')
+        out+=['','### '+c.l('常見問題','Frequently asked questions'),'']
+        for slug in ['about','','speaking','training','consulting','transformation']:
+            for q,a in FAQ[slug]:
+                out+=[f'**Q: {c.t(q)}**',f'A: {c.t(a)}','']
+    return '\n'.join(out)
+
 def build(base):
     base=base.rstrip('/')+'/'
     if urlsplit(base).scheme not in ['https','http'] or not urlsplit(base).netloc:
@@ -448,12 +529,20 @@ def build(base):
             dst.write_text(render(c))
             urls.append(c.url())
     ET.register_namespace('','http://www.sitemaps.org/schemas/sitemap/0.9')
+    ET.register_namespace('xhtml','http://www.w3.org/1999/xhtml')
     ns='{http://www.sitemaps.org/schemas/sitemap/0.9}'
+    xns='{http://www.w3.org/1999/xhtml}'
     tree=ET.Element(ns+'urlset')
-    for url in urls:
-        node=ET.SubElement(tree,ns+'url');ET.SubElement(node,ns+'loc').text=url
+    for lang in ['zh','en']:
+        for slug in PAGES:
+            c=Page(slug,lang,base)
+            node=ET.SubElement(tree,ns+'url');ET.SubElement(node,ns+'loc').text=c.url()
+            for hl,l in [('zh-Hant','zh'),('en','en'),('x-default','zh')]:
+                ET.SubElement(node,xns+'link',{'rel':'alternate','hreflang':hl,'href':c.url(lang=l)})
     ET.ElementTree(tree).write(ROOT/'sitemap.xml',encoding='utf-8',xml_declaration=True)
-    (ROOT/'robots.txt').write_text('# Effective crawler rules belong at the host root, not a project subpath.\nUser-agent: *\nAllow: /\n\nSitemap: '+base+'sitemap.xml\n')
+    (ROOT/'robots.txt').write_text(robots_txt(base))
+    (ROOT/'llms.txt').write_text(llms_txt(base))
+    (ROOT/'llms-full.txt').write_text(llms_full_txt(base))
     (ROOT/'.nojekyll').write_text('Static HTML site. Skip Jekyll processing.\n')
     (ROOT/'404.html').write_text(f'<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>找不到頁面｜Wilbur Wei</title><style>body{{font:18px/1.8 system-ui;background:#f5f2eb;color:#202520;max-width:700px;margin:15vh auto;padding:24px}}a{{color:#294c3e}}</style><main><p>404</p><h1>找不到這個頁面</h1><p>This page could not be found.</p><a href="{base}">回到首頁 / Home</a></main></html>')
     print(f'Built {len(urls)} bilingual pages for {base}')

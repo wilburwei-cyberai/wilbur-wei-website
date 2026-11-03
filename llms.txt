@@ -1,0 +1,42 @@
+# 魏得恩 Wilbur Wei｜AI 資安演講、企業內訓與顧問
+
+> 魏得恩（Wilbur Wei，學術論文署名 Te-En Wei）是元智大學資訊工程學系助理教授，主持 MIRAGE Lab（代理人紅隊攻防實境實驗室），也是 AI 資安講師與 AI 資安顧問，提供演講、企業內訓、顧問合作與 AI 賦能轉型服務。
+> Wilbur Wei (魏得恩), who publishes as Te-En Wei, is an Assistant Professor in the Department of Computer Science and Engineering at Yuan Ze University and Director of MIRAGE Lab. He is an AI security speaker and consultant offering talks, corporate training, consulting and AI transformation services.
+
+- 中文名：魏得恩；英文名：Wilbur Wei；學術署名：Te-En Wei
+- 職稱：元智大學資訊工程學系助理教授；MIRAGE Lab（代理人紅隊攻防實境實驗室）主持；AI 資安講師與顧問
+- Title: Assistant Professor, Department of Computer Science and Engineering, Yuan Ze University; Director, MIRAGE Lab; AI security speaker and consultant
+- 專長 / Expertise: AI Agent 資安、生成式 AI 資安、LLM 威脅建模、零信任架構、Active Directory 資安、AI 輔助資安防禦、資安治理與 ISO 27001、AI 賦能轉型、企業流程優化 / AI Agent Security, Generative AI Security, LLM Threat Modeling, Zero Trust Architecture, Active Directory Security, AI for Cybersecurity, Security Governance and ISO 27001, AI-enabled Business Transformation, Business Workflow Improvement
+- 獎項 / Awards: 2022 R&D 100 Awards; CISC 2026 Best Paper Award (AHAF); CISC 2026 Honorable Mention (HMELF); CISC 2025 Honorable Mention (STIE-ZTA)
+- 聯絡 / Contact: wilbur.wei.cyberai@gmail.com（演講、內訓、顧問、AI 賦能轉型 / speaking, training, consulting, AI transformation）; wilbur.wei@saturn.yzu.edu.tw（學術與產學合作 / academic and research collaboration）
+
+## 中文頁面
+
+- [首頁](https://wilburwei-cyberai.github.io/wilbur-wei-website/): 魏得恩 Wilbur Wei，元智大學資工系助理教授、AI 資安講師與顧問。提供 AI Agent 安全、零信任與資安治理的演講、企業內訓及顧問合作，並延伸至 AI 賦能轉型與企業流程優化。
+- [關於](https://wilburwei-cyberai.github.io/wilbur-wei-website/about/): 認識魏得恩 Wilbur Wei：元智大學資工系助理教授，學術署名 Te-En Wei。連結學術、政府稽核與企業實務，提供 AI 資安演講、內訓與顧問，並延伸至 AI 賦能轉型。
+- [演講](https://wilburwei-cyberai.github.io/wilbur-wei-website/speaking/): 為企業、產業公協會與教育機構安排 AI 資安演講，主題包含 AI 工具安全使用、AI Agent 攻防、零信任，並提供 AI 賦能轉型與流程優化方向。查看魏得恩 Wilbur Wei 的代表演講紀錄。
+- [企業內訓](https://wilburwei-cyberai.github.io/wilbur-wei-website/training/): 從 AI 安全使用、LLM 威脅建模與 SOC 實作，到企業 AI 工作流與流程改善。魏得恩 Wilbur Wei 依主管、一般同仁與技術團隊設計資安及 AI 應用內訓。
+- [顧問](https://wilburwei-cyberai.github.io/wilbur-wei-website/consulting/): 魏得恩 Wilbur Wei 提供 AI Agent 安全、零信任、AD 風險與資安治理顧問，並協助企業盤點 AI 導入與流程改善需求，討論評估範圍及可執行的優先順序。
+- [AI 賦能轉型](https://wilburwei-cyberai.github.io/wilbur-wei-website/transformation/): 從流程盤點、AI 工具導入到試點與團隊培訓。魏得恩 Wilbur Wei 協助企業以 AI 優化文件、知識查詢與作業管理，結合資安設計及成效量測，並提供亞旭合作與相關演講經驗。
+- [歷年紀錄](https://wilburwei-cyberai.github.io/wilbur-wei-website/experience/): 魏得恩 Wilbur Wei 的 2024–2026 演講、授課與教材紀錄，包含 SEMICON Taiwan 2025、臺大電信所、國防大學、觀音與中壢產業園區、自強基金會，以及已排定的自強基金會課程。
+- [研究](https://wilburwei-cyberai.github.io/wilbur-wei-website/research/): 魏得恩 Te-En Wei（Wilbur Wei）的研究計畫與成果：FY115 國科會 LLM 驅動紅隊代理平台計畫、七筆論文發表紀錄與三項論文獎，以及通訊與硬體資安的未來研究規劃。
+- [MIRAGE Lab](https://wilburwei-cyberai.github.io/wilbur-wei-website/lab/): 元智大學資工系 MIRAGE Lab 代理人紅隊攻防實境實驗室，由魏得恩 Wilbur Wei 主持。既有研究涵蓋 AI Agent、紅隊攻防與零信任，規劃拓展至無人機、機器人通訊資安與 PUF 應用。
+- [教學方法](https://wilburwei-cyberai.github.io/wilbur-wei-website/teaching/): 魏得恩 Wilbur Wei 的教材設計方法：查核來源、從學員環境實跑、以情境練習連結概念與決策，並結合 AI 協作與人工定稿。
+
+## English pages
+
+- [Home](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/): Wilbur Wei (Te-En Wei), Assistant Professor at Yuan Ze University: AI security talks, training and consulting on AI agents, zero trust and AI transformation.
+- [About](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/about/): About Wilbur Wei (Te-En Wei), Assistant Professor at Yuan Ze University: AI security speaker and consultant across academia, government audit and industry.
+- [Speaking](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/speaking/): AI security talks by Wilbur Wei on safe AI use, AI agent security, zero trust and AI transformation, with records from SEMICON Taiwan 2025 to industrial parks.
+- [Training](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/training/): Corporate AI security training with Wilbur Wei: safe AI use, LLM threat modelling, SOC labs and AI workflows, tailored to managers, staff and technical teams.
+- [Consulting](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/consulting/): Consulting with Wilbur Wei on AI agent security, zero trust, AD risk and governance, plus AI adoption and workflow assessment with practical priorities.
+- [AI Transformation](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/transformation/): AI transformation with Wilbur Wei: workflow assessment, AI adoption planning, pilot guidance and team training, with security design and evaluation built in.
+- [Experience](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/experience/): Wilbur Wei’s 2024–2026 talks, teaching and courseware, including SEMICON Taiwan 2025, NTU, National Defense University, Zhongli Industrial Park and TCFST.
+- [Research](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/research/): Research by Te-En Wei (Wilbur Wei): an FY115 NSTC LLM-driven red team agent project, seven publication records, three paper awards and planned research.
+- [MIRAGE Lab](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/lab/): MIRAGE Lab at Yuan Ze University, directed by Wilbur Wei, studies AI agent security, red teaming and zero trust, with planned drone, robot and PUF research.
+- [Teaching Approach](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/teaching/): How Wilbur Wei designs security courseware: source verification, learner-environment testing, scenario exercises, AI-assisted drafting and human review.
+
+## Optional
+
+- [llms-full.txt](https://wilburwei-cyberai.github.io/wilbur-wei-website/llms-full.txt): 完整的經歷、論文與常見問題文字版 / Full text of profile, records, publications and FAQs
+- [Sitemap](https://wilburwei-cyberai.github.io/wilbur-wei-website/sitemap.xml)
