@@ -18,7 +18,7 @@
 - [企業內訓](https://wilburwei-cyberai.github.io/wilbur-wei-website/training/): 從 AI 安全使用、LLM 威脅建模與 SOC 實作，到企業 AI 工作流與流程改善。魏得恩 Wilbur Wei 依主管、一般同仁與技術團隊設計資安及 AI 應用內訓。
 - [顧問](https://wilburwei-cyberai.github.io/wilbur-wei-website/consulting/): 魏得恩 Wilbur Wei 提供 AI Agent 安全、零信任、AD 風險與資安治理顧問，並協助企業盤點 AI 導入與流程改善需求，討論評估範圍及可執行的優先順序。
 - [AI 賦能轉型](https://wilburwei-cyberai.github.io/wilbur-wei-website/transformation/): 從流程盤點、AI 工具導入到試點與團隊培訓。魏得恩 Wilbur Wei 協助企業以 AI 優化文件、知識查詢與作業管理，結合資安設計及成效量測，並提供亞旭合作與相關演講經驗。
-- [歷年紀錄](https://wilburwei-cyberai.github.io/wilbur-wei-website/experience/): 魏得恩 Wilbur Wei 的 2024–2026 演講、授課與教材紀錄，包含 SEMICON Taiwan 2025、臺大電信所、國防大學、觀音與中壢產業園區、自強基金會，以及已排定的自強基金會課程。
+- [歷年紀錄](https://wilburwei-cyberai.github.io/wilbur-wei-website/experience/): 魏得恩 Wilbur Wei 的 2024–2026 演講、授課與教材紀錄，包含 SEMICON Taiwan 2025、臺大電信所、國防大學、觀音與中壢產業園區、自強基金會。
 - [研究](https://wilburwei-cyberai.github.io/wilbur-wei-website/research/): 魏得恩 Te-En Wei（Wilbur Wei）的研究計畫與成果：FY115 國科會 LLM 驅動紅隊代理平台計畫、七筆論文發表紀錄與三項論文獎，以及通訊與硬體資安的未來研究規劃。
 - [MIRAGE Lab](https://wilburwei-cyberai.github.io/wilbur-wei-website/lab/): 元智大學資工系 MIRAGE Lab 代理人紅隊攻防實境實驗室，由魏得恩 Wilbur Wei 主持。既有研究涵蓋 AI Agent、紅隊攻防與零信任，規劃拓展至無人機、機器人通訊資安與 PUF 應用。
 - [教學方法](https://wilburwei-cyberai.github.io/wilbur-wei-website/teaching/): 魏得恩 Wilbur Wei 的教材設計方法：查核來源、從學員環境實跑、以情境練習連結概念與決策，並結合 AI 協作與人工定稿。

@@ -68,7 +68,7 @@ URL: https://wilburwei-cyberai.github.io/wilbur-wei-website/lab/
 - [過往紀錄] 2026｜AI 資安應用實務：事中應變｜中華軟體公會｜3 小時｜2 本 Colab 實作教材
 - [教材開發] 2026｜資料結構教材改版｜元智大學資訊工程學系｜大學課程教材
 - [過往紀錄] 2026｜AI 賦能安全營運中心（SOC）智能化應用實務（實作）｜自強基金會｜2 次・共 12 小時
-- [已排定] 2026｜駭客滲透攻擊與 Honeypot 誘捕防禦攻防實務（實作）｜自強基金會｜2 次・共 12 小時
+- [過往紀錄] 2026｜駭客滲透攻擊與 Honeypot 誘捕防禦攻防實務（實作）｜自強基金會｜2 次・共 12 小時
 - [過往紀錄] 2025｜矽盾強化：半導體企業的 AD 資安與多因子防禦戰略｜SEMICON Taiwan 2025｜產業研討會演講｜半導體企業資安
 - [過往紀錄] 2025｜AI 世代下的簡單型零信任｜彰化縣工業會｜企業負責人及資安主管｜20 分鐘
 - [過往紀錄] 2025｜主動式資安防禦實務｜自強基金會｜同一門課・兩次授課
@@ -235,7 +235,7 @@ URL: https://wilburwei-cyberai.github.io/wilbur-wei-website/en/lab/
 - [Past engagement] 2026 · AI for Cybersecurity: Incident Response · Information Service Industry Association of R.O.C. (CISA) · 3 hours · 2 Colab lab notebooks
 - [Courseware] 2026 · Data Structures Courseware · Department of Computer Science and Engineering, Yuan Ze University · University courseware
 - [Past engagement] 2026 · AI-Enabled Security Operations Centre: Practical Applications · Tze-Chiang Foundation of Science & Technology · 2 sessions · 12 hours
-- [Scheduled] 2026 · Penetration Attacks and Honeypot Deception Defence · Tze-Chiang Foundation of Science & Technology · 2 sessions · 12 hours
+- [Past engagement] 2026 · Penetration Attacks and Honeypot Deception Defence · Tze-Chiang Foundation of Science & Technology · 2 sessions · 12 hours
 - [Past engagement] 2025 · Silicon Shield Reinforcement: AD Security Strategies and Multi-Factor Defense in the Semiconductor Industry · SEMICON Taiwan 2025 · Industry conference talk · Semiconductor cybersecurity
 - [Past engagement] 2025 · Practical Zero Trust in the AI Era · Changhua County Industrial Association (CHCIA) · Business owners and security managers · 20 minutes
 - [Past engagement] 2025 · Practical Proactive Cyber Defence · Tze-Chiang Foundation of Science & Technology · One course · Two sessions
