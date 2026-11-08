@@ -64,7 +64,7 @@ URL: https://wilburwei-cyberai.github.io/wilbur-wei-website/lab/
 - [課程設計] 2026｜AI 工作流需求分析與系列工作坊設計｜自雇者與微型工作者｜需求分析與課程設計
 - [過往紀錄] 2026｜如何安全地使用AI工具及應用實務｜亞旭電腦｜資安委員會例會｜2 小時
 - [過往紀錄] 2026｜AI 工具安全使用｜咖米股份有限公司｜企業內部演講
-- [課程介紹] 2026｜從 LLM 威脅建模到風險控管與治理（實作）｜自強基金會｜2 次・共 12 小時｜實作課程
+- [課程介紹] 2026｜從 LLM 威脅建模到風險控管與治理（實作）｜自強基金會｜2 次・共 12 小時
 - [過往紀錄] 2026｜AI 資安應用實務：事中應變｜中華軟體公會｜3 小時｜2 本 Colab 實作教材
 - [教材開發] 2026｜資料結構教材改版｜元智大學資訊工程學系｜大學課程教材
 - [過往紀錄] 2026｜AI 賦能安全營運中心（SOC）智能化應用實務（實作）｜自強基金會｜2 次・共 12 小時
@@ -231,7 +231,7 @@ URL: https://wilburwei-cyberai.github.io/wilbur-wei-website/en/lab/
 - [Curriculum design] 2026 · AI Workflow Needs Analysis and Workshop Design · Self-employed professionals and micro-businesses · Needs analysis and curriculum design
 - [Past engagement] 2026 · Using AI Tools Safely: Practical Applications · Askey · Cybersecurity committee meeting · 2 hours
 - [Past engagement] 2026 · Safe Use of AI Tools · Kamee Inc. · Internal corporate talk
-- [Course overview] 2026 · LLM Threat Modelling, Risk Management and Governance · Tze-Chiang Foundation of Science & Technology · 2 sessions · 12 hours · Hands-on course
+- [Course overview] 2026 · LLM Threat Modelling, Risk Management and Governance · Tze-Chiang Foundation of Science & Technology · 2 sessions · 12 hours
 - [Past engagement] 2026 · AI for Cybersecurity: Incident Response · Information Service Industry Association of R.O.C. (CISA) · 3 hours · 2 Colab lab notebooks
 - [Courseware] 2026 · Data Structures Courseware · Department of Computer Science and Engineering, Yuan Ze University · University courseware
 - [Past engagement] 2026 · AI-Enabled Security Operations Centre: Practical Applications · Tze-Chiang Foundation of Science & Technology · 2 sessions · 12 hours
