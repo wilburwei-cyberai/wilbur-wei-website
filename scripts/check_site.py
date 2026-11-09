@@ -65,7 +65,7 @@ assert set(urls)=={d.canonical[0] for d in docs.values()}
 for lang in ['', 'en/']:
     experience=(ROOT/(lang+'experience/index.html')).read_text()
     assert 'id="A5"' not in experience and 'id="B5"' not in experience
-    assert experience.count('data-record data-kind=')==29
+    assert experience.count('data-record data-kind=')==30
     assert 'id="A11"' in experience and 'SEMICON Taiwan 2025' in experience
     assert 'Silicon Shield Reinforcement: AD Security Strategies and Multi-Factor Defense in the Semiconductor Industry' in experience
     assert '矽盾強化：半導體企業的 AD 資安與多因子防禦戰略' in experience
@@ -132,4 +132,4 @@ for lang in ['', 'en/']:
     assert not [n for n in docs[ROOT/(lang+'experience/index.html')].ld[0]['@graph'] if n.get('@id','').endswith('#B3')]
     about=docs[ROOT/(lang+'about/index.html')]
     assert any(n['@type']=='FAQPage' and len(n['mainEntity'])>=8 for n in about.ld[0]['@graph'])
-print('PASS: 20 pages; unique titles/descriptions; reciprocal language URLs; valid JSON-LD/sitemap; all local links and anchors; 29 records per language; 7 publication records per language; merged/HOLD records excluded.')
+print('PASS: 20 pages; unique titles/descriptions; reciprocal language URLs; valid JSON-LD/sitemap; all local links and anchors; 30 records per language; 7 publication records per language; merged/HOLD records excluded.')

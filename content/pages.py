@@ -199,12 +199,14 @@ PAGES['research']['description'] = bi(
 # are not truncated. Speaking and experience descriptions no longer mention scheduled talks
 # (the Zhongli talk is now past; no talk is currently scheduled). B7 is past as of
 # 2026-11-08, so the experience description no longer says a TCFST course is scheduled.
+# B15 is a scheduled Billows Tech. course, so the Chinese description names that
+# course. English still does not mention a scheduled course, as before PR #5.
 PAGES['']['description']['en'] = 'Wilbur Wei (Te-En Wei), Assistant Professor at Yuan Ze University: AI security talks, training and consulting on AI agents, zero trust and AI transformation.'
 PAGES['speaking']['description']['en'] = 'AI security talks by Wilbur Wei on safe AI use, AI agent security, zero trust and AI transformation, with records from SEMICON Taiwan 2025 to industrial parks.'
 PAGES['speaking']['description']['zh'] = '為企業、產業公協會與教育機構安排 AI 資安演講，主題包含 AI 工具安全使用、AI Agent 攻防、零信任，並提供 AI 賦能轉型與流程優化方向。查看魏得恩 Wilbur Wei 的代表演講紀錄。'
 PAGES['training']['description']['en'] = 'Corporate AI security training with Wilbur Wei: safe AI use, LLM threat modelling, SOC labs and AI workflows, tailored to managers, staff and technical teams.'
 PAGES['consulting']['description']['en'] = 'Consulting with Wilbur Wei on AI agent security, zero trust, AD risk and governance, plus AI adoption and workflow assessment with practical priorities.'
-PAGES['experience']['description']['zh'] = '魏得恩 Wilbur Wei 的 2024–2026 演講、授課與教材紀錄，包含 SEMICON Taiwan 2025、臺大電信所、國防大學、觀音與中壢產業園區、自強基金會。'
+PAGES['experience']['description']['zh'] = '魏得恩 Wilbur Wei 的 2024–2026 演講、授課與教材紀錄，包含 SEMICON Taiwan 2025、臺大電信所、國防大學、觀音與中壢產業園區、自強基金會，以及已排定的竣盟科技課程。'
 PAGES['experience']['description']['en'] = 'Wilbur Wei’s 2024–2026 talks, teaching and courseware, including SEMICON Taiwan 2025, NTU, National Defense University, Zhongli Industrial Park and TCFST.'
 PAGES['lab']['description']['en'] = 'MIRAGE Lab at Yuan Ze University, directed by Wilbur Wei, studies AI agent security, red teaming and zero trust, with planned drone, robot and PUF research.'
 PAGES['about']['description']['en'] = 'About Wilbur Wei (Te-En Wei), Assistant Professor at Yuan Ze University: AI security speaker and consultant across academia, government audit and industry.'
