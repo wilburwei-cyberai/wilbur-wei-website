@@ -31,14 +31,14 @@ python3 -m http.server 8769 --bind 127.0.0.1
 
 ## 上傳 GitHub Pages
 
-正式網址仍為 `https://wilburwei-cyberai.github.io/wilbur-wei-website/`。
+正式網址為 `https://wilburwei.com/`（網域根目錄）。Pages 從 `main` 分支的 `/` 發布；根目錄 `CNAME` 的內容是 `wilburwei.com`。
 
 1. 將本資料夾的**內容**更新至原 repository 的發布根目錄，確保根目錄直接有 `index.html`，不再包一層 `.v4/`。
-2. 更新全部頁面、`assets/`、`sitemap.xml`、`robots.txt`、`404.html` 與 `.nojekyll`。特別記得新增 `transformation/` 與 `en/transformation/`。
+2. 更新全部頁面、`assets/`、`sitemap.xml`、`robots.txt`、`404.html`、`CNAME` 與 `.nojekyll`。特別記得新增 `transformation/` 與 `en/transformation/`。
 3. `content/`、`scripts/`、`site.config.json` 與本說明可一併提交，以保留可重建來源。不需上傳父資料夾的個人素材、行事曆截圖或檢查報告。
-4. 使用既有 GitHub Pages 發布流程。沿用原網址時，Search Console 的 sitemap 網址不變；新增頁面已在新 sitemap 內。
+4. 使用既有 GitHub Pages 發布流程（從分支根目錄發布）。Search Console 的 sitemap 為 `https://wilburwei.com/sitemap.xml`；新增頁面已在 sitemap 內。
 
-網站已產生 HTML，發布不需要再執行建置。本機版本名稱不會改動正式 repository 或 canonical。若改用其他正式網址，請先修改 `site.config.json` 再重建。
+網站已產生 HTML，發布不需要再執行建置。本機版本名稱不會改動正式 repository 或 canonical。正式網址只寫在 `site.config.json` 的 `site_url`；若改網址，請先修改該值再重建。
 
 ## 維護與檢查
 
@@ -77,7 +77,7 @@ python3 scripts/check_site.py
 - 20 個頁面皆有獨立 title、description、canonical、hreflang；新增頁納入 sitemap。
 - Person、Service、ScholarlyArticle、Organization 等結構化資料與可見內容對應。未把研究規劃包裝為已發表論文或成果。
 - 官方教師頁保留為 Person 的 sameAs。APT 期刊連結指向學會原始頁，期刊 JSON-LD 指向會議前身。
-- Google 驗證標籤與正式網址保留。沒有加入未設定的 GA4 代碼，也未變更主機根目錄的爬蟲政策。GitHub Pages 專案子路徑的 `robots.txt` 不等於主機根目錄規則。
+- Google 驗證標籤保留。沒有加入未設定的 GA4 代碼。自訂網域的 `robots.txt` 位於主機根目錄，規則會套用到整個網站。
 
 這些措施維持 SEO、AIO、GEO 基礎，適用一般搜尋及 ChatGPT、Claude、Gemini、Perplexity 的網頁搜尋情境；成效仍需上線後觀察索引、搜尋曝光與實際洽詢，不能以程式碼檢查代替。Google 的 AI 搜尋說明：[Google Search Central](https://developers.google.com/search/docs/appearance/ai-features)。
 

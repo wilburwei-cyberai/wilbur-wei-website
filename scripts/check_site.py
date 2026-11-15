@@ -103,6 +103,22 @@ for p,d in docs.items():
     assert '百杉' not in text
 # GEO checks: AI-crawler rules, llms.txt, profile FAQ and structured data.
 base=json.loads((ROOT/'site.config.json').read_text())['site_url'].rstrip('/')+'/'
+assert base=='https://wilburwei.com/', base
+assert all(u.startswith(base) for u in urls)
+OLD_BASE='https://wilburwei-cyberai.github.io/wilbur-wei-website'
+published=[*docs, ROOT/'404.html', ROOT/'sitemap.xml', ROOT/'robots.txt', ROOT/'llms.txt', ROOT/'llms-full.txt', ROOT/'CNAME']
+for path in published:
+    text=path.read_text()
+    assert OLD_BASE not in text and 'github.io' not in text, (path, 'old github.io base')
+    assert 'wilbur-wei-website' not in text, (path, 'project path prefix')
+assert (ROOT/'CNAME').read_text()=='wilburwei.com\n'
+assert f'href="{base}"' in (ROOT/'404.html').read_text()
+for p,d in docs.items():
+    assert d.canonical[0].startswith(base), (p, d.canonical[0])
+    page=p.read_text()
+    assert f'property="og:url" content="{d.canonical[0]}"' in page, p
+    assert f'property="og:image" content="{base}assets/social-card.png"' in page, p
+    assert f'name="twitter:image" content="{base}assets/social-card.png"' in page, p
 robots=(ROOT/'robots.txt').read_text()
 for bot in ['GPTBot','OAI-SearchBot','ChatGPT-User','PerplexityBot','Google-Extended','ClaudeBot','Applebot-Extended','Bingbot']:
     assert f'User-agent: {bot}\nAllow: /' in robots, bot
