@@ -126,6 +126,56 @@ for p,d in docs.items():
             assert html_escape(q['name']) in text,(p,q['name'])
     assert '@import' not in (ROOT/'assets/site.css').read_text()
     if p.parent.name=='experience': assert not [n for n in graph if n['@type']=='Event' or 'startDate' in n]
+# Approved positioning lines. Meta/og/twitter carry them only on the homepage and
+# About page. Person and WebSite JSON-LD, and both llms.txt summaries, carry the
+# line for that language. Visible body copy stays free of both lines.
+POSITIONING_ZH='企業的資安幕僚，守住公司的營運與信任。'
+POSITIONING_EN='A cybersecurity advisor to the enterprise, safeguarding its operations and trust.'
+def _slug(path):
+    rel=path.relative_to(ROOT).as_posix()
+    return '' if rel=='index.html' else rel[:-len('/index.html')]
+for p,d in docs.items():
+    text=p.read_text()
+    graph=d.ld[0]['@graph']
+    person=next(n for n in graph if n['@type']=='Person')
+    website=next(n for n in graph if n['@type']=='WebSite')
+    assert f'property="og:description" content="{d.description[0]}"' in text,p
+    assert f'name="twitter:description" content="{d.description[0]}"' in text,p
+    body=text.split('<body',1)[1]
+    assert POSITIONING_ZH not in body and POSITIONING_EN not in body,p
+    slug=_slug(p)
+    home_slug='' if d.lang=='zh-Hant' else 'en'
+    about_slug='about' if d.lang=='zh-Hant' else 'en/about'
+    home_meta=docs[ROOT/'index.html' if d.lang=='zh-Hant' else ROOT/'en/index.html'].description[0]
+    if d.lang=='zh-Hant':
+        line, other=POSITIONING_ZH, POSITIONING_EN
+        assert person['description'].startswith(line),p
+        assert 'MIRAGE Lab' in person['description'] and '元智大學' in person['description'] and 'AI 資安講師與 AI 資安顧問' in person['description'],p
+    else:
+        line, other=POSITIONING_EN, POSITIONING_ZH
+        assert person['description'].startswith(line+' '),p
+        assert 'Yuan Ze University' in person['description'] and 'MIRAGE Lab' in person['description'] and 'Assistant Professor' in person['description'],p
+    assert other not in text,p
+    assert website['description'].startswith(line) and website['description']==home_meta,p
+    assert len(d.description[0])<=160,(p,len(d.description[0]))
+    if slug in (home_slug, about_slug):
+        assert d.description[0].startswith(line),p
+    else:
+        assert line not in d.description[0],p
+llms=(ROOT/'llms.txt').read_text()
+llms_lines=llms.splitlines()
+assert llms_lines[2].startswith('> '+POSITIONING_ZH) and '主持 MIRAGE Lab' in llms_lines[2] and 'AI 資安講師與 AI 資安顧問' in llms_lines[2]
+assert llms_lines[3].startswith('> '+POSITIONING_EN+' ') and 'Director of MIRAGE Lab' in llms_lines[3]
+zh_llms,en_rest=llms.split('## English pages',1)
+en_llms=en_rest.split('## Optional',1)[0]
+zh_bullets=[ln for ln in zh_llms.splitlines() if ln.startswith('- [')]
+en_bullets=[ln for ln in en_llms.splitlines() if ln.startswith('- [')]
+assert len(zh_bullets)==10 and len(en_bullets)==10
+assert all(POSITIONING_ZH in ln for ln in zh_bullets[:2]) and all(POSITIONING_ZH not in ln for ln in zh_bullets[2:])
+assert all(POSITIONING_EN in ln for ln in en_bullets[:2]) and all(POSITIONING_EN not in ln for ln in en_bullets[2:])
+assert POSITIONING_ZH not in en_llms and POSITIONING_EN not in '\n'.join(zh_bullets)
+full=(ROOT/'llms-full.txt').read_text()
+assert POSITIONING_ZH not in full and POSITIONING_EN not in full
 # B3 (MasterTalks) stays only where it already appears; not in llms files or Course JSON-LD.
 assert 'MasterTalks' not in (ROOT/'llms.txt').read_text()+(ROOT/'llms-full.txt').read_text()
 for lang in ['', 'en/']:

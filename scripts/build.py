@@ -20,7 +20,7 @@ from transformation import INTRO as TRANSFORMATION_INTRO, SCENARIOS, STEPS, ASKE
 from research_directions import INTRO as FUTURE_INTRO, DIRECTIONS as FUTURE_DIRECTIONS
 from research_projects import RESEARCH_PROJECTS
 from profile import FACULTY_URL, ROLES, METRICS, ACHIEVEMENT_INTRO, METRIC_CONTEXT, AWARD_DESCRIPTION
-from geo import AI_CRAWLERS, SAME_AS, KNOWS_ABOUT, AWARDS, SUMMARY, PROFILE_FAQ, SALES_FAQ
+from geo import AI_CRAWLERS, SAME_AS, KNOWS_ABOUT, AWARDS, SUMMARY, PROFILE_FAQ, SALES_FAQ, with_positioning_en, with_positioning_zh
 FAQ = {**FAQ, 'about': PROFILE_FAQ}
 FAQ = {slug: FAQ.get(slug, []) + SALES_FAQ.get(slug, []) for slug in dict.fromkeys([*FAQ, *SALES_FAQ])}
 PAPERS = json.loads((ROOT / 'content/publications.json').read_text())
@@ -361,7 +361,8 @@ def schema(c):
     lab_id=c.base+'lab/#organization'
     yzu={'@type':'CollegeOrUniversity','@id':'https://www.yzu.edu.tw/#organization','name':c.l('元智大學','Yuan Ze University'),'url':'https://www.yzu.edu.tw/'}
     dept={'@type':'Organization','name':c.t(LAB_AFFILIATION),'url':'https://www.cse.yzu.edu.tw/','parentOrganization':yzu}
-    graph=[{'@type':'Person','@id':pid,'name':'魏得恩' if c.lang=='zh' else 'Wilbur Wei','alternateName':['Wilbur Wei','Te-En Wei','魏得恩'],'url':c.url('about'),'description':c.t(SUMMARY),'jobTitle':c.l('元智大學資訊工程學系助理教授；AI 資安講師與顧問','Assistant Professor; AI security speaker and consultant'),'worksFor':yzu,'affiliation':[dept,{'@type':'Organization','@id':lab_id,'name':LAB_NAME,'alternateName':LAB_ZH,'url':c.url('lab')}],'knowsAbout':c.t(KNOWS_ABOUT),'award':c.t(AWARDS),'email':EMAIL,'sameAs':SAME_AS},
+    person_description=with_positioning_zh(c.t(SUMMARY)) if c.lang=='zh' else with_positioning_en(c.t(SUMMARY))
+    graph=[{'@type':'Person','@id':pid,'name':'魏得恩' if c.lang=='zh' else 'Wilbur Wei','alternateName':['Wilbur Wei','Te-En Wei','魏得恩'],'url':c.url('about'),'description':person_description,'jobTitle':c.l('元智大學資訊工程學系助理教授；AI 資安講師與顧問','Assistant Professor; AI security speaker and consultant'),'worksFor':yzu,'affiliation':[dept,{'@type':'Organization','@id':lab_id,'name':LAB_NAME,'alternateName':LAB_ZH,'url':c.url('lab')}],'knowsAbout':c.t(KNOWS_ABOUT),'award':c.t(AWARDS),'email':EMAIL,'sameAs':SAME_AS},
     {'@type':'WebSite','@id':c.base+'#website','url':c.base,'name':'Wilbur Wei · AI Security','alternateName':['魏得恩 Wilbur Wei','Wilbur Wei · 魏得恩'],'description':c.t(PAGES['']['description']),'inLanguage':['zh-Hant','en'],'publisher':{'@id':pid}},
     {'@type':'ProfilePage' if c.slug=='about' else 'WebPage','@id':c.url()+'#webpage','url':c.url(),'name':c.t(PAGES[c.slug]['title']),'description':c.t(PAGES[c.slug]['description']),'inLanguage':lang,'isPartOf':{'@id':c.base+'#website'},'about':{'@id':pid}}]
     if c.slug == 'about':
@@ -478,7 +479,7 @@ LLMS_PAGES=['','about','speaking','training','consulting','transformation','expe
 
 def llms_txt(base):
     zh,en=Page('','zh',base),Page('','en',base)
-    out=['# 魏得恩 Wilbur Wei｜AI 資安演講、企業內訓與顧問','','> '+SUMMARY['zh'],'> '+SUMMARY['en'],'',
+    out=['# 魏得恩 Wilbur Wei｜AI 資安演講、企業內訓與顧問','','> '+with_positioning_zh(SUMMARY['zh']),'> '+with_positioning_en(SUMMARY['en']),'',
          '- 中文名：魏得恩；英文名：Wilbur Wei；學術署名：Te-En Wei',
          '- 職稱：元智大學資訊工程學系助理教授；MIRAGE Lab（'+LAB_ZH+'）主持；AI 資安講師與顧問',
          '- Title: Assistant Professor, Department of Computer Science and Engineering, Yuan Ze University; Director, MIRAGE Lab; AI security speaker and consultant',

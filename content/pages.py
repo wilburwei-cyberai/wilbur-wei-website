@@ -1,4 +1,5 @@
 """Editorial content for the bilingual static website."""
+from geo import with_positioning_en, with_positioning_zh
 from records import bi
 
 PAGES = {'lab': {'label': {'zh': 'MIRAGE Lab', 'en': 'MIRAGE Lab'},
@@ -201,7 +202,9 @@ PAGES['research']['description'] = bi(
 # 2026-11-08, so the experience description no longer says a TCFST course is scheduled.
 # B15 is a scheduled Billows Tech. course, so the Chinese description names that
 # course. English still does not mention a scheduled course, as before PR #5.
-PAGES['']['description']['en'] = 'Wilbur Wei (Te-En Wei), Assistant Professor at Yuan Ze University: AI security talks, training and consulting on AI agents, zero trust and AI transformation.'
+# English homepage meta must stay ≤160 characters, so the tail is shortened.
+# Person JSON-LD and the llms.txt summary still prefix the line onto the full identity text.
+PAGES['']['description']['en'] = with_positioning_en('Wilbur Wei (Te-En Wei), Yuan Ze University: talks, training and consulting.')
 PAGES['speaking']['description']['en'] = 'AI security talks by Wilbur Wei on safe AI use, AI agent security, zero trust and AI transformation, with records from SEMICON Taiwan 2025 to industrial parks.'
 PAGES['speaking']['description']['zh'] = '為企業、產業公協會與教育機構安排 AI 資安演講，主題包含 AI 工具安全使用、AI Agent 攻防、零信任，並提供 AI 賦能轉型與流程優化方向。查看魏得恩 Wilbur Wei 的代表演講紀錄。'
 PAGES['training']['description']['en'] = 'Corporate AI security training with Wilbur Wei: safe AI use, LLM threat modelling, SOC labs and AI workflows, tailored to managers, staff and technical teams.'
@@ -209,6 +212,11 @@ PAGES['consulting']['description']['en'] = 'Consulting with Wilbur Wei on AI age
 PAGES['experience']['description']['zh'] = '魏得恩 Wilbur Wei 的 2024–2026 演講、授課與教材紀錄，包含 SEMICON Taiwan 2025、臺大電信所、國防大學、觀音與中壢產業園區、自強基金會，以及已排定的竣盟科技課程。'
 PAGES['experience']['description']['en'] = 'Wilbur Wei’s 2024–2026 talks, teaching and courseware, including SEMICON Taiwan 2025, NTU, National Defense University, Zhongli Industrial Park and TCFST.'
 PAGES['lab']['description']['en'] = 'MIRAGE Lab at Yuan Ze University, directed by Wilbur Wei, studies AI agent security, red teaming and zero trust, with planned drone, robot and PUF research.'
-PAGES['about']['description']['en'] = 'About Wilbur Wei (Te-En Wei), Assistant Professor at Yuan Ze University: AI security speaker and consultant across academia, government audit and industry.'
+PAGES['about']['description']['en'] = with_positioning_en('About Wilbur Wei (Te-En Wei): academia, government audit and industry.')
 PAGES['transformation']['description']['en'] = 'AI transformation with Wilbur Wei: workflow assessment, AI adoption planning, pilot guidance and team training, with security design and evaluation built in.'
 PAGES['teaching']['description']['en'] = 'How Wilbur Wei designs security courseware: source verification, learner-environment testing, scenario exercises, AI-assisted drafting and human review.'
+
+# Positioning line on meta descriptions: homepage and About only, both languages.
+# English homepage and About are set above. Every other page keeps its description.
+for _slug in ('', 'about'):
+    PAGES[_slug]['description']['zh'] = with_positioning_zh(PAGES[_slug]['description']['zh'])
