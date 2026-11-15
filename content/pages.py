@@ -1,4 +1,5 @@
 """Editorial content for the bilingual static website."""
+from geo import with_positioning_zh
 from records import bi
 
 PAGES = {'lab': {'label': {'zh': 'MIRAGE Lab', 'en': 'MIRAGE Lab'},
@@ -212,3 +213,9 @@ PAGES['lab']['description']['en'] = 'MIRAGE Lab at Yuan Ze University, directed 
 PAGES['about']['description']['en'] = 'About Wilbur Wei (Te-En Wei), Assistant Professor at Yuan Ze University: AI security speaker and consultant across academia, government audit and industry.'
 PAGES['transformation']['description']['en'] = 'AI transformation with Wilbur Wei: workflow assessment, AI adoption planning, pilot guidance and team training, with security design and evaluation built in.'
 PAGES['teaching']['description']['en'] = 'How Wilbur Wei designs security courseware: source verification, learner-environment testing, scenario exercises, AI-assisted drafting and human review.'
+
+# Approved Chinese positioning line, prefixed after every description override above.
+# Meta, Open Graph, Twitter and WebPage/WebSite JSON-LD all read this field.
+# English descriptions stay as written; the English positioning line is not settled.
+for _page in PAGES.values():
+    _page['description']['zh'] = with_positioning_zh(_page['description']['zh'])

@@ -34,7 +34,20 @@ AWARDS = bi(
      'CISC 2026 Honorable Mention (HMELF)',
      'CISC 2025 Honorable Mention (STIE-ZTA)'])
 
-# One-sentence identity statement, reused in JSON-LD, llms.txt and the FAQ.
+# Owner-approved Chinese positioning line. It belongs in machine-readable fields
+# only (Chinese meta descriptions, Person/WebSite JSON-LD, and the llms.txt
+# summary). Do not add it to visible page copy: the About FAQ reuses SUMMARY.
+# The English wording is not settled; do not translate it into English meta,
+# JSON-LD or the English paragraphs of llms.txt.
+POSITIONING_ZH = '企業的資安幕僚，守住公司的營運與信任。'
+
+def with_positioning_zh(text):
+    return text if text.startswith(POSITIONING_ZH) else POSITIONING_ZH + text
+
+# Identity statement. The About FAQ and llms-full.txt use it as written, so
+# visible copy stays free of the positioning line. Chinese Person JSON-LD and
+# the Chinese llms.txt summary prefix POSITIONING_ZH; English JSON-LD and the
+# English llms.txt paragraph use this text unchanged.
 SUMMARY = bi(
     '魏得恩（Wilbur Wei，學術論文署名 Te-En Wei）是元智大學資訊工程學系助理教授，主持 MIRAGE Lab（代理人紅隊攻防實境實驗室），也是 AI 資安講師與 AI 資安顧問，提供演講、企業內訓、顧問合作與 AI 賦能轉型服務。',
     'Wilbur Wei (魏得恩), who publishes as Te-En Wei, is an Assistant Professor in the Department of Computer Science and Engineering at Yuan Ze University and Director of MIRAGE Lab. He is an AI security speaker and consultant offering talks, corporate training, consulting and AI transformation services.')

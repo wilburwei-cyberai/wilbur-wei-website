@@ -126,6 +126,33 @@ for p,d in docs.items():
             assert html_escape(q['name']) in text,(p,q['name'])
     assert '@import' not in (ROOT/'assets/site.css').read_text()
     if p.parent.name=='experience': assert not [n for n in graph if n['@type']=='Event' or 'startDate' in n]
+# Approved Chinese positioning line: Chinese machine-readable fields only.
+# Visible body copy stays free of it (the About FAQ keeps SUMMARY). English
+# pages and the English half of llms.txt must not carry a translation.
+POSITIONING='企業的資安幕僚，守住公司的營運與信任。'
+for p,d in docs.items():
+    text=p.read_text()
+    graph=d.ld[0]['@graph']
+    person=next(n for n in graph if n['@type']=='Person')
+    website=next(n for n in graph if n['@type']=='WebSite')
+    assert f'property="og:description" content="{d.description[0]}"' in text,p
+    assert f'name="twitter:description" content="{d.description[0]}"' in text,p
+    body=text.split('<body',1)[1]
+    if d.lang=='zh-Hant':
+        assert d.description[0].startswith(POSITIONING) and len(d.description[0])<=160,(p,len(d.description[0]),d.description[0])
+        assert person['description'].startswith(POSITIONING),p
+        assert 'MIRAGE Lab' in person['description'] and '元智大學' in person['description'] and 'AI 資安講師與 AI 資安顧問' in person['description'],p
+        assert website['description'].startswith(POSITIONING),p
+        assert POSITIONING not in body,p
+    else:
+        assert POSITIONING not in text,p
+llms=(ROOT/'llms.txt').read_text()
+zh_llms,en_rest=llms.split('## English pages',1)
+en_llms=en_rest.split('## Optional',1)[0]
+assert zh_llms.splitlines()[2].startswith('> '+POSITIONING)
+assert '主持 MIRAGE Lab' in zh_llms and 'AI 資安講師與 AI 資安顧問' in zh_llms
+assert POSITIONING not in en_llms
+assert POSITIONING not in (ROOT/'llms-full.txt').read_text()
 # B3 (MasterTalks) stays only where it already appears; not in llms files or Course JSON-LD.
 assert 'MasterTalks' not in (ROOT/'llms.txt').read_text()+(ROOT/'llms-full.txt').read_text()
 for lang in ['', 'en/']:
