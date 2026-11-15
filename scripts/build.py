@@ -20,9 +20,12 @@ from transformation import INTRO as TRANSFORMATION_INTRO, SCENARIOS, STEPS, ASKE
 from research_directions import INTRO as FUTURE_INTRO, DIRECTIONS as FUTURE_DIRECTIONS
 from research_projects import RESEARCH_PROJECTS
 from profile import FACULTY_URL, ROLES, METRICS, ACHIEVEMENT_INTRO, METRIC_CONTEXT, AWARD_DESCRIPTION
-from geo import AI_CRAWLERS, SAME_AS, KNOWS_ABOUT, AWARDS, SUMMARY, PROFILE_FAQ, SALES_FAQ, with_positioning_en, with_positioning_zh
+from geo import AI_CRAWLERS, SAME_AS, KNOWS_ABOUT, AWARDS, SUMMARY, PROFILE_FAQ, SALES_FAQ, POSITIONING_EN, POSITIONING_ZH, with_positioning_en, with_positioning_zh
+from owner_guide import ADVISOR_FAQ, ADVISOR_H1, ADVISOR_LEAD, ADVISOR_SECTIONS, ADVISOR_SERVICE, GUIDE_FAQ, GUIDE_H1, GUIDE_LEAD, GUIDE_NOTE, GUIDE_SECTIONS, SOURCES
 FAQ = {**FAQ, 'about': PROFILE_FAQ}
 FAQ = {slug: FAQ.get(slug, []) + SALES_FAQ.get(slug, []) for slug in dict.fromkeys([*FAQ, *SALES_FAQ])}
+FAQ['advisor'] = ADVISOR_FAQ
+FAQ['guides/who-to-call'] = GUIDE_FAQ
 PAPERS = json.loads((ROOT / 'content/publications.json').read_text())
 CONFIG = json.loads((ROOT / 'site.config.json').read_text())
 EMAIL = 'wilbur.wei.cyberai@gmail.com'
@@ -102,13 +105,23 @@ def service_cards(c):
 
 def faq(c,slug):
     items = ''.join(f'<details><summary>{e(c.t(q))}</summary>{paragraph(c.t(a))}</details>' for q,a in FAQ[slug])
-    title = c.l('常見問題：認識魏得恩','Frequently asked questions about Wilbur Wei') if slug=='about' else c.l('常見問題','Frequently asked questions') if slug=='' else c.l('合作前，你可能想知道','Before we work together')
+    if slug=='about':
+        title = c.l('常見問題：認識魏得恩','Frequently asked questions about Wilbur Wei')
+    elif slug=='' or slug in ('advisor','guides/who-to-call'):
+        title = c.l('常見問題','Frequently asked questions')
+    else:
+        title = c.l('合作前，你可能想知道','Before we work together')
     return c.section(c.heading('QUESTIONS',title)+'<div class="faq">'+items+'</div>',id='faq')
 
 
-def page_hero(c, headline, lead, anchors=None):
+def page_hero(c, headline, lead, anchors=None, crumbs=None, eyebrow=None):
     links = '<div class="anchor-nav">'+''.join(f'<a href="#{key}">{e(text)}</a>' for key,text in anchors or [])+'</div>'
-    return '<section class="page-hero"><div class="wrap">'+f'<div class="breadcrumbs"><a href="{c.href()}">{c.l("首頁","Home")}</a> / {e(c.t(PAGES[c.slug]["label"]))}</div><span class="eyebrow">WILBUR WEI / {c.slug.upper()}</span><h1>{e(headline)}</h1>'+paragraph(lead,'lead')+links+'</div></section>'
+    if crumbs is None:
+        trail = f'<a href="{c.href()}">{c.l("首頁","Home")}</a> / {e(c.t(PAGES[c.slug]["label"]))}'
+    else:
+        trail = crumbs
+    eye = eyebrow or f'WILBUR WEI / {c.slug.upper()}'
+    return '<section class="page-hero"><div class="wrap">'+f'<div class="breadcrumbs">{trail}</div><span class="eyebrow">{e(eye)}</span><h1>{e(headline)}</h1>'+paragraph(lead,'lead')+links+'</div></section>'
 
 def profile_section(c, id='about'):
     role_cards=[]
@@ -146,7 +159,8 @@ def home(c):
     proof='<div class="hero-trust">'+''.join(f'<a href="{href}" class="trust-item"><strong class="trust-value{ " trust-award" if value=="R&D 100" else ""}">{e(value)}</strong><span>{e(label)}</span></a>' for value,label,href in trust)+'</div>'
     result=f'<section class="hero hero-profile" id="hero"><div class="wrap"><div class="hero-copy"><span class="eyebrow">{c.l("AI 資安講師 × AI 資安顧問・產官學研三棲專家","AI SECURITY SPEAKER × CONSULTANT · INDUSTRY / GOVERNMENT / ACADEMIA")}</span><h1>{hero_title}</h1>'+paragraph(c.l('魏得恩 Wilbur Wei｜元智大學資工系助理教授・MIRAGE Lab','Wilbur Wei / Te-En Wei · Assistant Professor, Yuan Ze University · MIRAGE Lab'),'identity')+'<p class="lead">'+c.l('從課堂到董事會，我幫組織把防禦落地。<br>專精 AI Agent 資安風險、生成式 AI 防護策略、零信任架構導入<br class="desktop-break">與 Active Directory 勒索軟體防禦。','From the classroom to the boardroom, I help organisations put defence into practice.<br>My work covers AI agent risks, generative AI security, zero trust architecture and Active Directory ransomware defence.')+'</p>'+chips+f'<div class="actions">{actions}</div></div>{proof}</div></section>'
     result+=profile_section(c)
-    result+=c.section(c.heading('WAYS TO WORK TOGETHER',c.l('從你的需求，開始合作。','Start with what your organisation needs.'))+service_cards(c),id='services',tinted=True)
+    owner_callout='<div class="callout"><h3>'+e(c.l('給還不熟悉資安的企業主','For business owners'))+'</h3>'+paragraph(c.l('公司如果沒有資安主管，或報告看不懂，可以先看這兩個說明。','If there is no security lead in-house, or the reports are hard to follow, start with these two pages.'))+'<div class="actions">'+c.button(c.l('企業主資安幕僚','Advisor beside the owner'),c.href('advisor'))+c.button(c.l('老闆不懂資安，該找誰？','Who to call'),c.href('guides/who-to-call'),True)+'</div></div>'
+    result+=c.section(c.heading('WAYS TO WORK TOGETHER',c.l('從你的需求，開始合作。','Start with what your organisation needs.'))+service_cards(c)+owner_callout,id='services',tinted=True)
     topics=''.join(f'<div class="topic"><h3>{e(c.t(t))}</h3>{paragraph(c.t(d))}</div>' for t,d in TOPICS)
     result+=c.section('<div class="split"><div><span class="eyebrow">FOCUS</span><h2>'+c.l('同時看見技術風險<br>與管理決策。','Technical risk.<br>Management decisions.')+'</h2>'+paragraph(c.l('從資料、權限到工作流程，讓 AI 安全與企業需求接得起來。','Connect AI security to your business through data, permissions and workflows.'))+'</div><div>'+topics+'</div></div>',id='topics')
     result+=achievements_section(c)
@@ -336,7 +350,69 @@ def transformation(c):
     result+=c.section(c.heading('WORK TOGETHER',c.l('讓需求決定合作方式。','Choose the format around your needs.'))+paragraph(c.l('可從主管演講建立共識，以內訓讓同仁練習，或透過顧問合作盤點流程、規劃試點與量測方式。交付項目、系統串接範圍與時程會在合作前確認。','Start with a leadership talk, give staff practice through training, or use consulting to map workflows and plan pilots and evaluation. Deliverables, integration scope and timing are agreed before the engagement.'))+'<div class="actions">'+c.button(c.l('提供流程改善需求','Share a workflow brief'),c.mail('transformation'))+c.button(c.l('查看企業內訓','Explore corporate training'),c.href('training'),True)+'</div>')
     return result+faq(c,'transformation')
 
-RENDERERS={'transformation':transformation,'':home,'speaking':speaking,'training':training,'consulting':consulting,'experience':experience,'research':research,'about':about,'teaching':teaching,'lab':lab}
+def source_list(c, keys):
+    if not keys:
+        return ''
+    items=''.join(f'<li><a href="{SOURCES[key]["url"]}" target="_blank" rel="noopener">{e(c.t(SOURCES[key]["label"]))}</a></li>' for key in keys)
+    return paragraph(c.l('官方原文','Official text'),'notice')+'<ul class="source-list">'+items+'</ul>'
+
+def block_actions(c, actions):
+    if not actions:
+        return ''
+    parts=[]
+    for index, action in enumerate(actions):
+        outline=index>0
+        kind=action[0]
+        if kind=='page':
+            parts.append(c.button(c.t(action[2]), c.href(action[1]), outline))
+        elif kind=='contact':
+            parts.append(c.button(c.t(action[1]), '#contact', outline))
+        elif kind=='url':
+            parts.append(f'<a class="button{" outline" if outline else ""}" href="{e(action[1],quote=True)}" target="_blank" rel="noopener">{e(c.t(action[2]))} <span aria-hidden="true">↗</span></a>')
+    return '<div class="actions">'+''.join(parts)+'</div>'
+
+def owner_blocks(c, blocks):
+    out=''
+    for index, block in enumerate(blocks):
+        body=c.heading(block['eyebrow'], c.t(block['title']))
+        for text in block.get('paragraphs', []):
+            body+=paragraph(c.t(text))
+        cards=block.get('cards')
+        if cards:
+            cols='grid-3' if len(cards)%3==0 else 'grid-2'
+            body+=f'<div class="{cols}">'+''.join(f'<article class="card"><h3>{e(c.t(title))}</h3>{paragraph(c.t(desc))}</article>' for title, desc in cards)+'</div>'
+        if block.get('steps'):
+            body+='<ol class="process">'+''.join(f'<li><div><h3>{e(c.t(title))}</h3>{paragraph(c.t(desc))}</div></li>' for title, desc in block['steps'])+'</ol>'
+        if block.get('bullets'):
+            body+=list_html(c.t(item) for item in block['bullets'])
+        for title, paragraphs, keys in block.get('subsections', []):
+            body+=f'<h3>{e(c.t(title))}</h3>'+''.join(paragraph(c.t(text)) for text in paragraphs)+source_list(c, keys)
+        if block.get('note'):
+            body+=paragraph(c.t(block['note']),'notice')
+        if block.get('sources'):
+            body+=source_list(c, block['sources'])
+        body+=block_actions(c, block.get('actions'))
+        out+=c.section(body, id=block['id'], tinted=index%2==1)
+    return out
+
+def advisor(c):
+    lead=(POSITIONING_ZH if c.lang=='zh' else POSITIONING_EN+' ')+c.t(ADVISOR_LEAD)
+    anchors=[('role',c.l('這個角色','The role')),('who',c.l('適合誰','Who it suits')),('work',c.l('做哪些事','What it does')),('limits',c.l('不做什麼','What it does not')),('start',c.l('怎麼開始','How to start')),('background',c.l('相關經歷','Experience')),('faq',c.l('常見問題','Questions'))]
+    return page_hero(c,c.t(ADVISOR_H1),lead,anchors,eyebrow='WILBUR WEI / ADVISOR')+owner_blocks(c,ADVISOR_SECTIONS)+faq(c,'advisor')
+
+def guides_index(c):
+    lead=c.l('用老闆聽得懂的話，說明資安問題該找誰。目前從下面這一篇開始。','Plain-language pages for owners who need security handled and do not work in it. Start with the page below.')
+    card='<article class="card"><h3>'+e(c.t(GUIDE_H1))+'</h3>'+paragraph(c.l('平常還沒出事、已經出事、客戶或法規開始要求，三種情況分開看，並附上官方原文。','Three situations, kept apart: an ordinary day, an incident, and a customer or a rule that has started asking. Official texts are linked beside them.'))+c.link('guides/who-to-call',c.l('閱讀這篇指南','Read this guide'))+'</article>'
+    body=c.heading('START HERE',c.l('從一個問題開始','Start with one question'))+'<div class="grid-2">'+card+'</div>'+paragraph(c.l('若你已經知道自己要找的是站在老闆身邊的人，可以直接看企業主資安幕僚。','If you already know you need someone beside the owner, go straight to the advisor page.'))+c.link('advisor',c.l('企業主資安幕僚','Advisor beside the owner'))
+    return page_hero(c,c.l('給企業主的資安指南','Guides for business owners'),lead,[('guides-list',c.l('這一篇','This guide'))],eyebrow='WILBUR WEI / GUIDES')+c.section(body,id='guides-list')
+
+def who_to_call(c):
+    crumbs=f'<a href="{c.href()}">{c.l("首頁","Home")}</a> / <a href="{c.href("guides")}">{e(c.t(PAGES["guides"]["label"]))}</a> / {e(c.t(PAGES[c.slug]["label"]))}'
+    anchors=[('everyday',c.l('平常','Ordinary days')),('incident',c.l('出事','An incident')),('compliance',c.l('合規','Compliance')),('outside',c.l('找幕僚','An advisor')),('faq',c.l('常見問題','Questions'))]
+    note=c.section(paragraph(c.t(GUIDE_NOTE),'status-note'),id='updated')
+    return page_hero(c,c.t(GUIDE_H1),c.t(GUIDE_LEAD),anchors,crumbs=crumbs,eyebrow='WILBUR WEI / GUIDE')+owner_blocks(c,GUIDE_SECTIONS)+note+faq(c,'guides/who-to-call')
+
+RENDERERS={'transformation':transformation,'':home,'speaking':speaking,'training':training,'consulting':consulting,'experience':experience,'research':research,'about':about,'teaching':teaching,'lab':lab,'advisor':advisor,'guides':guides_index,'guides/who-to-call':who_to_call}
 
 def contact(c):
     return f'<section class="contact" id="contact"><div class="wrap contact-grid"><div><span class="eyebrow">LET’S TALK</span><h2>{c.l("從你的情境，開始討論。","Tell me about your context.")}</h2>'+paragraph(c.l('提供活動或團隊背景、想解決的問題與預計時程，就能開始討論合適的合作方式。','Share your event or team context, the problem to address and the expected timeline.'))+f'<div class="actions">{c.button(c.l("演講邀約","Speaking"),c.mail("speaking"))}{c.button(c.l("內訓洽詢","Training"),c.mail("training"))}{c.button(c.l("顧問需求","Consulting"),c.mail("consulting"))}{c.button(c.l("AI 賦能轉型","AI transformation"),c.mail("transformation"))}</div></div><div><div class="email-block"><small>{c.l("演講、內訓、資安顧問與 AI 賦能轉型","Speaking, training, security consulting and AI transformation")}</small><a href="mailto:{EMAIL}">{EMAIL}</a></div><div class="email-block"><small>{c.l("學術與產學合作","Academic and industry research")}</small><a href="mailto:{ACADEMIC}">{ACADEMIC}</a></div><p class="status-note">{c.l("點選邀約可準備洽詢內容，再複製或選擇郵件方式寄出。","Prepare an inquiry, then copy it or choose an email option to send it.")}</p></div></div></section>'
@@ -376,7 +452,12 @@ def schema(c):
                       'parentOrganization':{'@type':'Organization','name':c.t(LAB_AFFILIATION),'url':'https://www.cse.yzu.edu.tw/',
                                             'parentOrganization':{'@type':'CollegeOrUniversity','name':'Yuan Ze University','url':'https://www.yzu.edu.tw/'}},
                       'member':{'@id':pid},'email':ACADEMIC})
-    if c.slug:
+    if c.slug=='guides/who-to-call':
+        graph.append({'@type':'BreadcrumbList','itemListElement':[
+            {'@type':'ListItem','position':1,'name':c.l('首頁','Home'),'item':c.url('')},
+            {'@type':'ListItem','position':2,'name':c.t(PAGES['guides']['label']),'item':c.url('guides')},
+            {'@type':'ListItem','position':3,'name':c.t(PAGES[c.slug]['label']),'item':c.url()}]})
+    elif c.slug:
         graph.append({'@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':1,'name':c.l('首頁','Home'),'item':c.url('')},{'@type':'ListItem','position':2,'name':c.t(PAGES[c.slug]['label']),'item':c.url()}]})
     if c.slug in ['research','lab']:
         for project in RESEARCH_PROJECTS:
@@ -389,6 +470,14 @@ def schema(c):
     if c.slug in ['transformation','speaking','training','consulting']:
         svc=next(s for s in SERVICES if s[0]==c.slug)
         graph.append({'@type':'Service','@id':c.url()+'#service','name':c.t(svc[1]),'description':c.t(svc[3]),'provider':{'@id':pid},'url':c.url()})
+    if c.slug=='advisor':
+        service_id=c.url()+'#service'
+        graph.append({'@type':'Service','@id':service_id,'name':c.t(ADVISOR_H1),'serviceType':c.t(ADVISOR_H1),'description':c.t(ADVISOR_SERVICE),'provider':{'@id':pid},'url':c.url()})
+        next(node for node in graph if node['@type']=='WebPage')['mainEntity']={'@id':service_id}
+    if c.slug=='guides/who-to-call':
+        article_id=c.url()+'#article'
+        graph.append({'@type':'Article','@id':article_id,'headline':c.t(GUIDE_H1),'description':c.t(PAGES[c.slug]['description']),'inLanguage':lang,'url':c.url(),'mainEntityOfPage':{'@id':c.url()+'#webpage'},'author':{'@id':pid},'publisher':{'@id':pid},'datePublished':'2026-11-15','dateModified':'2026-11-15'})
+        next(node for node in graph if node['@type']=='WebPage')['mainEntity']={'@id':article_id}
     if c.slug=='research':
         for p in PAPERS:
             graph.append({'@type':'ScholarlyArticle','@id':c.url()+'#'+p['slug'],'headline':paper_title(c,p),'url':c.url()+'#'+p['slug'],'author':[{'@id':pid} if author_is_owner(a) else {'@type':'Person','name':author_name(c,a)} for a in p['authors']],'abstract':c.t(p['description']),'citation':c.t(p['venue'])})
@@ -416,7 +505,7 @@ def schema(c):
 def render(c):
     meta=PAGES[c.slug]
     lang='zh-Hant' if c.lang=='zh' else 'en'
-    nav=''.join(f'<a href="{c.href(slug)}"'+(' aria-current="page"' if c.slug==slug else '')+f'>{e(c.t(PAGES[slug]["label"]))}</a>' for slug in ['speaking','training','consulting','transformation','experience','research','lab','about'])
+    nav=''.join(f'<a href="{c.href(slug)}"'+(' aria-current="page"' if c.slug==slug else '')+f'>{e(c.t(PAGES[slug]["label"]))}</a>' for slug in ['speaking','training','consulting','advisor','guides','transformation','experience','research','lab','about'])
     language=c.href(c.slug,'en' if c.lang=='zh' else 'zh')
     alternates=''.join(f'<link rel="alternate" hreflang="{hl}" href="{e(c.url(lang=l))}">' for hl,l in [('zh-Hant','zh'),('en','en'),('x-default','zh')])
     body=RENDERERS[c.slug](c)
@@ -431,7 +520,7 @@ def render(c):
 <meta name="author" content="Wilbur Wei / 魏得恩">
 <link rel="canonical" href="{c.url()}">
 {alternates}
-<meta property="og:type" content="website">
+<meta property="og:type" content="{'article' if c.slug=='guides/who-to-call' else 'website'}">
 <meta property="og:site_name" content="Wilbur Wei · AI Security">
 <meta property="og:title" content="{e(c.t(meta['title']),quote=True)}">
 <meta property="og:description" content="{e(c.t(meta['description']),quote=True)}">
@@ -460,7 +549,7 @@ def render(c):
 <header class="site-header"><div class="wrap header-inner"><a class="brand" href="{c.href()}"><strong>Wilbur Wei</strong><span>AI SECURITY · 魏得恩</span></a><button class="nav-toggle" type="button" aria-label="{c.l('切換導覽選單','Toggle navigation')}" aria-controls="site-nav" aria-expanded="false" hidden>☰</button><nav class="nav-links" id="site-nav" aria-label="{c.l('主要導覽','Main navigation')}">{nav}<a class="nav-contact" href="#contact">{c.l('聯絡','Contact')}</a><a class="language" href="{language}" lang="{c.l('en','zh-Hant')}" hreflang="{c.l('en','zh-Hant')}" aria-label="{c.l('View this page in English','以繁體中文閱讀本頁')}">{c.l('EN','繁中')}</a></nav></div></header>
 <main id="main">{body}{contact(c)}</main>
 {inquiry_dialog(c)}
-<footer class="site-footer"><div class="wrap footer-inner"><div>© 2026 Wilbur Wei · 魏得恩</div><div class="footer-links">{c.link('teaching',c.l('教材與教學方法','Teaching approach'),css='')}{c.link('research',c.l('學術署名 Te-En Wei','Publishing as Te-En Wei'),css='')}<a href="{CV}" target="_blank" rel="noopener">{c.l('簡歷 PDF','CV · PDF')}</a></div></div></footer>
+<footer class="site-footer"><div class="wrap footer-inner"><div>© 2026 Wilbur Wei · 魏得恩</div><div class="footer-links">{c.link('advisor',c.l('企業主資安幕僚','Advisor beside the owner'),css='')}{c.link('guides/who-to-call',c.l('老闆不懂資安，該找誰？','Who to call'),css='')}{c.link('teaching',c.l('教材與教學方法','Teaching approach'),css='')}{c.link('research',c.l('學術署名 Te-En Wei','Publishing as Te-En Wei'),css='')}<a href="{CV}" target="_blank" rel="noopener">{c.l('簡歷 PDF','CV · PDF')}</a></div></div></footer>
 </body></html>
 '''
 
@@ -475,7 +564,7 @@ def robots_txt(base):
         lines+=[f'User-agent: {bot}','Allow: /','']
     return '\n'.join(lines+['Sitemap: '+base+'sitemap.xml',''])
 
-LLMS_PAGES=['','about','speaking','training','consulting','transformation','experience','research','lab','teaching']
+LLMS_PAGES=['','about','speaking','training','consulting','advisor','guides','guides/who-to-call','transformation','experience','research','lab','teaching']
 
 def llms_txt(base):
     zh,en=Page('','zh',base),Page('','en',base)
@@ -512,7 +601,7 @@ def llms_full_txt(base):
         for r in sorted((r for r in RECORDS if r['status']!='preparation'),key=lambda r:-(r['year'] or 0)):
             out.append(f'- [{STATUS[r["status"]][lang]}] {r["year"]}｜{c.t(r["title"])}｜{c.t(r["org"])}｜{c.t(r["meta"])}' if lang=='zh' else f'- [{STATUS[r["status"]][lang]}] {r["year"]} · {c.t(r["title"])} · {c.t(r["org"])} · {c.t(r["meta"])}')
         out+=['','### '+c.l('常見問題','Frequently asked questions'),'']
-        for slug in ['about','','speaking','training','consulting','transformation']:
+        for slug in ['about','','speaking','training','consulting','transformation','advisor','guides/who-to-call']:
             for q,a in FAQ[slug]:
                 out+=[f'**Q: {c.t(q)}**',f'A: {c.t(a)}','']
     return '\n'.join(out)

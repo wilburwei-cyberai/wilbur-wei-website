@@ -17,6 +17,9 @@
 - [演講](https://wilburwei-cyberai.github.io/wilbur-wei-website/speaking/): 為企業、產業公協會與教育機構安排 AI 資安演講，主題包含 AI 工具安全使用、AI Agent 攻防、零信任，並提供 AI 賦能轉型與流程優化方向。查看魏得恩 Wilbur Wei 的代表演講紀錄。
 - [企業內訓](https://wilburwei-cyberai.github.io/wilbur-wei-website/training/): 從 AI 安全使用、LLM 威脅建模與 SOC 實作，到企業 AI 工作流與流程改善。魏得恩 Wilbur Wei 依主管、一般同仁與技術團隊設計資安及 AI 應用內訓。
 - [顧問](https://wilburwei-cyberai.github.io/wilbur-wei-website/consulting/): 魏得恩 Wilbur Wei 提供 AI Agent 安全、零信任、AD 風險與資安治理顧問，並協助企業盤點 AI 導入與流程改善需求，討論評估範圍及可執行的優先順序。
+- [資安幕僚](https://wilburwei-cyberai.github.io/wilbur-wei-website/advisor/): 企業主資安幕僚站在老闆身邊，把資安風險翻成停工、罰則、商譽與客戶信任的語言，幫忙排優先順序。說明適合誰、做什麼、不做什麼。
+- [指南](https://wilburwei-cyberai.github.io/wilbur-wei-website/guides/): 給企業主的資安指南。用老闆聽得懂的方式，說明平常、出事與合規分別該找誰，並連到企業主資安幕僚說明與官方來源。
+- [老闆不懂資安，該找誰？](https://wilburwei-cyberai.github.io/wilbur-wei-website/guides/who-to-call/): 老闆不懂資安時該找誰：平常找能把風險講成生意的幕僚，出事向 TWCERT/CC 通報並向警政報案，合規對照金管會令、SEMI E187 與個資法。
 - [AI 賦能轉型](https://wilburwei-cyberai.github.io/wilbur-wei-website/transformation/): 從流程盤點、AI 工具導入到試點與團隊培訓。魏得恩 Wilbur Wei 協助企業以 AI 優化文件、知識查詢與作業管理，結合資安設計及成效量測，並提供亞旭合作與相關演講經驗。
 - [歷年紀錄](https://wilburwei-cyberai.github.io/wilbur-wei-website/experience/): 魏得恩 Wilbur Wei 的 2024–2026 演講、授課與教材紀錄，包含 SEMICON Taiwan 2025、臺大電信所、國防大學、觀音與中壢產業園區、自強基金會，以及已排定的竣盟科技課程。
 - [研究](https://wilburwei-cyberai.github.io/wilbur-wei-website/research/): 魏得恩 Te-En Wei（Wilbur Wei）的研究計畫與成果：FY115 國科會 LLM 驅動紅隊代理平台計畫、七筆論文發表紀錄與三項論文獎，以及通訊與硬體資安的未來研究規劃。
@@ -30,6 +33,9 @@
 - [Speaking](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/speaking/): AI security talks by Wilbur Wei on safe AI use, AI agent security, zero trust and AI transformation, with records from SEMICON Taiwan 2025 to industrial parks.
 - [Training](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/training/): Corporate AI security training with Wilbur Wei: safe AI use, LLM threat modelling, SOC labs and AI workflows, tailored to managers, staff and technical teams.
 - [Consulting](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/consulting/): Consulting with Wilbur Wei on AI agent security, zero trust, AD risk and governance, plus AI adoption and workflow assessment with practical priorities.
+- [Advisor](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/advisor/): An advisor beside the owner translates security risk into downtime, penalties, reputation and customer trust, and helps set priorities.
+- [Guides](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/guides/): Security guides for business owners, in plain language. See who to call day to day, during an incident and for compliance.
+- [Who to call](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/guides/who-to-call/): Who to call if cybersecurity is unclear: an advisor day to day, TWCERT/CC and police in an incident, plus rules for listed firms, SEMI E187 and personal data.
 - [AI Transformation](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/transformation/): AI transformation with Wilbur Wei: workflow assessment, AI adoption planning, pilot guidance and team training, with security design and evaluation built in.
 - [Experience](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/experience/): Wilbur Wei’s 2024–2026 talks, teaching and courseware, including SEMICON Taiwan 2025, NTU, National Defense University, Zhongli Industrial Park and TCFST.
 - [Research](https://wilburwei-cyberai.github.io/wilbur-wei-website/en/research/): Research by Te-En Wei (Wilbur Wei): an FY115 NSTC LLM-driven red team agent project, seven publication records, three paper awards and planned research.

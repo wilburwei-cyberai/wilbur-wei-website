@@ -170,6 +170,39 @@ A: 先保留導入前的基準，再比較處理時間、錯誤與返工、交�
 **Q: AI 賦能轉型和 AI 資安如何一起規劃？**
 A: 流程設計時一併確認可使用的資料、工具權限、輸出查核與人的決策責任。讓改善效率的方式能符合企業的使用條件，必要時結合既有 AI 資安顧問與內訓服務。
 
+**Q: 企業主資安幕僚和公司裡的資訊安全長有什麼不同？**
+A: 資訊安全長是金管會令和內部控制制度處理準則裡的公司內部職務，由公司自己指派，負責資安政策和資源。幕僚站在老闆身邊，把風險翻成營運語言、幫忙排優先順序。幕僚不能坐上那個職務，也不能代替法規要求公司配置的專責人員。
+
+**Q: 公司沒有資訊人員，也可以談嗎？**
+A: 可以。這一頁就是寫給還沒有資安主管、老闆自己也不熟悉資安的公司。從一件已經在桌上的事開始即可。
+
+**Q: 可以保證以後不會被駭、不會被罰嗎？**
+A: 不能。沒有人能保證零風險。幕僚做的是讓可能的停工、罰則、商譽和客戶信任影響被看懂，再由你決定先做哪一件。
+
+**Q: 可以代寫法律意見，或代公司回覆主管機關嗎？**
+A: 不提供法律意見，也不代公司向主管機關做法律上的承諾。個資、合約和罰則請洽律師。幕僚可以幫忙把事實整理成老闆和董事會聽得懂的說明。
+
+**Q: 客戶寄來資安問卷，沒有人會填，可以一起看嗎？**
+A: 可以一起把問題翻成公司做得到、拿得出證據的事實，避免過度承諾。問卷怎麼回、回了之後如何負責，仍是公司的事。
+
+**Q: 要怎麼開始聯絡？**
+A: 用本頁下方的聯絡區寫信，說明行業和想先談的那一件事，請不要附上機密。可以是單次把一件事談完，也可以日後每件事再一起看。看完那個問題再決定即可。
+
+**Q: 公司沒有資安人員，平常該先找誰？**
+A: 找能站在老闆身邊、用白話把風險說成停工、罰則、商譽和客戶信任，並幫你排先後的人。選人時看兩件事：能不能講清楚，以及建議是為了幫你決定，還是為了賣某一套產品。企業主資安幕僚那一頁說明這個角色做什麼、不做什麼。
+
+**Q: 檔案被加密、畫面上要我們付款，第一步做什麼？**
+A: 依 TWCERT/CC《資安事件應變處理行動指引》：先隔離網路、不要關機、留下紀錄，並向 TWCERT/CC 通報。涉及犯罪就向所在地警政機關報案。要不要付款，不要由老闆一個人在當下決定。官方連結在上一節。
+
+**Q: 165 和刑事局，分別在什麼時候找？**
+A: 165 是警政署的反詐騙諮詢專線，遇到詐騙、或有人要求匯款付款時撥打，也可以到 165 全民防騙網報案。資安事件若涉及犯罪，TWCERT/CC 指引寫的是向所在地警政機關報案；指引的說明範例也提到刑事警察局或所在地警察機關。請依上一節的官方頁判斷，不要把兩支電話當成同一件事。
+
+**Q: 我們不是上市櫃，金管會那道資安人力的令適用嗎？**
+A: 金管證審字第11003656544號令規範的是上市、上櫃公司，而且要看資本額、指數成分、電子收入占比，以及獲利和每股淨值等條件，不是每一家都同一款。不是上市櫃，不代表沒有其他責任：客戶合約、供應鏈要求或個人資料保護法仍可能適用。是否適用，請對照官方條文；法律判斷請洽律師。
+
+**Q: 什麼時候該找外面的資安幕僚？**
+A: 當老闆需要有人把風險說成營運和信任、幫忙排先後、一起看客戶問卷，或在事件當下協助判斷該通報誰、該把技術工作轉給誰。外面的幕僚不取代法規要求公司自己設置的人，也不提供法律意見。
+
 ## English
 
 ### Summary
@@ -337,3 +370,36 @@ A: Establish a baseline, then compare processing time, errors, rework, output qu
 
 **Q: How do transformation and AI security fit together?**
 A: Review permitted data, tool permissions, output checks and decision responsibility while designing the workflow. Where needed, combine the engagement with AI security consulting and training.
+
+**Q: How is an advisor beside the owner different from the in-house information-security lead?**
+A: The information-security lead in the FSC order and the internal-control rules is an internal post. The company appoints the person, who is responsible for security policy and resources. An advisor stands beside the owner, translates risk into business language and helps set priorities. The advisor cannot take that post, and cannot replace dedicated staff the rules require the company to have.
+
+**Q: Can we talk if the company has no IT staff?**
+A: Yes. This page is written for a company with no security lead, and for an owner who is not at home in security. Start with the one matter already on the table.
+
+**Q: Can you guarantee we will not be hacked or fined?**
+A: No. Nobody can promise zero risk. The work is to make the possible impact on operations, penalties, reputation and customer trust clear enough that you can choose what to do first.
+
+**Q: Can you write a legal opinion, or answer a regulator for us?**
+A: No legal opinions, and no legal commitment made to a regulator on the company’s behalf. Personal data, contracts and penalties are questions for a lawyer. An advisor can help turn the facts into an explanation the owner and the board can follow.
+
+**Q: A customer sent a security questionnaire and nobody can fill it in. Can we look at it together?**
+A: Yes. We can translate the questions into what the company can actually do and show, so the reply does not over-promise. What the company sends, and the responsibility for it, stay with the company.
+
+**Q: How do we start?**
+A: Use the contact section at the bottom of this page. Describe the industry and the one matter you want to discuss first, and do not include confidential material. It can be a single conversation about one matter, or later support one case at a time. Decide after that question is clear.
+
+**Q: We have no security staff. Who do we look for on an ordinary day?**
+A: Look for someone who can stand beside the owner, say the risk as downtime, penalties, reputation and customer trust, and help you set an order. When you choose, ask two things: can they explain it plainly, and is the advice there to help you decide or to sell one product? The advisor page says what that role does and does not do.
+
+**Q: Files are encrypted and the screen tells us to pay. What is the first step?**
+A: Follow the TWCERT/CC incident-response guide: disconnect the network, do not power off, keep a record, and report it to TWCERT/CC. If a crime is involved, report it to the local police. Do not decide alone, in that moment, whether to pay. The official links are in the section above.
+
+**Q: When do we call 165, and when the Criminal Investigation Bureau?**
+A: 165 is the National Police Agency’s anti-fraud hotline. Call it for a scam or when someone demands a transfer or a payment, or file on the 165 website. If a cyber incident is a crime, the TWCERT/CC guide says to report it to the local police; a sample statement in the guide also refers to the Criminal Investigation Bureau or the local police. Use the official pages in the section above. The two are not the same call.
+
+**Q: We are not listed. Does the FSC staffing order apply to us?**
+A: The order Jin-Guan-Zheng-Shen-Zi No. 11003656544 applies to TWSE and TPEx listed companies, and the group depends on capital, index membership, electronic revenue, profit and net worth per share. Not every company is in the same group. Not being listed does not mean there is no other duty: a customer contract, a supply-chain requirement or the Personal Data Protection Act may still apply. Compare your case with the official text. For a legal judgment, ask a lawyer.
+
+**Q: When should we bring in an outside advisor?**
+A: When the owner needs someone to put risk into the language of operations and trust, to set an order of work, to go through a customer questionnaire, or, during an incident, to help decide whom to notify and who should do the technical work. An outside advisor does not replace the people the rules require the company itself to appoint, and does not give legal opinions.
