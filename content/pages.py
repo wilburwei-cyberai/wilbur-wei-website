@@ -220,3 +220,28 @@ PAGES['teaching']['description']['en'] = 'How Wilbur Wei designs security course
 # English homepage and About are set above. Every other page keeps its description.
 for _slug in ('', 'about'):
     PAGES[_slug]['description']['zh'] = with_positioning_zh(PAGES[_slug]['description']['zh'])
+
+# Owner-facing pages. Descriptions stay within 160 characters and do not repeat
+# the positioning line; that line stays on the homepage, About, and the advisor
+# page's visible lead.
+PAGES['advisor'] = {
+    'label': bi('資安幕僚', 'Advisor'),
+    'title': bi('企業主資安幕僚｜魏得恩 Wilbur Wei', 'An Advisor Beside the Owner | Wilbur Wei'),
+    'description': bi(
+        '企業主資安幕僚站在老闆身邊，把資安風險翻成停工、罰則、商譽與客戶信任的語言，幫忙排優先順序。說明適合誰、做什麼、不做什麼。',
+        'An advisor beside the owner translates security risk into downtime, penalties, reputation and customer trust, and helps set priorities.'),
+}
+PAGES['guides'] = {
+    'label': bi('指南', 'Guides'),
+    'title': bi('給企業主的資安指南｜魏得恩 Wilbur Wei', 'Security Guides for Business Owners | Wilbur Wei'),
+    'description': bi(
+        '給企業主的資安指南。用老闆聽得懂的方式，說明平常、出事與合規分別該找誰，並連到企業主資安幕僚說明與官方來源。',
+        'Security guides for business owners, in plain language. See who to call day to day, during an incident and for compliance.'),
+}
+PAGES['guides/who-to-call'] = {
+    'label': bi('老闆不懂資安，該找誰？', 'Who to call'),
+    'title': bi('老闆不懂資安，該找誰？｜魏得恩 Wilbur Wei', 'Who to Call When Cybersecurity Is Unclear | Wilbur Wei'),
+    'description': bi(
+        '老闆不懂資安時該找誰：平常找能把風險講成生意的幕僚，出事向 TWCERT/CC 通報並向警政報案，合規對照金管會令、SEMI E187 與個資法。',
+        'Who to call if cybersecurity is unclear: an advisor day to day, TWCERT/CC and police in an incident, plus rules for listed firms, SEMI E187 and personal data.'),
+}

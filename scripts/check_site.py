@@ -35,9 +35,9 @@ class Document(HTMLParser):
 files=sorted(p for p in ROOT.rglob('index.html') if not {'node_modules', '.git', 'test-results', 'playwright-report'}.intersection(p.relative_to(ROOT).parts))
 docs={p:Document() for p in files}
 for p,d in docs.items():d.feed(p.read_text())
-assert len(docs)==20, len(docs)
-assert len({d.title for d in docs.values()})==20
-assert len({d.description[0] for d in docs.values()})==20
+assert len(docs)==26, len(docs)
+assert len({d.title for d in docs.values()})==26
+assert len({d.description[0] for d in docs.values()})==26
 for p,d in docs.items():
     assert d.h1==1,(p,'h1',d.h1)
     assert not d.duplicate_ids,(p,d.duplicate_ids)
@@ -112,7 +112,7 @@ for name in ['llms.txt','llms-full.txt']:
     assert base in text and '魏得恩' in text and 'Te-En Wei' in text and 'Director' in text or name=='llms-full.txt', name
     assert '2022 R&D 100 Awards' in text, name
 assert all(url in (ROOT/'llms.txt').read_text() for url in {d.canonical[0] for d in docs.values()} if '/teaching/' not in url or True)
-assert len(root.findall('{*}url/{http://www.w3.org/1999/xhtml}link'))==60
+assert len(root.findall('{*}url/{http://www.w3.org/1999/xhtml}link'))==78
 for p,d in docs.items():
     graph=d.ld[0]['@graph']
     person=next(n for n in graph if n['@type']=='Person')
@@ -142,8 +142,16 @@ for p,d in docs.items():
     assert f'property="og:description" content="{d.description[0]}"' in text,p
     assert f'name="twitter:description" content="{d.description[0]}"' in text,p
     body=text.split('<body',1)[1]
-    assert POSITIONING_ZH not in body and POSITIONING_EN not in body,p
     slug=_slug(p)
+    # The advisor page states the positioning line once, in the hero. Every
+    # other page keeps it out of visible copy.
+    if slug in ('advisor', 'en/advisor'):
+        expected = POSITIONING_ZH if slug=='advisor' else POSITIONING_EN
+        other_line = POSITIONING_EN if slug=='advisor' else POSITIONING_ZH
+        assert body.count(expected)==1,(p, body.count(expected))
+        assert other_line not in body,p
+    else:
+        assert POSITIONING_ZH not in body and POSITIONING_EN not in body,p
     home_slug='' if d.lang=='zh-Hant' else 'en'
     about_slug='about' if d.lang=='zh-Hant' else 'en/about'
     home_meta=docs[ROOT/'index.html' if d.lang=='zh-Hant' else ROOT/'en/index.html'].description[0]
@@ -170,7 +178,7 @@ zh_llms,en_rest=llms.split('## English pages',1)
 en_llms=en_rest.split('## Optional',1)[0]
 zh_bullets=[ln for ln in zh_llms.splitlines() if ln.startswith('- [')]
 en_bullets=[ln for ln in en_llms.splitlines() if ln.startswith('- [')]
-assert len(zh_bullets)==10 and len(en_bullets)==10
+assert len(zh_bullets)==13 and len(en_bullets)==13
 assert all(POSITIONING_ZH in ln for ln in zh_bullets[:2]) and all(POSITIONING_ZH not in ln for ln in zh_bullets[2:])
 assert all(POSITIONING_EN in ln for ln in en_bullets[:2]) and all(POSITIONING_EN not in ln for ln in en_bullets[2:])
 assert POSITIONING_ZH not in en_llms and POSITIONING_EN not in '\n'.join(zh_bullets)
@@ -182,4 +190,42 @@ for lang in ['', 'en/']:
     assert not [n for n in docs[ROOT/(lang+'experience/index.html')].ld[0]['@graph'] if n.get('@id','').endswith('#B3')]
     about=docs[ROOT/(lang+'about/index.html')]
     assert any(n['@type']=='FAQPage' and len(n['mainEntity'])>=8 for n in about.ld[0]['@graph'])
-print('PASS: 20 pages; unique titles/descriptions; reciprocal language URLs; valid JSON-LD/sitemap; all local links and anchors; 30 records per language; 7 publication records per language; merged/HOLD records excluded.')
+NEW_PAGES=['advisor/index.html','en/advisor/index.html','guides/index.html','en/guides/index.html','guides/who-to-call/index.html','en/guides/who-to-call/index.html']
+BANNED=['vCISO','V-CISO','虛擬資安長','外部兼任資安長','virtual CISO','Virtual CISO','fractional CISO','Fractional CISO','CISO','長茂','智慧資安','資策會','勤晁','佣金']
+OFFICIAL=[
+    'https://law.fsc.gov.tw/LawContent.aspx?id=GL003330',
+    'https://law.fsc.gov.tw/LawContent.aspx?id=FL021141',
+    'https://www.semi.org/en/industry-groups/semiconductor-cybersecurity/standards',
+    'https://store-us.semi.org/products/e18700-semi-e187-specification-for-cybersecurity-of-fab-equipment',
+    'https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=I0050021',
+    'https://www.twcert.org.tw/tw/cp-103-4902-9ce1f-1.html',
+    'https://www.twcert.org.tw/tw/dl-473-e741ca84ea284c62990cde8b100b19c5.html',
+    'https://165.npa.gov.tw/',
+    'https://www.npa.gov.tw/ch/app/faq/view?id=2144&module=faq&serno=A1078837',
+    'https://www.cib.npa.gov.tw/ch/app/artwebsite/view?id=1447&module=artwebsite&serno=762b4585-1bea-41a0-ae0b-d8496ea480e5',
+]
+for rel in NEW_PAGES:
+    text=(ROOT/rel).read_text()
+    for term in BANNED:
+        assert term not in text,(rel,term)
+    assert 'id="contact"' in text,rel
+for lang in ['', 'en/']:
+    advisor=docs[ROOT/(lang+'advisor/index.html')]
+    graph=advisor.ld[0]['@graph']
+    service=next(n for n in graph if n['@type']=='Service')
+    assert service['provider']['@id'].endswith('#person'),lang
+    assert service['description'] and service['description'] in (ROOT/(lang+'advisor/index.html')).read_text()
+    faq=next(n for n in graph if n['@type']=='FAQPage')
+    assert len(faq['mainEntity'])==6,lang
+    guide=docs[ROOT/(lang+'guides/who-to-call/index.html')]
+    ggraph=guide.ld[0]['@graph']
+    article=next(n for n in ggraph if n['@type']=='Article')
+    assert article['author']['@id'].endswith('#person') and article['datePublished']=='2026-11-15',lang
+    assert len(next(n for n in ggraph if n['@type']=='FAQPage')['mainEntity'])==5,lang
+    crumbs=next(n for n in ggraph if n['@type']=='BreadcrumbList')
+    assert len(crumbs['itemListElement'])==3,lang
+    guide_text=(ROOT/(lang+'guides/who-to-call/index.html')).read_text()
+    for url in OFFICIAL:
+        assert url in guide_text,(lang,url)
+    assert 'property="og:type" content="article"' in guide_text,lang
+print('PASS: 26 pages; unique titles/descriptions; reciprocal language URLs; valid JSON-LD/sitemap; all local links and anchors; 30 records per language; 7 publication records per language; merged/HOLD records excluded.')
