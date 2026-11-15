@@ -1,8 +1,6 @@
 # Crawler rules for Wilbur Wei · 魏得恩.
-# GitHub Pages project site: crawlers read robots.txt only at the host root
-# (https://wilburwei-cyberai.github.io/robots.txt), so these rules take effect
-# once the site moves to a custom domain or the host root. Until then, the host
-# root has no robots.txt and all crawlers are allowed by default.
+# Served at the host root of the custom domain (https://wilburwei.com/robots.txt),
+# so these rules apply to the whole site.
 
 User-agent: *
 Allow: /
@@ -46,4 +44,4 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://wilburwei-cyberai.github.io/wilbur-wei-website/sitemap.xml
+Sitemap: https://wilburwei.com/sitemap.xml

@@ -1,6 +1,6 @@
 # 魏得恩 Wilbur Wei — full profile / 完整資料
 
-Source: https://wilburwei-cyberai.github.io/wilbur-wei-website/  ·  llms.txt: https://wilburwei-cyberai.github.io/wilbur-wei-website/llms.txt
+Source: https://wilburwei.com/  ·  llms.txt: https://wilburwei.com/llms.txt
 
 ## 中文
 
@@ -16,10 +16,10 @@ Source: https://wilburwei-cyberai.github.io/wilbur-wei-website/  ·  llms.txt: h
 
 ### 服務
 
-- 主題演講（https://wilburwei-cyberai.github.io/wilbur-wei-website/speaking/）：適合企業活動、產業論壇與校園研習。從受眾面對的情境出發，安排案例、觀念與討論。
-- 企業內訓（https://wilburwei-cyberai.github.io/wilbur-wei-website/training/）：依管理者、一般同仁與技術團隊設計課程，搭配資料判斷、情境改寫或技術實作。
-- 顧問合作（https://wilburwei-cyberai.github.io/wilbur-wei-website/consulting/）：針對 AI 系統、零信任、AD 及資安治理，討論評估範圍、控制設計與可交付的工作。
-- AI 賦能轉型（https://wilburwei-cyberai.github.io/wilbur-wei-website/transformation/）：盤點重複作業與流程瓶頸，規劃 AI 導入、試點輔導及團隊培訓，用指標檢查改善。
+- 主題演講（https://wilburwei.com/speaking/）：適合企業活動、產業論壇與校園研習。從受眾面對的情境出發，安排案例、觀念與討論。
+- 企業內訓（https://wilburwei.com/training/）：依管理者、一般同仁與技術團隊設計課程，搭配資料判斷、情境改寫或技術實作。
+- 顧問合作（https://wilburwei.com/consulting/）：針對 AI 系統、零信任、AD 及資安治理，討論評估範圍、控制設計與可交付的工作。
+- AI 賦能轉型（https://wilburwei.com/transformation/）：盤點重複作業與流程瓶頸，規劃 AI 導入、試點輔導及團隊培訓，用指標檢查改善。
 
 ### 演講與課程主題
 
@@ -33,13 +33,13 @@ Source: https://wilburwei-cyberai.github.io/wilbur-wei-website/  ·  llms.txt: h
 ### MIRAGE Lab
 
 MIRAGE Lab 設於元智大學資訊工程學系，由魏得恩（Wilbur Wei／Te-En Wei）助理教授主持。研究聚焦 AI 代理人安全、紅隊攻防與零信任，從攻擊情境、授權邊界與行為證據，探討防禦如何設計與驗證。 接下來規劃深耕無人機與機器人通訊資安，以及 PUF 硬體資安應用。
-URL: https://wilburwei-cyberai.github.io/wilbur-wei-website/lab/
+URL: https://wilburwei.com/lab/
 
 ### 研究計畫
 
 - 基於 LLM 驅動的紅隊代理攻防演練與場域模擬實戰平台｜國家科學及技術委員會（國科會）｜FY115 (2026)
 
-### 論文發表 (https://wilburwei-cyberai.github.io/wilbur-wei-website/research/)
+### 論文發表 (https://wilburwei.com/research/)
 
 - AHAF: Agent-as-Human Authorization Framework to Enhance Cybersecurity of Openclaw — Te-En Wei、Hung-Ming Chen、Ching-Hua Kao、Jen-Fu Wang. 第三十六屆全國資訊安全會議（CISC 2026）・最佳論文獎. 提出以零信任為基礎的 AI Agent 授權框架，從角色、資源與行為三個維度設計控制，結合人工確認與異常偵測，降低代理人權限過大的風險。
 - HMELF 研究加密橫向移動偵測：以 Ligolo-ng 加密隧道攻擊為例 — 王仁甫、歐陽翰、蘇柏翰、魏得恩. 第三十六屆全國資訊安全會議（CISC 2026）・佳作論文獎. 以 Ligolo-ng 加密隧道攻擊為案例，結合網路流量特徵與端點行為，研究混合多模型集成學習如何辨識加密橫向移動。
@@ -49,7 +49,7 @@ URL: https://wilburwei-cyberai.github.io/wilbur-wei-website/lab/
 - AI 方法建構 APT 駭客家族攻擊情資特徵拓樸及風險評估架構－以 AD 伺服器攻擊為案例研究 — 王仁甫、陳品翰、陳思宥、呂書晴、徐睿廷、陳品嘉、魏得恩. 《資訊安全通訊》（Communications of the CCISA）第 31 卷第 3 期，頁 1–19，2025 年 8 月・期刊論文. 以 AD 攻擊為案例，將非結構化威脅情資轉為特徵網絡，結合風險分析及語言模型，研究如何支持漏洞判讀與修補優先順序。
 - AI 方法建構 APT 家族攻擊情資特徵拓樸及風險矩陣 - 以 AD 伺服器攻擊為案例研究 — 王仁甫、陳品翰、陳思宥、呂書晴、林瑜君、魏得恩. 第三十五屆全國資訊安全會議（CISC 2025），2025 年 5 月・會議論文. 以 AD 伺服器攻擊為案例，研究運用 AI 方法建構 APT 家族攻擊情資的特徵拓樸與風險矩陣。
 
-### 演講、授課與教材紀錄 (https://wilburwei-cyberai.github.io/wilbur-wei-website/experience/)
+### 演講、授課與教材紀錄 (https://wilburwei.com/experience/)
 
 - [過往紀錄] 2026｜如何安全地使用AI工具及應用實務｜國防大學｜專題演講
 - [過往紀錄] 2026｜AI 時代的資安素養：人機協作實戰必修課｜中壢產業園區｜主題講座
@@ -217,10 +217,10 @@ Wilbur Wei (魏得恩), who publishes as Te-En Wei, is an Assistant Professor in
 
 ### Services
 
-- Speaking (https://wilburwei-cyberai.github.io/wilbur-wei-website/en/speaking/): For corporate events, industry forums and education programmes. Topics and examples are shaped around the audience’s decisions.
-- Corporate training (https://wilburwei-cyberai.github.io/wilbur-wei-website/en/training/): Training for managers, general staff and technical teams, with data-handling exercises, scenarios or technical labs.
-- Consulting (https://wilburwei-cyberai.github.io/wilbur-wei-website/en/consulting/): Discuss assessment scope, controls and deliverables for AI systems, zero trust, AD security and governance.
-- AI transformation (https://wilburwei-cyberai.github.io/wilbur-wei-website/en/transformation/): Assess repetitive work and bottlenecks, plan AI adoption, guide pilots and train teams, with measures to evaluate improvements.
+- Speaking (https://wilburwei.com/en/speaking/): For corporate events, industry forums and education programmes. Topics and examples are shaped around the audience’s decisions.
+- Corporate training (https://wilburwei.com/en/training/): Training for managers, general staff and technical teams, with data-handling exercises, scenarios or technical labs.
+- Consulting (https://wilburwei.com/en/consulting/): Discuss assessment scope, controls and deliverables for AI systems, zero trust, AD security and governance.
+- AI transformation (https://wilburwei.com/en/transformation/): Assess repetitive work and bottlenecks, plan AI adoption, guide pilots and train teams, with measures to evaluate improvements.
 
 ### Talk and training topics
 
@@ -234,13 +234,13 @@ Wilbur Wei (魏得恩), who publishes as Te-En Wei, is an Assistant Professor in
 ### MIRAGE Lab
 
 MIRAGE Lab is based in the Department of Computer Science and Engineering at Yuan Ze University. Assistant Professor Wilbur Wei (Te-En Wei) is its Director. Its research focuses on AI agent security, red teaming and zero trust, examining how attack scenarios, authorisation boundaries and behavioural evidence inform the design and evaluation of defences. Future directions include drone and robot communication security and PUF hardware security applications.
-URL: https://wilburwei-cyberai.github.io/wilbur-wei-website/en/lab/
+URL: https://wilburwei.com/en/lab/
 
 ### Research projects
 
 - LLM-Driven Red Team Agent Platform for Adversarial Drills and Real-World Scenario Simulation｜National Science and Technology Council (NSTC)｜FY115 (2026)
 
-### Publications (https://wilburwei-cyberai.github.io/wilbur-wei-website/en/research/)
+### Publications (https://wilburwei.com/en/research/)
 
 - AHAF: Agent-as-Human Authorization Framework to Enhance Cybersecurity of Openclaw — Te-En Wei, Hung-Ming Chen, Ching-Hua Kao, Jen-Fu Wang. 36th Cryptology and Information Security Conference (CISC 2026) · Best Paper Award. A zero-trust authorisation framework for AI agents. Controls across role, resource and action are combined with human confirmation and anomaly detection to address excessive privileges.
 - HMELF 研究加密橫向移動偵測：以 Ligolo-ng 加密隧道攻擊為例 — 王仁甫、歐陽翰、蘇柏翰、魏得恩. 36th Cryptology and Information Security Conference (CISC 2026) · Honorable Mention. A study of encrypted lateral movement using Ligolo-ng tunnelling attacks. HMELF combines network traffic features with endpoint behaviour in a hybrid ensemble-learning framework.
@@ -250,7 +250,7 @@ URL: https://wilburwei-cyberai.github.io/wilbur-wei-website/en/lab/
 - AI-Based Construction of APT Hacker Family Attack Intelligence Topology and Risk Assessment Framework: A Case Study of Active Directory Server Attacks — Jen-Fu Wang, Pin-Han Chen, Ssu-Yu Chen, Shu-Ching Lu, Jui-Ting Hsu, Pin-Chia Chen, Te-En Wei. Communications of the CCISA, Vol. 31, No. 3, pp. 1–19, August 2025 · Journal article. An AD-focused study that turns unstructured threat intelligence into feature networks and combines risk analysis with language models to support vulnerability assessment and patch prioritisation.
 - AI 方法建構 APT 家族攻擊情資特徵拓樸及風險矩陣 - 以 AD 伺服器攻擊為案例研究 — 王仁甫、陳品翰、陳思宥、呂書晴、林瑜君、魏得恩. 35th Cryptology and Information Security Conference (CISC 2025), May 2025 · Conference paper. An AD server attack case study examining AI methods for constructing APT-family attack intelligence feature topology and a risk matrix.
 
-### Speaking, teaching and courseware records (https://wilburwei-cyberai.github.io/wilbur-wei-website/en/experience/)
+### Speaking, teaching and courseware records (https://wilburwei.com/en/experience/)
 
 - [Past engagement] 2026 · Using AI Tools Safely: Practical Applications · National Defense University · Invited talk
 - [Past engagement] 2026 · Cybersecurity Literacy in the AI Era: An Essential Hands-on Course in Human–AI Collaboration · Zhongli Industrial Park · Thematic talk

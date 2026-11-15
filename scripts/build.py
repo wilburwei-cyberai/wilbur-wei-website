@@ -555,10 +555,8 @@ def render(c):
 
 def robots_txt(base):
     lines=['# Crawler rules for Wilbur Wei · 魏得恩.',
-           '# GitHub Pages project site: crawlers read robots.txt only at the host root',
-           '# (https://wilburwei-cyberai.github.io/robots.txt), so these rules take effect',
-           '# once the site moves to a custom domain or the host root. Until then, the host',
-           '# root has no robots.txt and all crawlers are allowed by default.',
+           '# Served at the host root of the custom domain ('+base+'robots.txt),',
+           '# so these rules apply to the whole site.',
            '','User-agent: *','Allow: /','']
     for bot in AI_CRAWLERS:
         lines+=[f'User-agent: {bot}','Allow: /','']
@@ -608,8 +606,14 @@ def llms_full_txt(base):
 
 def build(base):
     base=base.rstrip('/')+'/'
-    if urlsplit(base).scheme not in ['https','http'] or not urlsplit(base).netloc:
+    parts=urlsplit(base)
+    if parts.scheme not in ['https','http'] or not parts.netloc:
         raise ValueError('site_url must be an absolute HTTP(S) URL')
+    if parts.path not in ('/', ''):
+        raise ValueError('site_url must be the domain root, with no path prefix')
+    host=parts.hostname
+    if not host or host.endswith('github.io'):
+        raise ValueError('site_url must be the custom domain')
     urls=[]
     for lang in ['zh','en']:
         for slug in PAGES:
@@ -633,6 +637,7 @@ def build(base):
     (ROOT/'robots.txt').write_text(robots_txt(base))
     (ROOT/'llms.txt').write_text(llms_txt(base))
     (ROOT/'llms-full.txt').write_text(llms_full_txt(base))
+    (ROOT/'CNAME').write_text(host+'\n')
     (ROOT/'.nojekyll').write_text('Static HTML site. Skip Jekyll processing.\n')
     (ROOT/'404.html').write_text(f'<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>找不到頁面｜Wilbur Wei</title><style>body{{font:18px/1.8 system-ui;background:#f5f2eb;color:#202520;max-width:700px;margin:15vh auto;padding:24px}}a{{color:#294c3e}}</style><main><p>404</p><h1>找不到這個頁面</h1><p>This page could not be found.</p><a href="{base}">回到首頁 / Home</a></main></html>')
     print(f'Built {len(urls)} bilingual pages for {base}')
