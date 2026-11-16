@@ -22,10 +22,16 @@ from research_projects import RESEARCH_PROJECTS
 from profile import FACULTY_URL, ROLES, METRICS, ACHIEVEMENT_INTRO, METRIC_CONTEXT, AWARD_DESCRIPTION
 from geo import AI_CRAWLERS, SAME_AS, KNOWS_ABOUT, AWARDS, SUMMARY, PROFILE_FAQ, SALES_FAQ, POSITIONING_EN, POSITIONING_ZH, with_positioning_en, with_positioning_zh
 from owner_guide import ADVISOR_FAQ, ADVISOR_H1, ADVISOR_LEAD, ADVISOR_SECTIONS, ADVISOR_SERVICE, GUIDE_FAQ, GUIDE_H1, GUIDE_LEAD, GUIDE_NOTE, GUIDE_SECTIONS, SOURCES
+from guide_pages import GUIDE_BY_SLUG, GUIDES, plain, render_guide
 FAQ = {**FAQ, 'about': PROFILE_FAQ}
 FAQ = {slug: FAQ.get(slug, []) + SALES_FAQ.get(slug, []) for slug in dict.fromkeys([*FAQ, *SALES_FAQ])}
 FAQ['advisor'] = ADVISOR_FAQ
 FAQ['guides/who-to-call'] = GUIDE_FAQ
+# New guides are Traditional Chinese only. FAQ answers in JSON-LD are the
+# approved wording; links stay in the visible page.
+ZH_ONLY = {guide.slug for guide in GUIDES}
+for _guide in GUIDES:
+    FAQ[_guide.slug] = [({'zh': question}, {'zh': plain(answer)}) for question, answer in _guide.faq]
 PAPERS = json.loads((ROOT / 'content/publications.json').read_text())
 CONFIG = json.loads((ROOT / 'site.config.json').read_text())
 EMAIL = 'wilbur.wei.cyberai@gmail.com'
@@ -75,8 +81,9 @@ class Page:
         return f'<a class="button{" outline" if outline else ""}" href="{e(url,quote=True)}"{inquiry}>{e(label)} <span aria-hidden="true">↗</span></a>'
     def heading(self, label, title, action=''):
         return f'<div class="section-head"><div><span class="eyebrow">{e(label)}</span><h2>{e(title)}</h2></div>{action}</div>'
-    def section(self, body, id=None, tinted=False):
-        return f'<section{f" id=\"{id}\"" if id else ""} class="section{" tinted" if tinted else ""}"><div class="wrap">{body}</div></section>'
+    def section(self, body, id=None, tinted=False, css=''):
+        classes = 'section' + (' tinted' if tinted else '') + (f' {css}' if css else '')
+        return f'<section{f" id=\"{id}\"" if id else ""} class="{classes}"><div class="wrap">{body}</div></section>'
 
 def paragraph(text, css=''):
     return f'<p{f" class=\"{css}\"" if css else ""}>{e(text)}</p>'
@@ -401,10 +408,20 @@ def advisor(c):
     return page_hero(c,c.t(ADVISOR_H1),lead,anchors,eyebrow='WILBUR WEI / ADVISOR')+owner_blocks(c,ADVISOR_SECTIONS)+faq(c,'advisor')
 
 def guides_index(c):
-    lead=c.l('用老闆聽得懂的話，說明資安問題該找誰。目前從下面這一篇開始。','Plain-language pages for owners who need security handled and do not work in it. Start with the page below.')
-    card='<article class="card"><h3>'+e(c.t(GUIDE_H1))+'</h3>'+paragraph(c.l('平常還沒出事、已經出事、客戶或法規開始要求，三種情況分開看，並附上官方原文。','Three situations, kept apart: an ordinary day, an incident, and a customer or a rule that has started asking. Official texts are linked beside them.'))+c.link('guides/who-to-call',c.l('閱讀這篇指南','Read this guide'))+'</article>'
-    body=c.heading('START HERE',c.l('從一個問題開始','Start with one question'))+'<div class="grid-2">'+card+'</div>'+paragraph(c.l('若你已經知道自己要找的是站在老闆身邊的人，可以直接看企業主資安幕僚。','If you already know you need someone beside the owner, go straight to the advisor page.'))+c.link('advisor',c.l('企業主資安幕僚','Advisor beside the owner'))
-    return page_hero(c,c.l('給企業主的資安指南','Guides for business owners'),lead,[('guides-list',c.l('這一篇','This guide'))],eyebrow='WILBUR WEI / GUIDES')+c.section(body,id='guides-list')
+    tail=paragraph(c.l('若你已經知道自己要找的是站在老闆身邊的人，可以直接看企業主資安幕僚。','If you already know you need someone beside the owner, go straight to the advisor page.'))+c.link('advisor',c.l('企業主資安幕僚','Advisor beside the owner'))
+    who='<article class="card"><h3>'+e(c.t(GUIDE_H1))+'</h3>'+paragraph(c.l('平常還沒出事、已經出事、客戶或法規開始要求，三種情況分開看，並附上官方原文。','Three situations, kept apart: an ordinary day, an incident, and a customer or a rule that has started asking. Official texts are linked beside them.'))+c.link('guides/who-to-call',c.l('閱讀這篇指南','Read this guide'))+'</article>'
+    if c.lang=='zh':
+        extra=''.join('<article class="card"><h3>'+e(guide.h1)+'</h3>'+paragraph(guide.description)+c.link(guide.slug,'閱讀這篇指南')+'</article>' for guide in GUIDES)
+        lead='用老闆聽得懂的話，說明資安問題該找誰。從下面幾篇開始。'
+        body=c.heading('START HERE','從這幾篇開始')+'<div class="grid-2">'+who+extra+'</div>'+tail
+        anchor=('guides-list','這幾篇')
+    else:
+        # The five newer guides have no English text yet. This index keeps the
+        # existing English guide only.
+        lead='Plain-language pages for owners who need security handled and do not work in it. Start with the page below.'
+        body=c.heading('START HERE','Start with one question')+'<div class="grid-2">'+who+'</div>'+tail
+        anchor=('guides-list','This guide')
+    return page_hero(c,c.l('給企業主的資安指南','Guides for business owners'),lead,[anchor],eyebrow='WILBUR WEI / GUIDES')+c.section(body,id='guides-list')
 
 def who_to_call(c):
     crumbs=f'<a href="{c.href()}">{c.l("首頁","Home")}</a> / <a href="{c.href("guides")}">{e(c.t(PAGES["guides"]["label"]))}</a> / {e(c.t(PAGES[c.slug]["label"]))}'
@@ -412,7 +429,12 @@ def who_to_call(c):
     note=c.section(paragraph(c.t(GUIDE_NOTE),'status-note'),id='updated')
     return page_hero(c,c.t(GUIDE_H1),c.t(GUIDE_LEAD),anchors,crumbs=crumbs,eyebrow='WILBUR WEI / GUIDE')+owner_blocks(c,GUIDE_SECTIONS)+note+faq(c,'guides/who-to-call')
 
+def guide_article(c):
+    return render_guide(c, GUIDE_BY_SLUG[c.slug], c.t(PAGES['guides']['label']))
+
 RENDERERS={'transformation':transformation,'':home,'speaking':speaking,'training':training,'consulting':consulting,'experience':experience,'research':research,'about':about,'teaching':teaching,'lab':lab,'advisor':advisor,'guides':guides_index,'guides/who-to-call':who_to_call}
+for _guide in GUIDES:
+    RENDERERS[_guide.slug] = guide_article
 
 def contact(c):
     return f'<section class="contact" id="contact"><div class="wrap contact-grid"><div><span class="eyebrow">LET’S TALK</span><h2>{c.l("從你的情境，開始討論。","Tell me about your context.")}</h2>'+paragraph(c.l('提供活動或團隊背景、想解決的問題與預計時程，就能開始討論合適的合作方式。','Share your event or team context, the problem to address and the expected timeline.'))+f'<div class="actions">{c.button(c.l("演講邀約","Speaking"),c.mail("speaking"))}{c.button(c.l("內訓洽詢","Training"),c.mail("training"))}{c.button(c.l("顧問需求","Consulting"),c.mail("consulting"))}{c.button(c.l("AI 賦能轉型","AI transformation"),c.mail("transformation"))}</div></div><div><div class="email-block"><small>{c.l("演講、內訓、資安顧問與 AI 賦能轉型","Speaking, training, security consulting and AI transformation")}</small><a href="mailto:{EMAIL}">{EMAIL}</a></div><div class="email-block"><small>{c.l("學術與產學合作","Academic and industry research")}</small><a href="mailto:{ACADEMIC}">{ACADEMIC}</a></div><p class="status-note">{c.l("點選邀約可準備洽詢內容，再複製或選擇郵件方式寄出。","Prepare an inquiry, then copy it or choose an email option to send it.")}</p></div></div></section>'
@@ -452,7 +474,7 @@ def schema(c):
                       'parentOrganization':{'@type':'Organization','name':c.t(LAB_AFFILIATION),'url':'https://www.cse.yzu.edu.tw/',
                                             'parentOrganization':{'@type':'CollegeOrUniversity','name':'Yuan Ze University','url':'https://www.yzu.edu.tw/'}},
                       'member':{'@id':pid},'email':ACADEMIC})
-    if c.slug=='guides/who-to-call':
+    if c.slug.startswith('guides/'):
         graph.append({'@type':'BreadcrumbList','itemListElement':[
             {'@type':'ListItem','position':1,'name':c.l('首頁','Home'),'item':c.url('')},
             {'@type':'ListItem','position':2,'name':c.t(PAGES['guides']['label']),'item':c.url('guides')},
@@ -474,9 +496,13 @@ def schema(c):
         service_id=c.url()+'#service'
         graph.append({'@type':'Service','@id':service_id,'name':c.t(ADVISOR_H1),'serviceType':c.t(ADVISOR_H1),'description':c.t(ADVISOR_SERVICE),'provider':{'@id':pid},'url':c.url()})
         next(node for node in graph if node['@type']=='WebPage')['mainEntity']={'@id':service_id}
-    if c.slug=='guides/who-to-call':
+    if c.slug.startswith('guides/'):
+        if c.slug=='guides/who-to-call':
+            headline, published = c.t(GUIDE_H1), '2026-11-15'
+        else:
+            headline, published = GUIDE_BY_SLUG[c.slug].h1, GUIDE_BY_SLUG[c.slug].published
         article_id=c.url()+'#article'
-        graph.append({'@type':'Article','@id':article_id,'headline':c.t(GUIDE_H1),'description':c.t(PAGES[c.slug]['description']),'inLanguage':lang,'url':c.url(),'mainEntityOfPage':{'@id':c.url()+'#webpage'},'author':{'@id':pid},'publisher':{'@id':pid},'datePublished':'2026-11-15','dateModified':'2026-11-15'})
+        graph.append({'@type':'Article','@id':article_id,'headline':headline,'description':c.t(PAGES[c.slug]['description']),'inLanguage':lang,'url':c.url(),'mainEntityOfPage':{'@id':c.url()+'#webpage'},'author':{'@id':pid},'publisher':{'@id':pid},'datePublished':published,'dateModified':published})
         next(node for node in graph if node['@type']=='WebPage')['mainEntity']={'@id':article_id}
     if c.slug=='research':
         for p in PAPERS:
@@ -506,8 +532,19 @@ def render(c):
     meta=PAGES[c.slug]
     lang='zh-Hant' if c.lang=='zh' else 'en'
     nav=''.join(f'<a href="{c.href(slug)}"'+(' aria-current="page"' if c.slug==slug else '')+f'>{e(c.t(PAGES[slug]["label"]))}</a>' for slug in ['speaking','training','consulting','advisor','guides','transformation','experience','research','lab','about'])
-    language=c.href(c.slug,'en' if c.lang=='zh' else 'zh')
-    alternates=''.join(f'<link rel="alternate" hreflang="{hl}" href="{e(c.url(lang=l))}">' for hl,l in [('zh-Hant','zh'),('en','en'),('x-default','zh')])
+    # Zh-only guides have no English page. The switcher opens the English
+    # guides index instead of a missing translation, and hreflang does not
+    # claim an en alternate.
+    if c.slug in ZH_ONLY:
+        language = c.href('guides', 'en')
+        language_label = 'View the English guides'
+        alternates=''.join(f'<link rel="alternate" hreflang="{hl}" href="{e(c.url())}">' for hl in ('zh-Hant', 'x-default'))
+        locale_alt = ''
+    else:
+        language=c.href(c.slug,'en' if c.lang=='zh' else 'zh')
+        language_label=c.l('View this page in English','以繁體中文閱讀本頁')
+        alternates=''.join(f'<link rel="alternate" hreflang="{hl}" href="{e(c.url(lang=l))}">' for hl,l in [('zh-Hant','zh'),('en','en'),('x-default','zh')])
+        locale_alt=f'<meta property="og:locale:alternate" content="{c.l("en_US","zh_TW")}">\n'
     body=RENDERERS[c.slug](c)
     return f'''<!doctype html>
 <html lang="{lang}">
@@ -520,13 +557,13 @@ def render(c):
 <meta name="author" content="Wilbur Wei / 魏得恩">
 <link rel="canonical" href="{c.url()}">
 {alternates}
-<meta property="og:type" content="{'article' if c.slug=='guides/who-to-call' else 'website'}">
+<meta property="og:type" content="{'article' if c.slug.startswith('guides/') else 'website'}">
 <meta property="og:site_name" content="Wilbur Wei · AI Security">
 <meta property="og:title" content="{e(c.t(meta['title']),quote=True)}">
 <meta property="og:description" content="{e(c.t(meta['description']),quote=True)}">
 <meta property="og:url" content="{c.url()}">
 <meta property="og:locale" content="{c.l('zh_TW','en_US')}">
-<meta property="og:locale:alternate" content="{c.l('en_US','zh_TW')}">
+{locale_alt}
 <meta property="og:image" content="{c.base}assets/social-card.png">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Wilbur Wei — AI Security · Speaking · Training · Consulting">
@@ -546,7 +583,7 @@ def render(c):
 </head>
 <body{' class="lab-page"' if c.slug == 'lab' else ''}>
 <a class="skip" href="#main">{c.l('跳到主要內容','Skip to main content')}</a>
-<header class="site-header"><div class="wrap header-inner"><a class="brand" href="{c.href()}"><strong>Wilbur Wei</strong><span>AI SECURITY · 魏得恩</span></a><button class="nav-toggle" type="button" aria-label="{c.l('切換導覽選單','Toggle navigation')}" aria-controls="site-nav" aria-expanded="false" hidden>☰</button><nav class="nav-links" id="site-nav" aria-label="{c.l('主要導覽','Main navigation')}">{nav}<a class="nav-contact" href="#contact">{c.l('聯絡','Contact')}</a><a class="language" href="{language}" lang="{c.l('en','zh-Hant')}" hreflang="{c.l('en','zh-Hant')}" aria-label="{c.l('View this page in English','以繁體中文閱讀本頁')}">{c.l('EN','繁中')}</a></nav></div></header>
+<header class="site-header"><div class="wrap header-inner"><a class="brand" href="{c.href()}"><strong>Wilbur Wei</strong><span>AI SECURITY · 魏得恩</span></a><button class="nav-toggle" type="button" aria-label="{c.l('切換導覽選單','Toggle navigation')}" aria-controls="site-nav" aria-expanded="false" hidden>☰</button><nav class="nav-links" id="site-nav" aria-label="{c.l('主要導覽','Main navigation')}">{nav}<a class="nav-contact" href="#contact">{c.l('聯絡','Contact')}</a><a class="language" href="{language}" lang="{c.l('en','zh-Hant')}" hreflang="{c.l('en','zh-Hant')}" aria-label="{e(language_label)}">{c.l('EN','繁中')}</a></nav></div></header>
 <main id="main">{body}{contact(c)}</main>
 {inquiry_dialog(c)}
 <footer class="site-footer"><div class="wrap footer-inner"><div>© 2026 Wilbur Wei · 魏得恩</div><div class="footer-links">{c.link('advisor',c.l('企業主資安幕僚','Advisor beside the owner'),css='')}{c.link('guides/who-to-call',c.l('老闆不懂資安，該找誰？','Who to call'),css='')}{c.link('teaching',c.l('教材與教學方法','Teaching approach'),css='')}{c.link('research',c.l('學術署名 Te-En Wei','Publishing as Te-En Wei'),css='')}<a href="{CV}" target="_blank" rel="noopener">{c.l('簡歷 PDF','CV · PDF')}</a></div></div></footer>
@@ -574,9 +611,15 @@ def llms_txt(base):
          '- 獎項 / Awards: '+'; '.join(AWARDS['en']),
          f'- 聯絡 / Contact: {EMAIL}（演講、內訓、顧問、AI 賦能轉型 / speaking, training, consulting, AI transformation）; {ACADEMIC}（學術與產學合作 / academic and research collaboration）',
          '','## 中文頁面','']
-    out+=[f'- [{zh.t(PAGES[s]["label"])}]({zh.url(s)}): {zh.t(PAGES[s]["description"])}' for s in LLMS_PAGES]
+    def llms_slugs(lang):
+        slugs=list(LLMS_PAGES)
+        if lang=='zh':
+            insert=slugs.index('guides/who-to-call')+1
+            slugs[insert:insert]=[guide.slug for guide in GUIDES]
+        return slugs
+    out+=[f'- [{zh.t(PAGES[s]["label"])}]({zh.url(s)}): {zh.t(PAGES[s]["description"])}' for s in llms_slugs('zh')]
     out+=['','## English pages','']
-    out+=[f'- [{en.t(PAGES[s]["label"])}]({en.url(s)}): {en.t(PAGES[s]["description"])}' for s in LLMS_PAGES]
+    out+=[f'- [{en.t(PAGES[s]["label"])}]({en.url(s)}): {en.t(PAGES[s]["description"])}' for s in llms_slugs('en')]
     out+=['','## Optional','',f'- [llms-full.txt]({base}llms-full.txt): 完整的經歷、論文與常見問題文字版 / Full text of profile, records, publications and FAQs',
           f'- [Sitemap]({base}sitemap.xml)','']
     return '\n'.join(out)
@@ -599,7 +642,10 @@ def llms_full_txt(base):
         for r in sorted((r for r in RECORDS if r['status']!='preparation'),key=lambda r:-(r['year'] or 0)):
             out.append(f'- [{STATUS[r["status"]][lang]}] {r["year"]}｜{c.t(r["title"])}｜{c.t(r["org"])}｜{c.t(r["meta"])}' if lang=='zh' else f'- [{STATUS[r["status"]][lang]}] {r["year"]} · {c.t(r["title"])} · {c.t(r["org"])} · {c.t(r["meta"])}')
         out+=['','### '+c.l('常見問題','Frequently asked questions'),'']
-        for slug in ['about','','speaking','training','consulting','transformation','advisor','guides/who-to-call']:
+        faq_slugs=['about','','speaking','training','consulting','transformation','advisor','guides/who-to-call']
+        if lang=='zh':
+            faq_slugs+=[guide.slug for guide in GUIDES]
+        for slug in faq_slugs:
             for q,a in FAQ[slug]:
                 out+=[f'**Q: {c.t(q)}**',f'A: {c.t(a)}','']
     return '\n'.join(out)
@@ -617,6 +663,8 @@ def build(base):
     urls=[]
     for lang in ['zh','en']:
         for slug in PAGES:
+            if lang=='en' and slug in ZH_ONLY:
+                continue
             c=Page(slug,lang,base)
             dst=ROOT/directory(slug,lang)/'index.html'
             dst.parent.mkdir(parents=True,exist_ok=True)
@@ -629,9 +677,12 @@ def build(base):
     tree=ET.Element(ns+'urlset')
     for lang in ['zh','en']:
         for slug in PAGES:
+            if lang=='en' and slug in ZH_ONLY:
+                continue
             c=Page(slug,lang,base)
             node=ET.SubElement(tree,ns+'url');ET.SubElement(node,ns+'loc').text=c.url()
-            for hl,l in [('zh-Hant','zh'),('en','en'),('x-default','zh')]:
+            alternates=[('zh-Hant','zh'),('x-default','zh')] if slug in ZH_ONLY else [('zh-Hant','zh'),('en','en'),('x-default','zh')]
+            for hl,l in alternates:
                 ET.SubElement(node,xns+'link',{'rel':'alternate','hreflang':hl,'href':c.url(lang=l)})
     ET.ElementTree(tree).write(ROOT/'sitemap.xml',encoding='utf-8',xml_declaration=True)
     (ROOT/'robots.txt').write_text(robots_txt(base))
@@ -640,7 +691,7 @@ def build(base):
     (ROOT/'CNAME').write_text(host+'\n')
     (ROOT/'.nojekyll').write_text('Static HTML site. Skip Jekyll processing.\n')
     (ROOT/'404.html').write_text(f'<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>找不到頁面｜Wilbur Wei</title><style>body{{font:18px/1.8 system-ui;background:#f5f2eb;color:#202520;max-width:700px;margin:15vh auto;padding:24px}}a{{color:#294c3e}}</style><main><p>404</p><h1>找不到這個頁面</h1><p>This page could not be found.</p><a href="{base}">回到首頁 / Home</a></main></html>')
-    print(f'Built {len(urls)} bilingual pages for {base}')
+    print(f'Built {len(urls)} pages for {base}')
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--site-url',default=CONFIG['site_url'])
