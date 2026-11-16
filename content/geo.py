@@ -13,9 +13,14 @@ AI_CRAWLERS = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'PerplexityBot', 'Perp
                'Google-Extended', 'Googlebot', 'Bingbot', 'ClaudeBot', 'Claude-SearchBot',
                'Claude-User', 'Applebot', 'Applebot-Extended']
 
-# Person.sameAs. Only verified profile URLs belong here. Add LinkedIn, Google
-# Scholar, ORCID, YouTube, X, etc. after the site owner supplies them.
-SAME_AS = ['https://www.cse.yzu.edu.tw/people/professor?name=Wilbur%20Wei']
+# Person.sameAs. Only verified profile URLs belong here.
+# 2026-11-16: Wilbur confirmed this list. Do not add ORCID, Google Scholar,
+# Wikidata, or DBLP.
+SAME_AS = [
+    'https://www.cse.yzu.edu.tw/people/professor?name=Wilbur%20Wei',
+    'https://www.linkedin.com/in/wilbur-d-wei-4ab923128',
+    'https://wilburwei.com/lab/',
+]
 
 KNOWS_ABOUT = bi(
     ['AI Agent 資安', '生成式 AI 資安', 'LLM 威脅建模', '零信任架構', 'Active Directory 資安',

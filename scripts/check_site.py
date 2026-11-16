@@ -1,13 +1,32 @@
 #!/usr/bin/env python3
 """Check generated pages, crawlable links, bilingual metadata and public scope."""
 import json
-from html import escape as html_escape
+import re
+import sys
+from html import escape as html_escape, unescape
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
 from xml.etree import ElementTree as ET
 
 ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT/'content'))
+from guide_pages import GUIDES, plain, text_chunks
+ZH_ONLY={guide.slug for guide in GUIDES}
+# 13 bilingual slugs × 2 languages, plus the Traditional Chinese-only guides.
+EXPECTED=26+len(ZH_ONLY)
+SAME_AS=[
+    'https://www.cse.yzu.edu.tw/people/professor?name=Wilbur%20Wei',
+    'https://www.linkedin.com/in/wilbur-d-wei-4ab923128',
+    'https://wilburwei.com/lab/',
+]
+
+def page_slug(path):
+    rel=path.relative_to(ROOT).as_posix()
+    if rel=='index.html':
+        return ''
+    rel=rel[:-len('/index.html')]
+    return rel[3:] if rel.startswith('en/') else rel
 class Document(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True); self.ids=set(); self.links=[]; self.h1=0; self.canonical=[]; self.alternates={}; self.description=[]; self.in_ld=False; self.ld=[]; self.buffer=''; self.lang=None; self.title=''; self.in_title=False; self.duplicate_ids=[]
@@ -35,14 +54,21 @@ class Document(HTMLParser):
 files=sorted(p for p in ROOT.rglob('index.html') if not {'node_modules', '.git', 'test-results', 'playwright-report'}.intersection(p.relative_to(ROOT).parts))
 docs={p:Document() for p in files}
 for p,d in docs.items():d.feed(p.read_text())
-assert len(docs)==26, len(docs)
-assert len({d.title for d in docs.values()})==26
-assert len({d.description[0] for d in docs.values()})==26
+assert len(docs)==EXPECTED, len(docs)
+assert len({d.title for d in docs.values()})==EXPECTED
+assert len({d.description[0] for d in docs.values()})==EXPECTED
 for p,d in docs.items():
     assert d.h1==1,(p,'h1',d.h1)
     assert not d.duplicate_ids,(p,d.duplicate_ids)
     assert len(d.canonical)==1 and len(d.description)==1,(p,'metadata')
-    assert set(d.alternates)=={'zh-Hant','en','x-default'},p
+    zh_only=d.lang=='zh-Hant' and page_slug(p) in ZH_ONLY
+    if zh_only:
+        assert set(d.alternates)=={'zh-Hant','x-default'},p
+        assert d.alternates['x-default']==d.canonical[0],p
+        assert any(href.rstrip('/').endswith('en/guides') for href in d.links),(p,'language switcher')
+        assert not any('/en/'+page_slug(p) in href for href in d.links),p
+    else:
+        assert set(d.alternates)=={'zh-Hant','en','x-default'},p
     assert d.alternates[d.lang]==d.canonical[0],p
     assert d.ld and d.ld[0]['@context']=='https://schema.org',p
     assert '魏○○' not in p.read_text() and 'JHIH-UN' not in p.read_text()
@@ -56,6 +82,8 @@ for p,d in docs.items():
             target=docs.get(dest)
             if not target:target=Document();target.feed(dest.read_text())
             assert unquote(u.fragment) in target.ids,(p,href,'missing anchor')
+    if zh_only:
+        continue
     partner=(ROOT/('en' if d.lang=='zh-Hant' else '')/p.relative_to(ROOT/('en' if d.lang=='en' else '')).parent/'index.html').resolve()
     other=docs[partner]
     assert d.alternates['zh-Hant']==other.alternates['zh-Hant'] and d.alternates['en']==other.alternates['en'],p
@@ -96,7 +124,7 @@ for p,d in docs.items():
     text=p.read_text()
     assert 'ZipTRu9fl09hABXefrHacn5wxzdZ1XQzbUtYnAI4e0Q' in text
     person=next(n for n in d.ld[0]['@graph'] if n['@type']=='Person')
-    assert person['sameAs']==['https://www.cse.yzu.edu.tw/people/professor?name=Wilbur%20Wei']
+    assert person['sameAs']==SAME_AS,(p, person['sameAs'])
     assert '.v4' not in d.canonical[0] and '.v3' not in d.canonical[0]
     assert 'SEMICON Taiwan 2026' not in text
     assert '../transformation/' in text or 'href="transformation/' in text or 'href="./" aria-current="page">AI' in text
@@ -128,7 +156,7 @@ for name in ['llms.txt','llms-full.txt']:
     assert base in text and '魏得恩' in text and 'Te-En Wei' in text and 'Director' in text or name=='llms-full.txt', name
     assert '2022 R&D 100 Awards' in text, name
 assert all(url in (ROOT/'llms.txt').read_text() for url in {d.canonical[0] for d in docs.values()} if '/teaching/' not in url or True)
-assert len(root.findall('{*}url/{http://www.w3.org/1999/xhtml}link'))==78
+assert len(root.findall('{*}url/{http://www.w3.org/1999/xhtml}link'))==(EXPECTED-len(ZH_ONLY))*3+len(ZH_ONLY)*2
 for p,d in docs.items():
     graph=d.ld[0]['@graph']
     person=next(n for n in graph if n['@type']=='Person')
@@ -194,7 +222,10 @@ zh_llms,en_rest=llms.split('## English pages',1)
 en_llms=en_rest.split('## Optional',1)[0]
 zh_bullets=[ln for ln in zh_llms.splitlines() if ln.startswith('- [')]
 en_bullets=[ln for ln in en_llms.splitlines() if ln.startswith('- [')]
-assert len(zh_bullets)==13 and len(en_bullets)==13
+assert len(zh_bullets)==13+len(GUIDES) and len(en_bullets)==13
+for _guide in GUIDES:
+    _url='https://wilburwei.com/'+_guide.slug+'/'
+    assert _url in zh_llms and _url not in en_llms, _guide.slug
 assert all(POSITIONING_ZH in ln for ln in zh_bullets[:2]) and all(POSITIONING_ZH not in ln for ln in zh_bullets[2:])
 assert all(POSITIONING_EN in ln for ln in en_bullets[:2]) and all(POSITIONING_EN not in ln for ln in en_bullets[2:])
 assert POSITIONING_ZH not in en_llms and POSITIONING_EN not in '\n'.join(zh_bullets)
@@ -207,6 +238,7 @@ for lang in ['', 'en/']:
     about=docs[ROOT/(lang+'about/index.html')]
     assert any(n['@type']=='FAQPage' and len(n['mainEntity'])>=8 for n in about.ld[0]['@graph'])
 NEW_PAGES=['advisor/index.html','en/advisor/index.html','guides/index.html','en/guides/index.html','guides/who-to-call/index.html','en/guides/who-to-call/index.html']
+NEW_PAGES+=[guide.slug+'/index.html' for guide in GUIDES]
 BANNED=['vCISO','V-CISO','虛擬資安長','外部兼任資安長','virtual CISO','Virtual CISO','fractional CISO','Fractional CISO','CISO','長茂','智慧資安','資策會','勤晁','佣金']
 OFFICIAL=[
     'https://law.fsc.gov.tw/LawContent.aspx?id=GL003330',
@@ -244,4 +276,27 @@ for lang in ['', 'en/']:
     for url in OFFICIAL:
         assert url in guide_text,(lang,url)
     assert 'property="og:type" content="article"' in guide_text,lang
-print('PASS: 26 pages; unique titles/descriptions; reciprocal language URLs; valid JSON-LD/sitemap; all local links and anchors; 30 records per language; 7 publication records per language; merged/HOLD records excluded.')
+for guide in GUIDES:
+    page=(ROOT/guide.slug/'index.html').read_text()
+    visible=re.sub(r'\s+','',unescape(re.sub(r'<script\b[^>]*>.*?</script>','',page,flags=re.S)))
+    visible=re.sub(r'<[^>]+>','',visible)
+    for chunk in text_chunks(guide):
+        assert chunk in visible,(guide.slug, chunk[:60])
+    doc=docs[ROOT/guide.slug/'index.html']
+    assert doc.canonical[0]=='https://wilburwei.com/'+guide.slug+'/', guide.slug
+    assert doc.title==guide.title and doc.description[0]==guide.description, guide.slug
+    assert len(doc.description[0])<=160, guide.slug
+    graph=doc.ld[0]['@graph']
+    faq=next(node for node in graph if node['@type']=='FAQPage')
+    assert [item['name'] for item in faq['mainEntity']]==[question for question,_ in guide.faq], guide.slug
+    assert [item['acceptedAnswer']['text'] for item in faq['mainEntity']]==[plain(answer) for _,answer in guide.faq], guide.slug
+    crumbs=next(node for node in graph if node['@type']=='BreadcrumbList')
+    assert [item['name'] for item in crumbs['itemListElement']]==['首頁','指南',guide.h1], guide.slug
+    article=next(node for node in graph if node['@type']=='Article')
+    assert article['headline']==guide.h1 and article['datePublished']==guide.published=='2026-11-16', guide.slug
+    assert article['author']['@id'].endswith('#person'), guide.slug
+    for url in guide.urls:
+        assert url in doc.links,(guide.slug, url)
+    assert 'id="sources"' in page and '本頁來源' in page and '供後續程式代理人' not in page, guide.slug
+    assert 'orcid.org' not in page.lower() and 'wikidata.org' not in page and 'dblp.org' not in page, guide.slug
+print(f'PASS: {EXPECTED} pages; unique titles/descriptions; reciprocal language URLs; valid JSON-LD/sitemap; all local links and anchors; 30 records per language; 7 publication records per language; merged/HOLD records excluded.')

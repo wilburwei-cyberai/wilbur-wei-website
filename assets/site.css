@@ -99,3 +99,12 @@ html.inquiry-open{overflow:hidden}
 .profile-intro>.text-link{margin-right:20px}
 
 .publication-version{border-left:2px solid var(--line);padding:12px 20px;margin:20px 0}.publication-version p{margin-bottom:8px;font-size:14px}
+
+/* Owner guides: comparison tables and multi-paragraph sections. */
+.section.guide h3{margin-top:1.75rem}.section.guide h3:first-of-type{margin-top:.4rem}
+.section.guide li{margin:.35em 0}.section.guide ol,.section.guide ul{padding-left:1.35em}
+.table-wrap{overflow-x:auto;margin:1.1em 0 1.4em;-webkit-overflow-scrolling:touch}
+.guide-table{border-collapse:collapse;width:100%;min-width:640px;font-size:14.5px;line-height:1.7}
+.guide-table th,.guide-table td{border-top:1px solid var(--line);text-align:left;vertical-align:top;padding:12px 14px;overflow-wrap:anywhere}
+.guide-table th{font-weight:600;color:var(--ink)}.guide-table td{color:var(--ink)}
+.page-hero .hero-follow{color:var(--ink);max-width:760px}

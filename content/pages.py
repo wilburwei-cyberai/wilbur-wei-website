@@ -245,3 +245,12 @@ PAGES['guides/who-to-call'] = {
         '老闆不懂資安時該找誰：平常找能把風險講成生意的幕僚，出事向 TWCERT/CC 通報並向警政報案，合規對照金管會令、SEMI E187 與個資法。',
         'Who to call if cybersecurity is unclear: an advisor day to day, TWCERT/CC and police in an incident, plus rules for listed firms, SEMI E187 and personal data.'),
 }
+
+# Traditional Chinese guides. English pages are intentionally not generated.
+from guide_pages import GUIDES
+for _guide in GUIDES:
+    PAGES[_guide.slug] = {
+        'label': {'zh': _guide.h1},
+        'title': {'zh': _guide.title},
+        'description': {'zh': _guide.description},
+    }
