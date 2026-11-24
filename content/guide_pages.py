@@ -28,6 +28,10 @@ SECTION_IDS = {
     '誰會被要求、哪些設備算進去': 'scope',
     '老闆要先準備什麼': 'prepare',
     '什麼時候該找外面的資安幕僚': 'outside',
+    '為什麼導入前要先看資安': 'why',
+    '上線前建議先核對的幾件事': 'checks',
+    '問資訊人員或廠商的清單': 'checklist',
+    '找誰評估': 'who-assess',
     '魏得恩的相關經歷': 'background',
     '常見問題': 'faq',
     '本頁來源': 'sources',
@@ -201,6 +205,8 @@ def parse_guide(text):
     description = re.search(r'^- meta description.*?：(.*)$', text, re.M).group(1).strip()
     if len(description) > 160:
         raise ValueError(f'{slug} description is {len(description)} characters')
+    published_match = re.search(r'^- published：(\d{4}-\d{2}-\d{2})$', text, re.M)
+    published = published_match.group(1) if published_match else PUBLISHED
     body = text.split('\n---\n', 1)[1].strip()
     chunks = re.split(r'^## ', body, flags=re.M)
     intro = chunks[0].strip()
@@ -236,7 +242,7 @@ def parse_guide(text):
         'sections': sections,
         'faq': faq,
         'note': note,
-        'published': PUBLISHED,
+        'published': published,
         'urls': urls,
     }
 
@@ -253,8 +259,8 @@ def load_guides():
     guides = []
     for path in sorted(GUIDE_DIR.glob('*.md')):
         guides.append(Guide(parse_guide(path.read_text())))
-    if len(guides) != 5:
-        raise ValueError(f'expected 5 guides, found {len(guides)}')
+    if len(guides) != 6:
+        raise ValueError(f'expected 6 guides, found {len(guides)}')
     return guides
 
 

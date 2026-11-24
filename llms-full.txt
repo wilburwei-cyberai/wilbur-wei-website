@@ -143,6 +143,15 @@ A: 可以從員工角色、現有工具、常見錯誤與學習目標討論課�
 **Q: 企業要做 AI Agent 資安內訓，可以找誰？**
 A: 魏得恩為資安、IT 與研發團隊開設 LLM 威脅建模、AI 輔助 SOC、滲透與誘捕防禦等實作課程，也為主管與一般同仁設計 AI 安全使用課程。他在自強基金會的「從 LLM 威脅建模到風險控管與治理（實作）」共 12 小時、含 10 項實作，教材採用本地模型與離線環境。他也主持 MIRAGE Lab（代理人紅隊攻防實境實驗室），AI Agent 授權框架研究 AHAF 獲 CISC 2026 最佳論文獎。洽詢內訓請寄 wilbur.wei.cyberai@gmail.com，說明團隊角色、人數與學習需求。
 
+**Q: 導入 AI Agent 前要注意哪些資安風險？**
+A: 先看它能讀哪些資料、能做哪些動作、高影響操作要不要人批准，以及出事時能不能追溯、叫停和還原。完整說明見[導入 AI Agent 前要注意哪些資安風險？找誰評估？](https://wilburwei.com/guides/ai-agent-security-assessment/)。
+
+**Q: 導入 AI Agent 前該找誰評估？**
+A: 先由了解公司系統的資訊人員，盤點資料、工具和權限。若老闆需要有人把風險講成停工、罰則和客戶信任，可以再請資安幕僚或顧問一起看；責任和簽字仍在公司。見[導入 AI Agent 前要注意哪些資安風險？找誰評估？](https://wilburwei.com/guides/ai-agent-security-assessment/)。
+
+**Q: AI Agent 和只會回答問題的聊天工具，差在哪裡？**
+A: Agent 可能被接到可以寄信、改資料或呼叫其他系統的工具，影響範圍比只回答問題來得大。上線前要把權限和「哪些動作要人批准」問清楚。見[導入 AI Agent 前要注意哪些資安風險？找誰評估？](https://wilburwei.com/guides/ai-agent-security-assessment/)。
+
 **Q: 還沒導入 AI，也可以先討論嗎？**
 A: 可以。先從想改善的流程、資料與團隊現況盤點需求，再討論工具選型、試點範圍與安全要求。
 
@@ -293,6 +302,21 @@ A: 官方公開頁沒有寫這種一律的後果。會不會影響訂單、出�
 **Q: 顧問能不能保證幫我們通過 E187？**
 A: 不能做這樣的保證。幕僚可以協助老闆看懂範圍、整理現況和先後，但不代替標準本文，也不保證某一客戶的查核結果。見企業主資安幕僚。
 
+**Q: 還沒正式上線、只是先試用，也要先評估嗎？**
+A: 要。試用階段如果已經接到真實信件、客戶資料或可執行動作的工具，風險和正式上線是同一類。範圍可以先縮小，但權限、資料和「要不要人批准」這幾項，建議在接到真實環境前就問完。
+
+**Q: 提示注入是什麼？公司的信或網頁真的能讓 Agent 做錯事嗎？**
+A: 提示注入是指：寫進信件、網頁或文件裡的指示，讓模型做出不是你原本要求的行為。它不必長得像攻擊指令，員工日常轉貼的內容也可能觸發意外結果。影響有多大，取決於 Agent 當時看得到什麼、做得出什麼。公開說明見文末來源。
+
+**Q: 哪些動作一定要人批准？**
+A: 凡是做了就難收回，或會直接碰到客戶、金錢、對外通訊和重要資料的，都應先由人批准。例如對外寄信、刪改資料、接到下單或付款相關系統。批准應寫在系統流程裡，不要只交代「模型自己判斷」。
+
+**Q: 導入 AI Agent 的資安風險，該找誰評估？**
+A: 先由了解公司系統的資訊人員，對照上面的清單盤點資料、工具和權限。若老闆需要有人把風險講成營運後果，並幫忙排先後，可以再請資安幕僚或顧問一起看。責任和簽字仍在公司。
+
+**Q: 評估完、控制都做了，是不是就不會出事？**
+A: 不是。提示注入目前沒有可以完全防住的方法，模型也可能產出錯誤內容。評估的目的，是把權限和影響範圍先縮小，並讓公司在出事時有人能叫停、有紀錄可查。沒有人能保證零風險。
+
 ## English
 
 ### Summary
@@ -433,6 +457,15 @@ A: We can start with employee roles, existing tools, common difficulties and lea
 
 **Q: Who can run AI agent security training for our company?**
 A: Wilbur Wei runs hands-on courses for security, IT and engineering teams on LLM threat modelling, AI-assisted SOC work, penetration testing and deception defence, and designs safe-AI-use training for managers and general staff. His TCFST course “LLM Threat Modelling, Risk Management and Governance” runs 12 hours with ten labs on local models in offline environments. He is also Director of MIRAGE Lab, and his AI agent authorisation framework AHAF received the CISC 2026 Best Paper Award. Email wilbur.wei.cyberai@gmail.com with your team’s roles, size and learning needs.
+
+**Q: What security risks should we check before deploying an AI agent?**
+A: Check what data it can read, which tools and actions it can use, whether high-impact actions need a person to approve them, and whether you can trace, stop and roll back what it did. See [導入 AI Agent 前要注意哪些資安風險？找誰評估？](https://wilburwei.com/guides/ai-agent-security-assessment/).
+
+**Q: Who should assess the risks before we deploy an AI agent?**
+A: Start with the people who know your systems, and inventory the data, tools and permissions. If the owner needs someone to translate the risks into downtime, penalties and customer trust, an outside advisor can help; accountability stays with the company. See [導入 AI Agent 前要注意哪些資安風險？找誰評估？](https://wilburwei.com/guides/ai-agent-security-assessment/).
+
+**Q: How is an AI agent different from a chatbot that only answers questions?**
+A: An agent may be connected to tools that send mail, change records or call other systems, so the impact is larger than a chatbot that only answers. Confirm permissions and which actions need human approval before going live. See [導入 AI Agent 前要注意哪些資安風險？找誰評估？](https://wilburwei.com/guides/ai-agent-security-assessment/).
 
 **Q: Can we talk before deploying AI?**
 A: Yes. Start with the workflow you want to improve, your data and team context, then discuss tool selection, pilot scope and security requirements.
