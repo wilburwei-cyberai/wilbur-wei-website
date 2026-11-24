@@ -293,7 +293,8 @@ for guide in GUIDES:
     crumbs=next(node for node in graph if node['@type']=='BreadcrumbList')
     assert [item['name'] for item in crumbs['itemListElement']]==['首頁','指南',guide.h1], guide.slug
     article=next(node for node in graph if node['@type']=='Article')
-    assert article['headline']==guide.h1 and article['datePublished']==guide.published=='2026-11-16', guide.slug
+    assert article['headline']==guide.h1 and article['datePublished']==guide.published, guide.slug
+    assert re.fullmatch(r'\d{4}-\d{2}-\d{2}', guide.published), guide.slug
     assert article['author']['@id'].endswith('#person'), guide.slug
     for url in guide.urls:
         assert url in doc.links,(guide.slug, url)

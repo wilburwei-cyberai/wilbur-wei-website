@@ -155,7 +155,16 @@ FAQ = {'speaking': [({'zh': '可以依產業與聽眾調整內容嗎？', 'en': 
                 'en': 'We can start with employee roles, existing tools, common difficulties and learning goals, '
                       'then agree on exercises, duration and material usage. Past course titles provide starting '
                       'points.'})],
- 'consulting': [({'zh': '還沒導入 AI，也可以先討論嗎？', 'en': 'Can we talk before deploying AI?'},
+ 'consulting': [({'zh': '導入 AI Agent 前要注意哪些資安風險？', 'en': 'What security risks should we check before deploying an AI agent?'},
+                 {'zh': '先看它能讀哪些資料、能做哪些動作、高影響操作要不要人批准，以及出事時能不能追溯、叫停和還原。完整說明見[導入 AI Agent 前要注意哪些資安風險？找誰評估？](https://wilburwei.com/guides/ai-agent-security-assessment/)。',
+                  'en': 'Check what data it can read, which tools and actions it can use, whether high-impact actions need a person to approve them, and whether you can trace, stop and roll back what it did. See [導入 AI Agent 前要注意哪些資安風險？找誰評估？](https://wilburwei.com/guides/ai-agent-security-assessment/).'}),
+                ({'zh': '導入 AI Agent 前該找誰評估？', 'en': 'Who should assess the risks before we deploy an AI agent?'},
+                 {'zh': '先由了解公司系統的資訊人員，盤點資料、工具和權限。若老闆需要有人把風險講成停工、罰則和客戶信任，可以再請資安幕僚或顧問一起看；責任和簽字仍在公司。見[導入 AI Agent 前要注意哪些資安風險？找誰評估？](https://wilburwei.com/guides/ai-agent-security-assessment/)。',
+                  'en': 'Start with the people who know your systems, and inventory the data, tools and permissions. If the owner needs someone to translate the risks into downtime, penalties and customer trust, an outside advisor can help; accountability stays with the company. See [導入 AI Agent 前要注意哪些資安風險？找誰評估？](https://wilburwei.com/guides/ai-agent-security-assessment/).'}),
+                ({'zh': 'AI Agent 和只會回答問題的聊天工具，差在哪裡？', 'en': 'How is an AI agent different from a chatbot that only answers questions?'},
+                 {'zh': 'Agent 可能被接到可以寄信、改資料或呼叫其他系統的工具，影響範圍比只回答問題來得大。上線前要把權限和「哪些動作要人批准」問清楚。見[導入 AI Agent 前要注意哪些資安風險？找誰評估？](https://wilburwei.com/guides/ai-agent-security-assessment/)。',
+                  'en': 'An agent may be connected to tools that send mail, change records or call other systems, so the impact is larger than a chatbot that only answers. Confirm permissions and which actions need human approval before going live. See [導入 AI Agent 前要注意哪些資安風險？找誰評估？](https://wilburwei.com/guides/ai-agent-security-assessment/).'}),
+                ({'zh': '還沒導入 AI，也可以先討論嗎？', 'en': 'Can we talk before deploying AI?'},
                  {'zh': '可以。先從想改善的流程、資料與團隊現況盤點需求，再討論工具選型、試點範圍與安全要求。',
                   'en': 'Yes. Start with the workflow you want to improve, your data and team context, then '
                         'discuss tool selection, pilot scope and security requirements.'}),

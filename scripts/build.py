@@ -22,7 +22,7 @@ from research_projects import RESEARCH_PROJECTS
 from profile import FACULTY_URL, ROLES, METRICS, ACHIEVEMENT_INTRO, METRIC_CONTEXT, AWARD_DESCRIPTION
 from geo import AI_CRAWLERS, SAME_AS, KNOWS_ABOUT, AWARDS, SUMMARY, PROFILE_FAQ, SALES_FAQ, POSITIONING_EN, POSITIONING_ZH, with_positioning_en, with_positioning_zh
 from owner_guide import ADVISOR_FAQ, ADVISOR_H1, ADVISOR_LEAD, ADVISOR_SECTIONS, ADVISOR_SERVICE, GUIDE_FAQ, GUIDE_H1, GUIDE_LEAD, GUIDE_NOTE, GUIDE_SECTIONS, SOURCES
-from guide_pages import GUIDE_BY_SLUG, GUIDES, plain, render_guide
+from guide_pages import GUIDE_BY_SLUG, GUIDES, plain, render_guide, render_inline
 FAQ = {**FAQ, 'about': PROFILE_FAQ}
 FAQ = {slug: FAQ.get(slug, []) + SALES_FAQ.get(slug, []) for slug in dict.fromkeys([*FAQ, *SALES_FAQ])}
 FAQ['advisor'] = ADVISOR_FAQ
@@ -111,7 +111,7 @@ def service_cards(c):
     return '<div class="grid-2">'+''.join(cards)+'</div>'
 
 def faq(c,slug):
-    items = ''.join(f'<details><summary>{e(c.t(q))}</summary>{paragraph(c.t(a))}</details>' for q,a in FAQ[slug])
+    items = ''.join(f'<details><summary>{e(c.t(q))}</summary><p>{render_inline(c, c.t(a))}</p></details>' for q,a in FAQ[slug])
     if slug=='about':
         title = c.l('常見問題：認識魏得恩','Frequently asked questions about Wilbur Wei')
     elif slug=='' or slug in ('advisor','guides/who-to-call'):
@@ -416,8 +416,8 @@ def guides_index(c):
         body=c.heading('START HERE','從這幾篇開始')+'<div class="grid-2">'+who+extra+'</div>'+tail
         anchor=('guides-list','這幾篇')
     else:
-        # The five newer guides have no English text yet. This index keeps the
-        # existing English guide only.
+        # The additional Traditional Chinese guides have no English text yet.
+        # This index keeps the existing English guide only.
         lead='Plain-language pages for owners who need security handled and do not work in it. Start with the page below.'
         body=c.heading('START HERE','Start with one question')+'<div class="grid-2">'+who+'</div>'+tail
         anchor=('guides-list','This guide')
@@ -518,7 +518,7 @@ def schema(c):
             if p['award']: article['award']=c.t(p['award'])
     if c.slug in FAQ:
         graph.append({'@type':'FAQPage','@id':c.url()+'#faq','url':c.url()+'#faq','inLanguage':lang,'isPartOf':{'@id':c.url()+'#webpage'},'about':{'@id':pid},
-                      'mainEntity':[{'@type':'Question','name':c.t(q),'acceptedAnswer':{'@type':'Answer','text':c.t(a)}} for q,a in FAQ[c.slug]]})
+                      'mainEntity':[{'@type':'Question','name':c.t(q),'acceptedAnswer':{'@type':'Answer','text':plain(c.t(a))}} for q,a in FAQ[c.slug]]})
     if c.slug=='experience':
         # Courses only: no exact dates are published, so no Event/startDate is emitted.
         for r in RECORDS:
