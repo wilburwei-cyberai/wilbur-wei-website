@@ -15,7 +15,7 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, str(ROOT / 'content'))
 from records import RECORDS, STATUS, bi
 from pages import PAGES, SERVICES, TOPICS, FAQ
-from lab import LAB_NAME, LAB_ZH, LAB_AFFILIATION, LAB_INTRO, LAB_DIRECTIONS
+from lab import LAB_NAME, LAB_ZH, LAB_AFFILIATION, LAB_INTRO, LAB_DIRECTIONS, COMMUNITY_EVENTS, community_event_schema, community_llms_suffix, event_is_upcoming
 from transformation import INTRO as TRANSFORMATION_INTRO, SCENARIOS, STEPS, ASKEY_TITLE, ASKEY_DESCRIPTION
 from research_directions import INTRO as FUTURE_INTRO, DIRECTIONS as FUTURE_DIRECTIONS
 from research_projects import RESEARCH_PROJECTS
@@ -186,6 +186,43 @@ def lab_feature(c):
 {paragraph(c.l('元智大學資訊工程學系。研究 AI 代理人授權與攻防驗證，並規劃拓展至無人機、機器人通訊資安，以及 PUF 硬體資安應用。','Based in Computer Science and Engineering at Yuan Ze University. Research on AI agent authorisation and defence, with planned directions in communication security for drones and robots, and PUF hardware security applications.'))}
 {c.link('lab',c.l('認識 MIRAGE Lab','Explore MIRAGE Lab'))}</div></div></section>'''
 
+
+def community_partnership_section(c):
+    """Render /lab/ community-partner blocks. Wording switches after event_date."""
+    blocks = []
+    first_id = None
+    for ev in COMMUNITY_EVENTS:
+        upcoming = event_is_upcoming(ev)
+        first_id = first_id or ev['id']
+        organizer = f'<a href="{e(ev["organizer_url"], quote=True)}" rel="noopener">{e(c.t(ev["organizer_name"]))}</a>'
+        body = e(c.t(ev['body_upcoming' if upcoming else 'body_past'])).replace('{organizer}', organizer)
+        links = [
+            (c.l('OPEN LAB 2026 活動官網', 'OPEN LAB 2026 website'), ev['event_url']),
+            (c.l('AI郵報', 'AI郵報'), ev['organizer_url']),
+            (c.l('AI郵報 Instagram（@aiposthub）', 'AI郵報 on Instagram (@aiposthub)'), ev['instagram']),
+        ]
+        if upcoming:
+            links.insert(1, (c.l('報名頁（Luma）', 'Registration (Luma)'), ev['register_url']))
+        lis = ''.join(
+            f'<li><a href="{e(url, quote=True)}" rel="noopener">{e(label)}</a></li>'
+            for label, url in links
+        )
+        note = paragraph(
+            c.l('活動時間、地點與內容以主辦單位公告為準。', "Details are subject to the organiser's announcements."),
+            'status-note',
+        )
+        blocks.append(
+            c.heading('COMMUNITY', c.t(ev['heading']))
+            + paragraph(c.t(ev['lead_upcoming' if upcoming else 'lead_past']))
+            + f'<p>{body}</p>'
+            + paragraph(c.t(ev['director']))
+            + f'<ul class="lab-community-links">{lis}</ul>'
+            + note
+        )
+    if not blocks:
+        return ''
+    return c.section(''.join(blocks), id=first_id, tinted=True)
+
 def lab(c):
     academic_mail = 'mailto:' + ACADEMIC + '?' + urlencode({
         'subject':c.l('MIRAGE Lab 研究合作洽詢','MIRAGE Lab research inquiry'),
@@ -197,7 +234,7 @@ def lab(c):
 <div class="lab-hero-grid"><div><span class="eyebrow">YUAN ZE UNIVERSITY / CSE</span><h1>MIRAGE Lab</h1>
 <p class="lab-subtitle">{LAB_ZH}</p><p class="lab-affiliation">{e(c.t(LAB_AFFILIATION))}</p>
 <p class="lab-statement">{c.l('理解攻擊如何發生，<br>驗證防禦如何成立。','Understand the attack.<br>Evaluate the defence.')}</p>
-<div class="anchor-nav"><a href="#lab-profile">{c.l('認識實驗室','About the lab')}</a><a href="#lab-directions">{c.l('研究方向','Research areas')}</a><a href="#projects">{c.l('研究計畫','Projects')}</a><a href="#emerging-directions">{c.l('未來方向','Future directions')}</a><a href="#lab-collaboration">{c.l('研究合作','Collaborate')}</a></div></div>
+<div class="anchor-nav"><a href="#lab-profile">{c.l('認識實驗室','About the lab')}</a><a href="#lab-directions">{c.l('研究方向','Research areas')}</a><a href="#projects">{c.l('研究計畫','Projects')}</a><a href="#emerging-directions">{c.l('未來方向','Future directions')}</a><a href="#openlab-2026">{c.l('社群合作','Community')}</a><a href="#lab-collaboration">{c.l('研究合作','Collaborate')}</a></div></div>
 <div class="lab-emblem"><img src="{c.asset('mirage-logo-white.png')}" width="688" height="764" alt="MIRAGE Lab — {LAB_ZH}"><span>AI AGENTS · RED TEAMING · ZERO TRUST</span></div></div></div></section>'''
     profile=f'''<div class="lab-profile-grid"><div><span class="eyebrow">THE LAB</span><h2>{c.l('從攻防情境，提出可以驗證的問題。','Turn attack and defence scenarios into testable questions.')}</h2></div><div>{paragraph(c.t(LAB_INTRO),'lead')}<div class="lab-advisor"><img src="{c.asset('mirage-logo-dark.png')}" width="688" height="764" loading="lazy" alt="MIRAGE Lab Logo"><span>{c.l('主持','Director')}</span><strong>{c.l('魏得恩 Wilbur Wei','Wilbur Wei / Te-En Wei')}</strong><p>{c.l('元智大學資訊工程學系助理教授','Assistant Professor, Computer Science and Engineering, Yuan Ze University')}</p>{c.link('about',c.l('教師經歷與專業背景','Faculty background'))}</div></div></div>'''
     result+=c.section(profile,id='lab-profile')
@@ -211,6 +248,7 @@ def lab(c):
     research_body=c.heading('RELATED PUBLICATIONS',c.l('以研究成果，說明問題與方法。','Explore the questions through published work.'),c.link('research',c.l('閱讀完整論文書目','Full publication list')))
     research_body+=paragraph(c.l('主持人與共同作者的相關研究包含 AHAF、HMELF、MARS、STIE-ZTA，以及 AD 風險與 APT 情資分析。研究頁保留各篇論文的作者、發表出處及研究範圍。','Related work by the Director and co-authors includes AHAF, HMELF, MARS, STIE-ZTA, AD risk and APT intelligence analysis. The research page provides author lists, publication venues and the scope of each study.'))
     result+=c.section(research_body)
+    result+=community_partnership_section(c)
     result+=f'''<section class="lab-collaboration" id="lab-collaboration"><div class="wrap lab-profile-grid"><div><span class="eyebrow">RESEARCH & COLLABORATION</span><h2>{c.l('一起釐清值得研究的問題。','Find a research question worth investigating.')}</h2></div><div>{paragraph(c.l('歡迎就 AI 代理人安全、攻防驗證與零信任，以及規劃中的無人機／機器人通訊資安、PUF 硬體資安應用討論學術或產學合作。來信可簡述研究問題、已有背景與合作構想。','For academic or industry research on AI agent security and zero trust, or planned work on drone / robot communication security and PUF applications, share the research question, relevant background and your collaboration idea.'))}<div class="actions">{c.button(c.l('討論研究合作','Discuss research collaboration'),academic_mail)}</div><p class="lab-email"><a href="mailto:{ACADEMIC}">{ACADEMIC}</a></p></div></div></section>'''
     return result
 
@@ -474,6 +512,8 @@ def schema(c):
                       'parentOrganization':{'@type':'Organization','name':c.t(LAB_AFFILIATION),'url':'https://www.cse.yzu.edu.tw/',
                                             'parentOrganization':{'@type':'CollegeOrUniversity','name':'Yuan Ze University','url':'https://www.yzu.edu.tw/'}},
                       'member':{'@id':pid},'email':ACADEMIC})
+        for ev in COMMUNITY_EVENTS:
+            graph.append(community_event_schema(ev, page_url=c.url('lab'), lab_id=lab_id, lang=c.lang))
     if c.slug.startswith('guides/'):
         graph.append({'@type':'BreadcrumbList','itemListElement':[
             {'@type':'ListItem','position':1,'name':c.l('首頁','Home'),'item':c.url('')},
@@ -617,9 +657,14 @@ def llms_txt(base):
             insert=slugs.index('guides/who-to-call')+1
             slugs[insert:insert]=[guide.slug for guide in GUIDES]
         return slugs
-    out+=[f'- [{zh.t(PAGES[s]["label"])}]({zh.url(s)}): {zh.t(PAGES[s]["description"])}' for s in llms_slugs('zh')]
+    def llms_line(c, s):
+        desc=c.t(PAGES[s]['description'])
+        if s=='lab':
+            desc=desc+' '+community_llms_suffix(c.lang)
+        return f"- [{c.t(PAGES[s]['label'])}]({c.url(s)}): {desc}"
+    out+=[llms_line(zh,s) for s in llms_slugs('zh')]
     out+=['','## English pages','']
-    out+=[f'- [{en.t(PAGES[s]["label"])}]({en.url(s)}): {en.t(PAGES[s]["description"])}' for s in llms_slugs('en')]
+    out+=[llms_line(en,s) for s in llms_slugs('en')]
     out+=['','## Optional','',f'- [llms-full.txt]({base}llms-full.txt): 完整的經歷、論文與常見問題文字版 / Full text of profile, records, publications and FAQs',
           f'- [Sitemap]({base}sitemap.xml)','']
     return '\n'.join(out)
@@ -633,6 +678,7 @@ def llms_full_txt(base):
         out+=['### '+c.l('服務','Services'),'']+[f'- {c.t(t)}（{c.url(s)}）：{c.t(d)}' if lang=='zh' else f'- {c.t(t)} ({c.url(s)}): {c.t(d)}' for s,t,_,d in SERVICES]+['']
         out+=['### '+c.l('演講與課程主題','Talk and training topics'),'']+[f'- {c.t(t)}：{c.t(d)}' if lang=='zh' else f'- {c.t(t)}: {c.t(d)}' for t,d in TOPICS]+['']
         out+=['### MIRAGE Lab','',c.t(LAB_INTRO),f'URL: {c.url("lab")}','']
+        out+=['### '+c.l('社群合作','Community partnerships'),'',community_llms_suffix(lang),'']
         out+=['### '+c.l('研究計畫','Research projects'),'']+[f'- {c.t(p["title"])}｜{c.t(p["agency"])}｜{p["fiscal_year"]} ({p["year"]})' for p in RESEARCH_PROJECTS]+['']
         out+=['### '+c.l('論文發表','Publications')+f' ({c.url("research")})','']
         for p in PAPERS:

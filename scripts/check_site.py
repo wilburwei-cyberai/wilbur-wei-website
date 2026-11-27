@@ -300,4 +300,75 @@ for guide in GUIDES:
         assert url in doc.links,(guide.slug, url)
     assert 'id="sources"' in page and '本頁來源' in page and '供後續程式代理人' not in page, guide.slug
     assert 'orcid.org' not in page.lower() and 'wikidata.org' not in page and 'dblp.org' not in page, guide.slug
+
+# OPEN LAB 2026 Community Partner block on /lab/ (and English). The Event is
+# allowed here because the organiser published a date; experience pages still
+# must not emit Event/startDate.
+from lab import COMMUNITY_EVENTS, community_event_schema, event_is_upcoming
+from datetime import date as _date
+_openlab = next(ev for ev in COMMUNITY_EVENTS if ev['id']=='openlab-2026')
+# Both wordings must produce valid Event JSON (upcoming has Offer, past does not).
+for _as_of, _expect_offer in ((_date(2026, 11, 30), True), (_date(2026, 12, 6), False)):
+    for _lang, _page in (('zh', 'https://wilburwei.com/lab/'), ('en', 'https://wilburwei.com/en/lab/')):
+        _node = community_event_schema(_openlab, page_url=_page, lab_id='https://wilburwei.com/lab/#organization', lang=_lang, as_of=_as_of)
+        assert _node['@type']=='Event' and _node['startDate']=='2026-12-05T13:30:00+08:00'
+        assert _node['doorTime']=='2026-12-05T13:00:00+08:00'
+        assert _node['eventStatus']=='https://schema.org/EventScheduled'
+        assert _node['eventAttendanceMode']=='https://schema.org/OfflineEventAttendanceMode'
+        assert _node['contributor']['@id']=='https://wilburwei.com/lab/#organization'
+        assert 'price' not in _node and 'priceCurrency' not in _node
+        assert ('offers' in _node) is _expect_offer
+        if _expect_offer:
+            assert _node['offers']['url']=='https://luma.com/zr1k4qa5' and 'price' not in _node['offers']
+_upcoming = event_is_upcoming(_openlab)
+for lang in ['', 'en/']:
+    lab_path=ROOT/(lang+'lab/index.html')
+    lab_doc=docs[lab_path]
+    events=[n for n in lab_doc.ld[0]['@graph'] if n['@type']=='Event']
+    assert len(events)==1, lang
+    ev=events[0]
+    assert ev['startDate']=='2026-12-05T13:30:00+08:00' and ev['doorTime']=='2026-12-05T13:00:00+08:00'
+    assert ev['eventAttendanceMode']=='https://schema.org/OfflineEventAttendanceMode'
+    assert ev['eventStatus']=='https://schema.org/EventScheduled'
+    assert ev['location']['@type']=='Place' and ev['location']['address']['@type']=='PostalAddress'
+    assert ev['location']['address']['addressCountry']=='TW' and ev['location']['address']['postalCode']=='115'
+    assert ev['organizer']['name']=='AI郵報' and ev['organizer']['url']=='https://www.aiposthub.com/'
+    assert 'https://www.instagram.com/aiposthub/' in ev['organizer']['sameAs']
+    assert ev['contributor']['@id']=='https://wilburwei.com/lab/#organization'
+    assert 'price' not in ev and 'priceCurrency' not in ev
+    if _upcoming:
+        assert ev['offers']['url']=='https://luma.com/zr1k4qa5' and 'price' not in ev['offers']
+    else:
+        assert 'offers' not in ev
+    text=lab_path.read_text()
+    assert 'id="openlab-2026"' in text
+    assert 'https://openlab.aiposthub.com/' in text
+    assert 'https://www.aiposthub.com/' in text
+    assert 'https://www.instagram.com/aiposthub/' in text
+    if _upcoming:
+        assert 'https://luma.com/zr1k4qa5' in text
+    assert '折扣碼' not in text and 'NT$' not in text and 'VIP' not in text
+    for term in BANNED:
+        assert term not in text,(lang,term)
+    start=text.find('id="openlab-2026"')
+    assert start!=-1
+    end_block=text.find('</section>', start)
+    block=text[start:end_block]
+    visible=re.sub(r'<script\b[^>]*>.*?</script>','',block,flags=re.S)
+    visible=re.sub(r'<[^>]+>','',visible)
+    assert '講者' not in visible and 'will speak' not in visible.lower() and 'will attend' not in visible.lower()
+    # @aiposthub may appear in the Instagram link label, but only as linked text.
+    if '@aiposthub' in block:
+        assert 'href="https://www.instagram.com/aiposthub/"' in block
+    if not lang:
+        assert '元智資工 MIRAGE Lab' in visible
+        assert ('是 AI郵報年會 OPEN LAB 2026 的社群夥伴' in visible) if _upcoming else ('曾擔任 AI郵報年會 OPEN LAB 2026 的社群夥伴' in visible)
+    else:
+        assert 'Community Partner' in visible
+
+llms_txt=(ROOT/'llms.txt').read_text()
+llms_full=(ROOT/'llms-full.txt').read_text()
+assert 'OPEN LAB 2026' in llms_txt and 'openlab.aiposthub.com' in llms_txt
+assert 'OPEN LAB 2026' in llms_full and 'openlab.aiposthub.com' in llms_full
+
 print(f'PASS: {EXPECTED} pages; unique titles/descriptions; reciprocal language URLs; valid JSON-LD/sitemap; all local links and anchors; 30 records per language; 7 publication records per language; merged/HOLD records excluded.')

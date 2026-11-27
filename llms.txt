@@ -29,7 +29,7 @@
 - [AI 賦能轉型](https://wilburwei.com/transformation/): 從流程盤點、AI 工具導入到試點與團隊培訓。魏得恩 Wilbur Wei 協助企業以 AI 優化文件、知識查詢與作業管理，結合資安設計及成效量測，並提供亞旭合作與相關演講經驗。
 - [歷年紀錄](https://wilburwei.com/experience/): 魏得恩 Wilbur Wei 的 2024–2026 演講、授課與教材紀錄，包含 SEMICON Taiwan 2025、臺大電信所、國防大學、觀音與中壢產業園區、自強基金會，以及已排定的竣盟科技課程。
 - [研究](https://wilburwei.com/research/): 魏得恩 Te-En Wei（Wilbur Wei）的研究計畫與成果：FY115 國科會 LLM 驅動紅隊代理平台計畫、七筆論文發表紀錄與三項論文獎，以及通訊與硬體資安的未來研究規劃。
-- [MIRAGE Lab](https://wilburwei.com/lab/): 元智大學資工系 MIRAGE Lab 代理人紅隊攻防實境實驗室，由魏得恩 Wilbur Wei 主持。既有研究涵蓋 AI Agent、紅隊攻防與零信任，規劃拓展至無人機、機器人通訊資安與 PUF 應用。
+- [MIRAGE Lab](https://wilburwei.com/lab/): 元智大學資工系 MIRAGE Lab 代理人紅隊攻防實境實驗室，由魏得恩 Wilbur Wei 主持。既有研究涵蓋 AI Agent、紅隊攻防與零信任，規劃拓展至無人機、機器人通訊資安與 PUF 應用。 元智資工 MIRAGE Lab 是 AI郵報年會 OPEN LAB 2026（2026-12-05，台北瓶蓋工廠）的社群夥伴。活動官網：https://openlab.aiposthub.com/
 - [教學方法](https://wilburwei.com/teaching/): 魏得恩 Wilbur Wei 的教材設計方法：查核來源、從學員環境實跑、以情境練習連結概念與決策，並結合 AI 協作與人工定稿。
 
 ## English pages
@@ -45,7 +45,7 @@
 - [AI Transformation](https://wilburwei.com/en/transformation/): AI transformation with Wilbur Wei: workflow assessment, AI adoption planning, pilot guidance and team training, with security design and evaluation built in.
 - [Experience](https://wilburwei.com/en/experience/): Wilbur Wei’s 2024–2026 talks, teaching and courseware, including SEMICON Taiwan 2025, NTU, National Defense University, Zhongli Industrial Park and TCFST.
 - [Research](https://wilburwei.com/en/research/): Research by Te-En Wei (Wilbur Wei): an FY115 NSTC LLM-driven red team agent project, seven publication records, three paper awards and planned research.
-- [MIRAGE Lab](https://wilburwei.com/en/lab/): MIRAGE Lab at Yuan Ze University, directed by Wilbur Wei, studies AI agent security, red teaming and zero trust, with planned drone, robot and PUF research.
+- [MIRAGE Lab](https://wilburwei.com/en/lab/): MIRAGE Lab at Yuan Ze University, directed by Wilbur Wei, studies AI agent security, red teaming and zero trust, with planned drone, robot and PUF research. MIRAGE Lab (Yuan Ze University) is a Community Partner of AI郵報 OPEN LAB 2026 (5 December 2026, POPOP Taipei). Event site: https://openlab.aiposthub.com/
 - [Teaching Approach](https://wilburwei.com/en/teaching/): How Wilbur Wei designs security courseware: source verification, learner-environment testing, scenario exercises, AI-assisted drafting and human review.
 
 ## Optional
