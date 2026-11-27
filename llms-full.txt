@@ -35,6 +35,10 @@ Source: https://wilburwei.com/  ·  llms.txt: https://wilburwei.com/llms.txt
 MIRAGE Lab 設於元智大學資訊工程學系，由魏得恩（Wilbur Wei／Te-En Wei）助理教授主持。研究聚焦 AI 代理人安全、紅隊攻防與零信任，從攻擊情境、授權邊界與行為證據，探討防禦如何設計與驗證。 接下來規劃深耕無人機與機器人通訊資安，以及 PUF 硬體資安應用。
 URL: https://wilburwei.com/lab/
 
+### 社群合作
+
+元智資工 MIRAGE Lab 是 AI郵報年會 OPEN LAB 2026（2026-12-05，台北瓶蓋工廠）的社群夥伴。活動官網：https://openlab.aiposthub.com/
+
 ### 研究計畫
 
 - 基於 LLM 驅動的紅隊代理攻防演練與場域模擬實戰平台｜國家科學及技術委員會（國科會）｜FY115 (2026)
@@ -349,6 +353,10 @@ Wilbur Wei (魏得恩), who publishes as Te-En Wei, is an Assistant Professor in
 
 MIRAGE Lab is based in the Department of Computer Science and Engineering at Yuan Ze University. Assistant Professor Wilbur Wei (Te-En Wei) is its Director. Its research focuses on AI agent security, red teaming and zero trust, examining how attack scenarios, authorisation boundaries and behavioural evidence inform the design and evaluation of defences. Future directions include drone and robot communication security and PUF hardware security applications.
 URL: https://wilburwei.com/en/lab/
+
+### Community partnerships
+
+MIRAGE Lab (Yuan Ze University) is a Community Partner of AI郵報 OPEN LAB 2026 (5 December 2026, POPOP Taipei). Event site: https://openlab.aiposthub.com/
 
 ### Research projects
 

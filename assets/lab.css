@@ -61,6 +61,10 @@
 .lab-feature-name { color: #fff; font-size: 20px; }
 .lab-feature p:not(.lab-feature-name) { color: #cfDAf0; max-width: 760px; font-size: 15px; }
 .lab-feature a { color: #fff; }
+
+.lab-community-links { margin: 16px 0 0; padding: 0; list-style: none; }
+.lab-community-links li { margin: 8px 0; }
+.lab-community-links a { font-size: 15px; }
 @media(max-width:900px) {
   .lab-hero-grid { gap: 30px; grid-template-columns: 1.35fr 1fr; }
   .lab-profile-grid { grid-template-columns: 1fr; gap: 22px; }
