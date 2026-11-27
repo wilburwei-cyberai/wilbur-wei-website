@@ -15,7 +15,7 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, str(ROOT / 'content'))
 from records import RECORDS, STATUS, bi
 from pages import PAGES, SERVICES, TOPICS, FAQ
-from lab import LAB_NAME, LAB_ZH, LAB_AFFILIATION, LAB_INTRO, LAB_DIRECTIONS
+from lab import LAB_NAME, LAB_ZH, LAB_AFFILIATION, LAB_INTRO, LAB_DIRECTIONS, STUDENT_ACHIEVEMENTS
 from transformation import INTRO as TRANSFORMATION_INTRO, SCENARIOS, STEPS, ASKEY_TITLE, ASKEY_DESCRIPTION
 from research_directions import INTRO as FUTURE_INTRO, DIRECTIONS as FUTURE_DIRECTIONS
 from research_projects import RESEARCH_PROJECTS
@@ -184,7 +184,22 @@ def lab_feature(c):
 <div><span class="eyebrow">YUAN ZE UNIVERSITY / CSE</span><h2>MIRAGE Lab</h2>
 <p class="lab-feature-name">{c.l(LAB_ZH,'AI agent security · Red teaming · Zero trust')}</p>
 {paragraph(c.l('元智大學資訊工程學系。研究 AI 代理人授權與攻防驗證，並規劃拓展至無人機、機器人通訊資安，以及 PUF 硬體資安應用。','Based in Computer Science and Engineering at Yuan Ze University. Research on AI agent authorisation and defence, with planned directions in communication security for drones and robots, and PUF hardware security applications.'))}
+{''.join(paragraph(c.t(a['statement'])) for a in STUDENT_ACHIEVEMENTS)}
 {c.link('lab',c.l('認識 MIRAGE Lab','Explore MIRAGE Lab'))}</div></div></section>'''
+
+def student_achievements_section(c):
+    """Render /lab/ student competition results (team names only, with sources)."""
+    if not STUDENT_ACHIEVEMENTS:
+        return ''
+    cards=[]
+    for a in STUDENT_ACHIEVEMENTS:
+        sources=c.l('、',' · ').join(f'<a href="{e(url,quote=True)}" rel="noopener">{e(c.t(label))}</a>' for label,url in a['sources'])
+        cards.append(f'<article class="card" id="{a["id"]}"><span class="tag">{a["year"]}</span><h3>{e(c.t(a["title"]))}</h3><p><strong>{c.l("隊伍：","Team: ")}</strong>{e(a["team"])}</p>'
+                     +paragraph(c.t(a['statement']))+paragraph(c.t(a['context']))
+                     +f'<p class="status-note">{c.l("競賽資訊來源：","Competition details: ")}{sources}</p></article>')
+    body=c.heading('STUDENT ACHIEVEMENTS',c.l('學生競賽成果','Student competition results'))
+    body+=paragraph(c.l('MIRAGE Lab 的學生以攻防實作參與國內資安競賽。以下列出競賽名稱、組別、名次與隊伍名稱。','MIRAGE Lab students take part in national cybersecurity competitions through hands-on offence and defence work. Each entry lists the competition, division, placing and team name.'))
+    return c.section(body+''.join(cards),id='student-achievements')
 
 def lab(c):
     academic_mail = 'mailto:' + ACADEMIC + '?' + urlencode({
@@ -197,10 +212,11 @@ def lab(c):
 <div class="lab-hero-grid"><div><span class="eyebrow">YUAN ZE UNIVERSITY / CSE</span><h1>MIRAGE Lab</h1>
 <p class="lab-subtitle">{LAB_ZH}</p><p class="lab-affiliation">{e(c.t(LAB_AFFILIATION))}</p>
 <p class="lab-statement">{c.l('理解攻擊如何發生，<br>驗證防禦如何成立。','Understand the attack.<br>Evaluate the defence.')}</p>
-<div class="anchor-nav"><a href="#lab-profile">{c.l('認識實驗室','About the lab')}</a><a href="#lab-directions">{c.l('研究方向','Research areas')}</a><a href="#projects">{c.l('研究計畫','Projects')}</a><a href="#emerging-directions">{c.l('未來方向','Future directions')}</a><a href="#lab-collaboration">{c.l('研究合作','Collaborate')}</a></div></div>
+<div class="anchor-nav"><a href="#lab-profile">{c.l('認識實驗室','About the lab')}</a><a href="#lab-directions">{c.l('研究方向','Research areas')}</a><a href="#projects">{c.l('研究計畫','Projects')}</a><a href="#emerging-directions">{c.l('未來方向','Future directions')}</a><a href="#student-achievements">{c.l('學生成果','Student results')}</a><a href="#lab-collaboration">{c.l('研究合作','Collaborate')}</a></div></div>
 <div class="lab-emblem"><img src="{c.asset('mirage-logo-white.png')}" width="688" height="764" alt="MIRAGE Lab — {LAB_ZH}"><span>AI AGENTS · RED TEAMING · ZERO TRUST</span></div></div></div></section>'''
     profile=f'''<div class="lab-profile-grid"><div><span class="eyebrow">THE LAB</span><h2>{c.l('從攻防情境，提出可以驗證的問題。','Turn attack and defence scenarios into testable questions.')}</h2></div><div>{paragraph(c.t(LAB_INTRO),'lead')}<div class="lab-advisor"><img src="{c.asset('mirage-logo-dark.png')}" width="688" height="764" loading="lazy" alt="MIRAGE Lab Logo"><span>{c.l('主持','Director')}</span><strong>{c.l('魏得恩 Wilbur Wei','Wilbur Wei / Te-En Wei')}</strong><p>{c.l('元智大學資訊工程學系助理教授','Assistant Professor, Computer Science and Engineering, Yuan Ze University')}</p>{c.link('about',c.l('教師經歷與專業背景','Faculty background'))}</div></div></div>'''
     result+=c.section(profile,id='lab-profile')
+    result+=student_achievements_section(c)
     directions=[]
     for number,title,question,desc,papers in LAB_DIRECTIONS:
         links=''.join(c.link('research',label,slug) for slug,label in papers)
@@ -474,6 +490,14 @@ def schema(c):
                       'parentOrganization':{'@type':'Organization','name':c.t(LAB_AFFILIATION),'url':'https://www.cse.yzu.edu.tw/',
                                             'parentOrganization':{'@type':'CollegeOrUniversity','name':'Yuan Ze University','url':'https://www.yzu.edu.tw/'}},
                       'member':{'@id':pid},'email':ACADEMIC})
+        if STUDENT_ACHIEVEMENTS:
+            next(node for node in graph if node.get('@id')==lab_id)['award']=[c.t(a['award'])+c.l('｜學生隊伍 ',' — student team ')+a['team'] for a in STUDENT_ACHIEVEMENTS]
+        for a in STUDENT_ACHIEVEMENTS:
+            graph.append({'@type':'Organization','@id':c.url('lab',lang='zh')+'#'+a['id'],'name':a['team'],
+                          'description':c.t(a['statement'])+c.l('',' ')+c.t(a['context']),
+                          'award':c.t(a['award']),
+                          'memberOf':[{'@id':lab_id},{'@id':'https://www.yzu.edu.tw/#organization'}],
+                          'subjectOf':[{'@type':'WebPage','url':url} for _,url in a['sources']]})
     if c.slug.startswith('guides/'):
         graph.append({'@type':'BreadcrumbList','itemListElement':[
             {'@type':'ListItem','position':1,'name':c.l('首頁','Home'),'item':c.url('')},
@@ -609,6 +633,7 @@ def llms_txt(base):
          '- Title: Assistant Professor, Department of Computer Science and Engineering, Yuan Ze University; Director, MIRAGE Lab; AI security speaker and consultant',
          '- 專長 / Expertise: '+'、'.join(KNOWS_ABOUT['zh'])+' / '+', '.join(KNOWS_ABOUT['en']),
          '- 獎項 / Awards: '+'; '.join(AWARDS['en']),
+         *[f'- MIRAGE Lab 學生競賽 / Student competition: {a["statement"]["zh"]} / {a["statement"]["en"]} ({base}lab/#{a["id"]})' for a in STUDENT_ACHIEVEMENTS],
          f'- 聯絡 / Contact: {EMAIL}（演講、內訓、顧問、AI 賦能轉型 / speaking, training, consulting, AI transformation）; {ACADEMIC}（學術與產學合作 / academic and research collaboration）',
          '','## 中文頁面','']
     def llms_slugs(lang):
@@ -633,6 +658,11 @@ def llms_full_txt(base):
         out+=['### '+c.l('服務','Services'),'']+[f'- {c.t(t)}（{c.url(s)}）：{c.t(d)}' if lang=='zh' else f'- {c.t(t)} ({c.url(s)}): {c.t(d)}' for s,t,_,d in SERVICES]+['']
         out+=['### '+c.l('演講與課程主題','Talk and training topics'),'']+[f'- {c.t(t)}：{c.t(d)}' if lang=='zh' else f'- {c.t(t)}: {c.t(d)}' for t,d in TOPICS]+['']
         out+=['### MIRAGE Lab','',c.t(LAB_INTRO),f'URL: {c.url("lab")}','']
+        if STUDENT_ACHIEVEMENTS:
+            out+=['### '+c.l('MIRAGE Lab 學生競賽成果','MIRAGE Lab student competition results'),'']
+            for a in STUDENT_ACHIEVEMENTS:
+                out+=['- '+c.t(a['statement'])+c.l('',' ')+f'{c.t(a["context"])}'+c.l('競賽資訊來源：',' Competition details: ')+', '.join(url for _,url in a['sources'])]
+            out+=['']
         out+=['### '+c.l('研究計畫','Research projects'),'']+[f'- {c.t(p["title"])}｜{c.t(p["agency"])}｜{p["fiscal_year"]} ({p["year"]})' for p in RESEARCH_PROJECTS]+['']
         out+=['### '+c.l('論文發表','Publications')+f' ({c.url("research")})','']
         for p in PAPERS:

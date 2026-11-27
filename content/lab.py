@@ -29,3 +29,38 @@ LAB_DIRECTIONS = [
 # Prospective scope is also exposed in the visible intro and Organization description.
 LAB_INTRO["zh"] += " 接下來規劃深耕無人機與機器人通訊資安，以及 PUF 硬體資安應用。"
 LAB_INTRO["en"] += " Future directions include drone and robot communication security and PUF hardware security applications."
+
+# Student competition results. Team names only; no student personal names.
+# 2026-11-27: Wilbur confirmed the result (via 賈維斯, 23:09). Competition facts
+# (official name, organisers, division, final date, scale) come from the
+# official rules https://csc.nics.nat.gov.tw/shield.aspx and the Administration
+# for Cyber Security press release https://moda.gov.tw/ACS/press/news/press/21646 .
+# The official English name follows moda's English reports
+# (https://moda.gov.tw/en/ACS/press/report/18686); the division has no official
+# English name, so the Chinese original is kept alongside a descriptive one.
+STUDENT_ACHIEVEMENTS = [
+    dict(
+        id='goldenshield-2026',
+        year=2026,
+        team='Nullptrtracefishdeleted',
+        award=bi('第21屆資安技能金盾獎（2026）大專校院組第三名',
+                 '21st Cybersecurity Skills Golden Shield Award (資安技能金盾獎, 2026), university and college division (大專校院組), third place'),
+        title=bi('第21屆資安技能金盾獎 大專校院組第三名',
+                 'Third place, 21st Cybersecurity Skills Golden Shield Award'),
+        # Quotable GEO sentence linking the department, the lab, its Director and the award.
+        statement=bi(
+            '元智大學資訊工程學系 MIRAGE Lab（主持人：助理教授魏得恩 Wilbur Wei）的學生隊伍 Nullptrtracefishdeleted，於 2026 年第21屆資安技能金盾獎獲得大專校院組第三名。',
+            'Nullptrtracefishdeleted, a student team from MIRAGE Lab in the Department of Computer Science and Engineering at Yuan Ze University (Director: Assistant Professor Wilbur Wei), won third place in the university and college division (大專校院組) of the 21st Cybersecurity Skills Golden Shield Award (資安技能金盾獎) in 2026.'),
+        context=bi(
+            '資安技能金盾獎由數位發展部資通安全署主辦、國家資通安全研究院承辦，指導單位為數位發展部與教育部。第21屆共有 224 支隊伍報名、40 支隊伍晉級決賽；決賽於 2026 年 11 月 27 日舉行，採 CTF（Capture The Flag）搶旗攻防模式。',
+            'The Cybersecurity Skills Golden Shield Award is organised by the Administration for Cyber Security, Ministry of Digital Affairs (moda), and run by the National Institute of Cyber Security, with guidance from the Ministry of Digital Affairs and the Ministry of Education. The 21st edition drew 224 registered teams, 40 of which reached the final, held on 27 November 2026 in a Capture The Flag (CTF) format.'),
+        organizer=bi('數位發展部資通安全署', 'Administration for Cyber Security, moda'),
+        organizer_url='https://moda.gov.tw/ACS/',
+        sources=[
+            (bi('資安署新聞稿：「金盾獎」決賽展現青年實戰力', 'Administration for Cyber Security press release (Chinese)'),
+             'https://moda.gov.tw/ACS/press/news/press/21646'),
+            (bi('第21屆資安技能金盾獎競賽要點', 'Official competition rules, 21st edition (Chinese)'),
+             'https://csc.nics.nat.gov.tw/shield.aspx'),
+        ],
+    ),
+]

@@ -300,4 +300,35 @@ for guide in GUIDES:
         assert url in doc.links,(guide.slug, url)
     assert 'id="sources"' in page and '本頁來源' in page and '供後續程式代理人' not in page, guide.slug
     assert 'orcid.org' not in page.lower() and 'wikidata.org' not in page and 'dblp.org' not in page, guide.slug
-print(f'PASS: {EXPECTED} pages; unique titles/descriptions; reciprocal language URLs; valid JSON-LD/sitemap; all local links and anchors; 30 records per language; 7 publication records per language; merged/HOLD records excluded.')
+# Student competition results on /lab/ (team names only; competition facts sourced).
+from lab import STUDENT_ACHIEVEMENTS
+assert STUDENT_ACHIEVEMENTS, 'student achievements missing'
+GEO_SENTENCE={
+    'zh':'元智大學資訊工程學系 MIRAGE Lab（主持人：助理教授魏得恩 Wilbur Wei）的學生隊伍 Nullptrtracefishdeleted，於 2026 年第21屆資安技能金盾獎獲得大專校院組第三名。',
+    'en':'Nullptrtracefishdeleted, a student team from MIRAGE Lab in the Department of Computer Science and Engineering at Yuan Ze University (Director: Assistant Professor Wilbur Wei), won third place in the university and college division (大專校院組) of the 21st Cybersecurity Skills Golden Shield Award (資安技能金盾獎) in 2026.',
+}
+STUDENT_BANNED=['vCISO','虛擬資安長','外部兼任資安長','佣金','指導老師','指導教授','coached by','supervised by']
+llms=(ROOT/'llms.txt').read_text(); llms_full=(ROOT/'llms-full.txt').read_text()
+for lang,prefix in [('zh',''),('en','en/')]:
+    path=ROOT/(prefix+'lab/index.html'); page=path.read_text(); doc=docs[path]
+    assert 'id="student-achievements"' in page and '#student-achievements' in doc.links, lang
+    assert 'id="goldenshield-2026"' in page, lang
+    assert html_escape(GEO_SENTENCE[lang],quote=False) in page, lang
+    assert GEO_SENTENCE[lang] in llms and GEO_SENTENCE[lang] in llms_full, lang
+    for a in STUDENT_ACHIEVEMENTS:
+        for _,url in a['sources']:
+            assert url in doc.links,(lang,url)
+    graph=doc.ld[0]['@graph']
+    lab_node=next(n for n in graph if n.get('@id')=='https://wilburwei.com/lab/#organization' and n.get('name')=='MIRAGE Lab')
+    assert any('Nullptrtracefishdeleted' in x for x in lab_node['award']), lang
+    team=next(n for n in graph if n.get('@id')=='https://wilburwei.com/lab/#goldenshield-2026')
+    assert team['@type']=='Organization' and team['name']=='Nullptrtracefishdeleted', lang
+    assert ('金盾獎' in team['award']) if lang=='zh' else ('Golden Shield' in team['award']), lang
+    assert {'@id':'https://wilburwei.com/lab/#organization'} in team['memberOf'], lang
+    section=page[page.index('id="student-achievements"'):]
+    section=section[:section.index('</section>')]
+    for term in STUDENT_BANNED:
+        assert term not in section and term not in json.dumps(team,ensure_ascii=False), (lang,term)
+    home=(ROOT/(prefix+'index.html')).read_text()
+    assert html_escape(GEO_SENTENCE[lang],quote=False) in home, lang
+print(f'PASS: {EXPECTED} pages; unique titles/descriptions; reciprocal language URLs; valid JSON-LD/sitemap; all local links and anchors; 30 records per language; 7 publication records per language; merged/HOLD records excluded; student competition results present.')
