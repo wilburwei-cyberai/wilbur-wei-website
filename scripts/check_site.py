@@ -331,4 +331,37 @@ for lang,prefix in [('zh',''),('en','en/')]:
         assert term not in section and term not in json.dumps(team,ensure_ascii=False), (lang,term)
     home=(ROOT/(prefix+'index.html')).read_text()
     assert html_escape(GEO_SENTENCE[lang],quote=False) in home, lang
+    # Result graphic: files exist, <picture> has WebP + JPEG fallback, alt/caption present, no personal names.
+    for a in STUDENT_ACHIEVEMENTS:
+        img=a.get('image')
+        assert img, (lang,'result image missing')
+        webp=ROOT/'assets'/(img['file']+'.webp'); jpg=ROOT/'assets'/(img['file']+'.jpg')
+        assert webp.is_file() and webp.stat().st_size>10_000 and webp.read_bytes()[:4]==b'RIFF' and webp.read_bytes()[8:12]==b'WEBP', (lang,'webp')
+        assert jpg.is_file() and jpg.stat().st_size>10_000 and jpg.read_bytes()[:3]==b'\xff\xd8\xff', (lang,'jpg')
+        card=page[page.index('id="goldenshield-2026"'):]
+        card=card[:card.index('</article>')]
+        fig=re.search(r'<figure class="result-figure"><picture><source type="image/webp" srcset="([^"]+)"><img src="([^"]+)" width="(\d+)" height="(\d+)" loading="lazy" decoding="async" alt="([^"]*)"></picture><figcaption>([^<]+)</figcaption></figure>',card)
+        assert fig, (lang,'figure markup')
+        srcset,src,width,height,alt,caption=fig.groups()
+        assert (img['file']+'.webp') in srcset and (img['file']+'.jpg') in src, lang
+        assert (int(width),int(height))==(img['width'],img['height']), lang
+        try:
+            from PIL import Image
+            for f in (webp,jpg):
+                with Image.open(f) as im: assert im.size==(img['width'],img['height']), (lang,f.name,im.size)
+        except ImportError:
+            pass
+        assert unescape(alt).strip()==img['alt'][lang].strip() and len(unescape(alt))>60, lang
+        assert unescape(caption)==img['caption'][lang], lang
+        assert 'Nullptrtracefishdeleted' in unescape(alt) and ('MIRAGE Lab' in unescape(alt)), lang
+        assert ('非主辦單位發布' in unescape(alt) and '資通安全署' in unescape(alt)) if lang=='zh' else ('not issued by the organiser' in unescape(alt) and 'Cybersecurity Skills Golden Shield Award' in unescape(alt)), lang
+        for term in STUDENT_BANNED:
+            assert term not in unescape(alt) and term not in unescape(caption), (lang,term)
+        # Team name is the only personal-name-like token allowed in the alt text.
+        assert not re.search(r'魏得恩|Wilbur|Te-En', unescape(alt)), (lang,'alt text must not name individuals')
+        image_node=team.get('image')
+        assert image_node and image_node['@type']=='ImageObject' and image_node['contentUrl']==f"https://wilburwei.com/assets/{img['file']}.webp", lang
+        assert image_node['caption']==img['caption'][lang] and image_node['description']==img['alt'][lang], lang
+        assert f"https://wilburwei.com/assets/{img['file']}.webp" in llms_full, lang
+    assert 'og:image" content="https://wilburwei.com/assets/social-card.png"' in page, lang
 print(f'PASS: {EXPECTED} pages; unique titles/descriptions; reciprocal language URLs; valid JSON-LD/sitemap; all local links and anchors; 30 records per language; 7 publication records per language; merged/HOLD records excluded; student competition results present.')

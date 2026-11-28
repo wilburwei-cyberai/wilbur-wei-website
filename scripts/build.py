@@ -187,6 +187,16 @@ def lab_feature(c):
 {''.join(paragraph(c.t(a['statement'])) for a in STUDENT_ACHIEVEMENTS)}
 {c.link('lab',c.l('認識 MIRAGE Lab','Explore MIRAGE Lab'))}</div></div></section>'''
 
+def achievement_figure(c,a):
+    """Optional result graphic: WebP with a JPEG fallback, fixed dimensions, lazy loaded."""
+    img=a.get('image')
+    if not img:
+        return ''
+    stem=img['file']
+    return (f'<figure class="result-figure"><picture><source type="image/webp" srcset="{c.asset(stem+".webp")}">'
+            f'<img src="{c.asset(stem+".jpg")}" width="{img["width"]}" height="{img["height"]}" loading="lazy" decoding="async" alt="{e(c.t(img["alt"]),quote=True)}"></picture>'
+            f'<figcaption>{e(c.t(img["caption"]))}</figcaption></figure>')
+
 def student_achievements_section(c):
     """Render /lab/ student competition results (team names only, with sources)."""
     if not STUDENT_ACHIEVEMENTS:
@@ -195,7 +205,7 @@ def student_achievements_section(c):
     for a in STUDENT_ACHIEVEMENTS:
         sources=c.l('、',' · ').join(f'<a href="{e(url,quote=True)}" rel="noopener">{e(c.t(label))}</a>' for label,url in a['sources'])
         cards.append(f'<article class="card" id="{a["id"]}"><span class="tag">{a["year"]}</span><h3>{e(c.t(a["title"]))}</h3><p><strong>{c.l("隊伍：","Team: ")}</strong>{e(a["team"])}</p>'
-                     +paragraph(c.t(a['statement']))+paragraph(c.t(a['context']))
+                     +paragraph(c.t(a['statement']))+paragraph(c.t(a['context']))+achievement_figure(c,a)
                      +f'<p class="status-note">{c.l("競賽資訊來源：","Competition details: ")}{sources}</p></article>')
     body=c.heading('STUDENT ACHIEVEMENTS',c.l('學生競賽成果','Student competition results'))
     body+=paragraph(c.l('MIRAGE Lab 的學生以攻防實作參與國內資安競賽。以下列出競賽名稱、組別、名次與隊伍名稱。','MIRAGE Lab students take part in national cybersecurity competitions through hands-on offence and defence work. Each entry lists the competition, division, placing and team name.'))
@@ -498,6 +508,11 @@ def schema(c):
                           'award':c.t(a['award']),
                           'memberOf':[{'@id':lab_id},{'@id':'https://www.yzu.edu.tw/#organization'}],
                           'subjectOf':[{'@type':'WebPage','url':url} for _,url in a['sources']]})
+            if a.get('image'):
+                img=a['image']
+                graph[-1]['image']={'@type':'ImageObject','contentUrl':f"{c.base}assets/{img['file']}.webp",
+                                    'encodingFormat':'image/webp','width':img['width'],'height':img['height'],
+                                    'caption':c.t(img['caption']),'description':c.t(img['alt'])}
     if c.slug.startswith('guides/'):
         graph.append({'@type':'BreadcrumbList','itemListElement':[
             {'@type':'ListItem','position':1,'name':c.l('首頁','Home'),'item':c.url('')},
@@ -662,6 +677,8 @@ def llms_full_txt(base):
             out+=['### '+c.l('MIRAGE Lab 學生競賽成果','MIRAGE Lab student competition results'),'']
             for a in STUDENT_ACHIEVEMENTS:
                 out+=['- '+c.t(a['statement'])+c.l('',' ')+f'{c.t(a["context"])}'+c.l('競賽資訊來源：',' Competition details: ')+', '.join(url for _,url in a['sources'])]
+                if a.get('image'):
+                    out+=['  '+c.l('說明圖：','Graphic: ')+c.t(a['image']['caption'])+' '+f"{base}assets/{a['image']['file']}.webp"]
             out+=['']
         out+=['### '+c.l('研究計畫','Research projects'),'']+[f'- {c.t(p["title"])}｜{c.t(p["agency"])}｜{p["fiscal_year"]} ({p["year"]})' for p in RESEARCH_PROJECTS]+['']
         out+=['### '+c.l('論文發表','Publications')+f' ({c.url("research")})','']
