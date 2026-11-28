@@ -56,6 +56,18 @@ STUDENT_ACHIEVEMENTS = [
             'The Cybersecurity Skills Golden Shield Award is organised by the Administration for Cyber Security, Ministry of Digital Affairs (moda), and run by the National Institute of Cyber Security, with guidance from the Ministry of Digital Affairs and the Ministry of Education. The 21st edition drew 224 registered teams, 40 of which reached the final, held on 27 November 2026 in a Capture The Flag (CTF) format.'),
         organizer=bi('數位發展部資通安全署', 'Administration for Cyber Security, moda'),
         organizer_url='https://moda.gov.tw/ACS/',
+        # 2026-11-28: Wilbur chose this adapted graphic (V1: third-place row highlighted,
+        # other rows dimmed, organiser/implementer note in the footer). It is based on the
+        # organiser's published finals results and is labelled as not issued by the organiser.
+        # Alt text uses the team name only; no personal names.
+        image=dict(
+            file='goldenshield-2026-finals-results-highlight',
+            width=1600, height=1731,
+            alt=bi('依主辦公布之第21屆資安技能金盾獎決賽獲獎名單製作的說明圖，非主辦單位發布。圖中標示元智大學資訊工程學系 MIRAGE Lab 學生隊伍 Nullptrtracefishdeleted 獲得 2026 年大專校院組第三名。主辦：數位發展部資通安全署；承辦：國家資通安全研究院。',
+                   'Explanatory graphic based on the organiser’s published finals results for the 21st Cybersecurity Skills Golden Shield Award (資安技能金盾獎); not issued by the organiser. It marks Nullptrtracefishdeleted, a student team from MIRAGE Lab in the Department of Computer Science and Engineering at Yuan Ze University, as third place in the university and college division (大專校院組) in 2026. Organiser: Administration for Cyber Security, Ministry of Digital Affairs; implementer: National Institute of Cyber Security.'),
+            caption=bi('依主辦公布之決賽獲獎名單製作，非主辦單位發布。',
+                       'Adapted from the organizer’s published finals results; not issued by the organizer.'),
+        ),
         sources=[
             (bi('資安署新聞稿：「金盾獎」決賽展現青年實戰力', 'Administration for Cyber Security press release (Chinese)'),
              'https://moda.gov.tw/ACS/press/news/press/21646'),

@@ -81,6 +81,11 @@
   .lab-feature-logo img { width: 145px; }
   .lab-feature, .lab-collaboration { padding: 46px 0; }
 }
+/* Student result graphic (adapted from the organiser's finals list). */
+.result-figure { margin: 22px 0 4px; max-width: 480px; }
+.result-figure picture, .result-figure img { display: block; }
+.result-figure img { width: 100%; height: auto; border: 1px solid var(--line); background: #071634; }
+.result-figure figcaption { margin-top: 8px; font-size: 12px; line-height: 1.6; color: var(--muted); }
 @media print {
   .lab-hero, .lab-feature, .lab-collaboration { background: #fff; color: #141922; }
   .lab-hero *, .lab-feature * { color: #141922 !important; }
